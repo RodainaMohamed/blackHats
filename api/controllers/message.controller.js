@@ -522,7 +522,7 @@ module.exports.getMessages = function (req, res) {
                 res.status(200).json({
                         error: null,
                         msg: "messages retrieved Successfully",
-                        data: message
+                        data: messages
                 });
             }
         })

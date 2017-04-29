@@ -14,7 +14,10 @@ export class DirectMessagingComponent implements OnInit {
     private business: String;
     private thread: Object;
     private destID: String;
+    private srcID: String;
     message: String;
+    threads: [Object];
+    messages: [Object];
 
 
     constructor(
@@ -28,7 +31,6 @@ export class DirectMessagingComponent implements OnInit {
     ngOnInit() { }
 
     sendMessage() {
-
         this.appService.getCurrentUser().subscribe(
             (user) => {
                 if (this.user.constructor.name === "User") {
@@ -102,5 +104,106 @@ export class DirectMessagingComponent implements OnInit {
                             });
                     });
             });
+    }
+
+
+    getThreads() {
+        this.appService.getCurrentUser().subscribe(
+            (user) => {
+                if (this.user.constructor.name === "User") {
+                    this.srcID = user.data._id;
+                }
+                else {
+                    this.srcID = user.data._id;
+                }
+            },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            });
+        this.directMessagingService.getThreads(this.srcID).subscribe(
+            (threads) => {
+                this.threads = threads.data;
+            },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            });
+    }
+
+    getMessages(threadID) {
+        this.directMessagingService.getMessages(threadID).subscribe(
+            (messages) => {
+                this.messages = messages.data;
+            },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            });
+    }
+
+    deleteThread(threadID) {
+        this.directMessagingService.deleteThread(threadID).subscribe(
+            (data) => { },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            }
+        )
+    }
+
+    deleteMessage(messageID) {
+      this.directMessagingService.deleteMessage(messageID).subscribe(
+        (data) => {},
+        (err) => {
+            switch (err.status) {
+                case 404:
+                    this.router.navigateByUrl('/404-error');
+                    break;
+                case 401:
+                    this.router.navigateByUrl('/notAuthorized-error');
+                    break;
+                default:
+                    this.router.navigateByUrl('/500-error');
+                    break;
+            }
+        }
+      )
     }
 }
