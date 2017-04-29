@@ -23,7 +23,7 @@ export class DirectMessagingService {
       let body = {
         message: message
       }
-      return this.http.post('http://localhost:8080/api/api/thread/add/' + destID, { headers: headers }).map(res => res.json());
+      return this.http.post('http://localhost:8080/api/thread/add/' + destID, body, { headers: headers }).map(res => res.json());
     }
 
     addMessage(threadID, message){
@@ -32,6 +32,6 @@ export class DirectMessagingService {
       let body = {
         content: message
       }
-      return this.http.post('http://localhost:8080/api//thread/addMessage/' + threadID, body, { headers: headers }).map(res => res.json());
+      return this.http.post('http://localhost:8080/api/thread/addMessage/' + threadID, body, { headers: headers }).map(res => res.json());
     }
 }

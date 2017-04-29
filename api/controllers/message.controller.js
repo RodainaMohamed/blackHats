@@ -8,7 +8,6 @@ const Business = mongoose.model("Business");
 // api/thread/add/:id
 module.exports.createThread = function (req, res) {
     req.checkBody('message', 'Message is required').notEmpty();
-
     const errors = req.validationErrors();
     var user;
     var business;
@@ -31,6 +30,7 @@ module.exports.createThread = function (req, res) {
         }
         User.findById(user, function (errUser, user) {
             if (errUser) {
+
                 res.status(500).json({
                     error: errUser,
                     msg: "Error finding the user",
@@ -44,8 +44,9 @@ module.exports.createThread = function (req, res) {
                         data: null
                     });
                 } else {
-                    Business.findById(business, function (errBusiness) {
+                    Business.findById(business, function (errBusiness, business) {
                         if (errBusiness) {
+
                             res.status(500).json({
                                 error: errBusiness,
                                 msg: "Error finding the business",
@@ -66,6 +67,7 @@ module.exports.createThread = function (req, res) {
                                 });
                                 newThread.save(function (errSave, thread) {
                                     if (errSave) {
+
                                         res.status(500).json({
                                             error: errSave,
                                             msg: "Error creating the thread",
@@ -84,6 +86,7 @@ module.exports.createThread = function (req, res) {
                                                 user.threads.push(thread._id);
                                                 user.save(function (errSaveUser, userNew) {
                                                     if (errSaveUser) {
+
                                                         res.status(500).json({
                                                             error: errSaveUser,
                                                             msg: "Error updating user",
@@ -93,6 +96,7 @@ module.exports.createThread = function (req, res) {
                                                         business.threads.push(thread._id);
                                                         business.save(function (errSaveBusiness, newBusiness) {
                                                             if (errSaveBusiness) {
+
                                                                 res.status(500).json({
                                                                     error: errSaveBusiness,
                                                                     msg: "Error updating business",
@@ -164,37 +168,47 @@ function addMessage(threadId, content, byUser, done) {
 // api/thread/findExistingThread
 module.exports.findExistingThread = function (req, res) {
 
-  var userID;
-  var businessID;
+    var userID;
+    var businessID;
+    if (req.user.constructor.modelName === "User") {
+        businessID = req.body.businessID;
+    } else {
+        userID = req.body.userID;
+    }
+    console.log(userID);
+    console.log(businessID);
+    console.log("1");
+    if (!businessID) {
+        businessID = req.user._id;
+    } else {
+        userID = req.user._id;
+    }
+    console.log(userID);
+    console.log(businessID);
 
-  if (req.user.constructor.modelName === "User") {
-    businessID = req.body.businessID;
-  }
-  else {
-    userID = req.body.userID;
-  }
-
-  if(!businessID){
-    businessID = req.user._id;
-  }
-  else {
-    userID = req.user._id;
-  }
-
-    Thread.find({
-        "user": "userID",
-        "business": "businessID"
+    Thread.findOne({
+        "user": userID,
+        "business": businessID
     }, function (err, thread) {
-        if (err) return res.status(404).json({
+        if (err) return res.status(500).json({
             error: err,
-            msg: "No existent thread",
+            msg: "Error occured",
             data: null
         });
-        else return res.status(200).json({
-            error: null,
-            msg: "thread Retrieved Successfully",
-            data: thread
-        });
+        else {
+            if (thread) {
+                return res.status(200).json({
+                    error: null,
+                    msg: "thread Retrieved Successfully",
+                    data: thread
+                });
+            } else
+                return res.status(404).json({
+                    error: null,
+                    msg: "No existing thread",
+                    data: null
+                });
+        }
     });
 }
 
@@ -520,9 +534,9 @@ module.exports.getMessages = function (req, res) {
             });
             else {
                 res.status(200).json({
-                        error: null,
-                        msg: "messages retrieved Successfully",
-                        data: message
+                    error: null,
+                    msg: "messages retrieved Successfully",
+                    data: message
                 });
             }
         })

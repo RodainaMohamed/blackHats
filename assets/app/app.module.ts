@@ -1,3 +1,4 @@
+import { DirectMessagingService } from './directMessaging/directMessaging.service';
 import { AdminGuard } from './admin/admin.guard';
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -163,7 +164,8 @@ const DROPZONE_CONFIG: DropzoneConfigInterface = {
     EditUserProfileService,
     ContactSupportService,
     BusinessEditGuard,
-    AdminGuard
+    AdminGuard,
+    DirectMessagingService
   ],
   bootstrap: [AppComponent]
 })

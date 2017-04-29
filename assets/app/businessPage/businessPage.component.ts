@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {BusinessPageService} from './businessPage.service';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { BusinessPageService } from './businessPage.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Headers } from '@angular/http';
 import { AppService } from '../app.service';
+import { DirectMessagingService } from '../directMessaging/directMessaging.service';
 
 
 
@@ -48,18 +49,26 @@ export class BusinessPageComponent implements OnInit {
     activitiesAvailable = false;
     reviewsAvailable = false;
     test = 3;
+    private user: String;
+    private business: String;
+    private thread: Object;
+    private destID: String;
+    message: String;
 
     constructor(
         private businessPageService: BusinessPageService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private http: Http,
-        private appService: AppService) { }
+        private appService: AppService,
+        private directMessagingService: DirectMessagingService,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.initialize();
 
     }
+
     initialize() {
         this.activatedRoute.params.subscribe((params: Params) => {
             this.businessId = params['businessId'];
@@ -67,6 +76,7 @@ export class BusinessPageComponent implements OnInit {
             this.appService.getCurrentUser().subscribe(info => {
                 if (info.success) {
                     if (info.user) {
+                        this.user = info.user._id;
                         this.userLoggedIn = true;
                         this.ownerLoggedIn = false;
                         if (info.user.favorites.includes(this.businessId)) {
@@ -271,4 +281,52 @@ export class BusinessPageComponent implements OnInit {
         return text;
     }
 
+    sendMessage() {
+
+        this.route.params.subscribe(
+            (params) => {
+                this.business = params['businessId'];
+                this.destID = params['businessId'];
+
+                this.directMessagingService.existingThread(this.user, this.business).subscribe(
+                    (thread) => {
+                        this.thread = thread.data;
+                        this.directMessagingService.addMessage(this.thread._id, this.message).subscribe(
+                            (data) => { },
+                            (err) => {
+                                switch (err.status) {
+                                    case 404:
+                                        this.router.navigateByUrl('/404-error');
+                                        break;
+                                    case 401:
+                                        this.router.navigateByUrl('/notAuthorized-error');
+                                        break;
+                                    default:
+                                        this.router.navigateByUrl('/500-error');
+                                        break;
+                                }
+                            }
+                        )
+                    },
+                    (err) => {
+                        this.directMessagingService.newThread(this.destID, this.message).subscribe(
+                            (thread) => {
+                                this.thread = thread.data;
+                            },
+                            (err) => {
+                                switch (err.status) {
+                                    case 404:
+                                        this.router.navigateByUrl('/404-error');
+                                        break;
+                                    case 401:
+                                        this.router.navigateByUrl('/notAuthorized-error');
+                                        break;
+                                    default:
+                                        this.router.navigateByUrl('/500-error');
+                                        break;
+                                }
+                            });
+                    });
+            });
+    }
 }
