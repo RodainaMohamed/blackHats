@@ -14,6 +14,7 @@ export class DirectMessagingComponent implements OnInit {
     private business: String;
     private thread: Object;
     private destID: String;
+    message: String;
 
 
     constructor(
@@ -64,9 +65,25 @@ export class DirectMessagingComponent implements OnInit {
                 this.directMessagingService.existingThread(this.user, this.business).subscribe(
                     (thread) => {
                         this.thread = thread.data;
+                        this.directMessagingService.addMessage(this.thread._id, this.message).subscribe(
+                            (data) => { },
+                            (err) => {
+                                switch (err.status) {
+                                    case 404:
+                                        this.router.navigateByUrl('/404-error');
+                                        break;
+                                    case 401:
+                                        this.router.navigateByUrl('/notAuthorized-error');
+                                        break;
+                                    default:
+                                        this.router.navigateByUrl('/500-error');
+                                        break;
+                                }
+                            }
+                        )
                     },
                     (err) => {
-                        this.directMessagingService.newThread(this.destID).subscribe(
+                        this.directMessagingService.newThread(this.destID, this.message).subscribe(
                             (thread) => {
                                 this.thread = thread.data;
                             },

@@ -17,9 +17,21 @@ export class DirectMessagingService {
         return this.http.post('http://localhost:8080/api/thread/findExistingThread', body, { headers: headers }).map(res => res.json());
     }
 
-    newThread(destID) {
+    newThread(destID, message) {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
+      let body = {
+        message: message
+      }
       return this.http.post('http://localhost:8080/api/api/thread/add/' + destID, { headers: headers }).map(res => res.json());
+    }
+
+    addMessage(threadID, message){
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      let body = {
+        content: message
+      }
+      return this.http.post('http://localhost:8080/api//thread/addMessage/' + threadID, body, { headers: headers }).map(res => res.json());
     }
 }
