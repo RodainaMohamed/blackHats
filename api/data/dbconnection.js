@@ -45,3 +45,5 @@ require("./tempUser.model");
 require("./advBooking.model");
 require("./advSlot.model");
 require("./supportRequest.model");
+require("./thread.model");
+require("./message.model");

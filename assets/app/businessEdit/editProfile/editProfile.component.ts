@@ -44,6 +44,7 @@ export class EditProfileComponent implements OnInit {
     //warnings
     descriptionRequired = false;
     nameRequired = false;
+    depositRequired = false;
 
 
     constructor(
@@ -131,8 +132,14 @@ export class EditProfileComponent implements OnInit {
         else {
             this.descriptionRequired = false;
         }
+        if(this.depositFlag && (!this.deposit || this.deposit == 0)) {
+          this.depositRequired = true;
+        }
+        else {
+          this.depositRequired = false;
+        }
 
-        if (!this.descriptionRequired || !this.nameRequired) {
+        if (!this.descriptionRequired && !this.nameRequired && !this.depositRequired) {
             let workingHours = {
                 from: this.workingFrom,
                 to: this.workingTo
@@ -232,6 +239,10 @@ export class EditProfileComponent implements OnInit {
 
     hideNameWarning() {
         this.nameRequired = false;
+    }
+
+    hideDepositWarning() {
+      this.depositRequired = false;
     }
 
 }

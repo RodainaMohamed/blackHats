@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Booking"
 	}],
+	threads: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Thread"
+	}],
 	admin: {
 		type: Boolean,
 		default: false
