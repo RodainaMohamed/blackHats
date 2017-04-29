@@ -29,7 +29,7 @@ export class EditUserProfileComponent implements OnInit {
 
 
     path: String = "";
-    userId: String = ""; //58f252bd9037f62725ddf62c";
+    userId: String = "";
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -117,7 +117,7 @@ export class EditUserProfileComponent implements OnInit {
 
         this.editProfileService.editUserProfile(this.firstName, this.lastName, this.birthDate).subscribe(
             (data) => {
-                location.reload();
+                bootbox.alert("Profile Updated.");
             }, (err) => {
                 switch (err.status) {
                     case 404:
@@ -132,9 +132,6 @@ export class EditUserProfileComponent implements OnInit {
                 }
             }
         );
-
-        //refresh
-
     }
 
 
@@ -160,7 +157,7 @@ export class EditUserProfileComponent implements OnInit {
                 if (result) {
                     _this.editProfileService.deleteAccount().subscribe(
                         (data) => {
-                            _this.router.navigateByUrl('/');
+                            _this.router.navigateByUrl('/homepage');
                         },
                         (err) => {
                             switch (err.status) {
@@ -182,4 +179,7 @@ export class EditUserProfileComponent implements OnInit {
         });
     }
 
+    cancel() {
+        this.initialise();
+    }
 }

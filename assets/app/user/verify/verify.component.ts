@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VerifyService } from './verify.service';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
@@ -51,7 +51,11 @@ export class VerifyComponent implements OnInit {
     onVerifyUser() {
 
         this.verifyService.confirmId(this.userId).subscribe(
-            (data) => { },
+            (data) => {
+                bootbox.alert("You verified your account successfully.", () => {
+                    this.router.navigateByUrl("/homepage");
+                });
+            },
             (err) => {
                 switch (err.status) {
                     case 404:

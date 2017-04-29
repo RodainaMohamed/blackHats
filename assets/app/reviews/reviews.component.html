@@ -4,7 +4,7 @@
 
     <!-- start Main Wrapper -->
 
-    <div class="main-wrapper scrollspy-container">
+    <div class="main-wrapper scrollspy-container" style="background-color: white;">
 
         <div class="blog-item" style="height: 300pt; margin-bottom: 0;">
 
@@ -46,182 +46,176 @@
                 <!-- /.carousel -->
             </div>
         </div>
+    </div>
+    <div class="user-profile-wrapper">
 
-        <div class="user-profile-wrapper">
+        <div class="user-header">
 
-            <div class="user-header">
+            <div class="content">
 
-                <div class="content">
+                <div class="content-top">
 
-                    <div class="content-top">
+                    <div class="container">
 
-                        <div class="container">
+                        <div class="inner-top">
 
-                            <div class="inner-top">
+                            <div class="image" *ngIf="loadDone">
 
-                                <div class="image" *ngIf="loadDone">
-                                    
-                                    <img *ngIf="!logo" src="{{path}}image/businessLogos/x" alt="image" style="margin: auto; height: 105px; width: auto;" />
-                                    <img *ngIf="logo" src="{{path}}image/businessLogos/{{logo}}" alt="image" style="margin: auto; height: 105px; width: auto;" />
+                                <img *ngIf="!logo" src="{{path}}image/businessLogos/x" alt="image" style="margin: auto; height: 105px; width: auto;" />
+                                <img *ngIf="logo" src="{{path}}image/businessLogos/{{logo}}" alt="image" style="margin: auto; height: 105px; width: auto;"
+                                />
+                            </div>
+
+                            <div class="GridLex-gap-20">
+
+                                <div class="GridLex-grid-noGutter-equalHeight GirdLex-grid-bottom">
+
+                                    <div class="GridLex-col-7_sm-12_xs-12_xss-12">
+
+                                        <div class="GridLex-inner">
+                                            <div class="heading clearfix">
+                                                <h3><a routerLink="/business/{{businessId}}">{{businessName}}</a></h3>
+                                            </div>
+                                            <ul class="user-meta">
+                                                <li><i *ngIf="addressAvailable" class="fa fa-map-marker"></i> {{businessAddress}}
+                                                    <i *ngIf="phoneNumbersAvailable" class="fa fa-phone"></i> {{businessPhoneNumbers}}</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="GridLex-gap-20">
+                    </div>
 
-                                    <div class="GridLex-grid-noGutter-equalHeight GirdLex-grid-bottom">
+                </div>
 
-                                        <div class="GridLex-col-7_sm-12_xs-12_xss-12">
+            </div>
 
-                                            <div class="GridLex-inner">
-                                                <div class="heading clearfix">
-                                                    <h3><a routerLink="/business/{{businessId}}">{{businessName}}</a></h3>
+        </div>
+
+    </div>
+
+    <div class="pt-30 pb-50">
+
+        <div class="container">
+            <div class="row">
+                <br>
+                <br>
+                <div *ngIf="userLoggedIn" id="review-form" class="review-form">
+
+                    <form class="">
+
+                        <!--<div class="row">-->
+
+
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <h3 class="review-form-title">Leave Your Review</h3>
+                            <div class="form-group">
+                                <label>Rating:</label>
+                                <rating [(ngModel)]="addRating" name="addRating" [titles]="false"></rating>
+                                <div *ngIf="addRatingWarning" class="alert alert-danger alert-dismissable" style="margin-top: 15pt;">
+                                    <a class="close" (click)="hideRatingWarning()" aria-label="close">&times;</a> Please
+                                    choose a rating!
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="clear"></div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+
+                            <div class="form-group">
+                                <label>Your Review: </label>
+                                <textarea style="resize: none;" [(ngModel)]="addComment" name="addComment" class="form-control form-control-sm" placeholder="Maximum 100 characters"
+                                    maxlength="100" rows="4"></textarea>
+                                <div *ngIf="addCommentWarning" class="alert alert-danger alert-dismissable">
+                                    <a class="close" (click)="hideCommentWarning()" aria-label="close">&times;</a> Please
+                                    write a review!
+                                </div>
+                            </div>
+                            <div class="clear mb-5"></div>
+
+                            <a class="btn btn-primary btn-lg" (click)=submitReview()>Submit</a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="pt-30 pb-50">
+
+                        <div class="review-wrapper">
+
+                            <div class="review-header">
+
+                                <div class="GridLex-gap-30">
+
+                                    <div class="GridLex-grid-noGutter-equalHeight GridLex-grid-middle">
+
+                                        <div class="GridLex-col-9_sm-8_xs-12_xss-12">
+
+                                            <div class="review-rating">
+                                                <div class="number">{{rating}}</div>
+                                                <div class="rating-wrapper">
+                                                    <rating [(ngModel)]="rating" [readonly]="true" [float]="true" [titles]="false"></rating>
+                                                    {{reviews.length}} reviews
                                                 </div>
-                                                <ul class="user-meta">
-                                                    <li><i *ngIf="addressAvailable" class="fa fa-map-marker"></i> {{businessAddress}}
-                                                        <span class="mh-5 text-muted">|</span> <i *ngIf="phoneNumbersAvailable"
-                                                            class="fa fa-phone"></i> {{businessPhoneNumbers}}</li>
-                                                    <li>
-                                                        <a *ngIf="userLoggedIn && !favorited" class="btn btn-primary btn-xs btn-border" (click)=addFavorite()>Favorite</a>
-                                                        <p *ngIf="userLoggedIn && favorited" style="color: coral;">Favorited</p>
-                                                    </li>
-                                                </ul>
                                             </div>
 
                                         </div>
 
                                     </div>
+
                                 </div>
+
+                            </div>
+
+                            <div class="review-content">
+
+                                <ul class="review-list">
+
+                                    <li class="clearfix" *ngFor="let review of reviews; let i = index">
+
+                                        <div class="row">
+
+                                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                                <div class="review-header">
+                                                    <h6><a routerLink="/user/{{review.user._id}}">{{review.user.firstName + " " + review.user.lastName}}</a></h6>
+                                                    <span class="review-date">{{review.time | date:'hh:mm - MMM d, y'}}</span>
+
+                                                    <div class="rating-item">
+                                                        <rating [(ngModel)]="review.rating" [readonly]="true" [float]="true" [titles]="false"></rating>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-9" style="padding-right: 50px;">
+                                                <div class="review-replied">
+                                                    <div class="review-content">
+
+                                                        <h4>{{review.comment}}</h4>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </li>
+
+                                </ul>
+
                             </div>
 
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
-        <div *ngIf="userLoggedIn" id="review-form" class="review-form" style="padding-top: 150px; padding-left: 100px; padding-right: 250px; padding-bottom: 50px;">
-
-            <h3 class="review-form-title">Leave Your Review</h3>
-
-            <form class="">
-
-                <div class="row">
-
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="form-group" style="width: 200pt;">
-                                    <label>Rating:</label>
-                                    <rating [(ngModel)]="addRating" name="addRating" [titles]="false"></rating>
-                                    <div *ngIf="addRatingWarning" class="alert alert-danger alert-dismissable" style="margin-top: 15pt;">
-                                        <a class="close" (click)="hideRatingWarning()" aria-label="close">&times;</a> Please
-                                        choose a rating!
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="clear"></div>
-
-                    <div class="col-sm-12 col-md-12">
-
-                        <div class="form-group" style="padding-left: 15px;">
-                            <label>Your Review: </label>
-                            <textarea style="resize: none;" [(ngModel)]="addComment" name="addComment" class="form-control form-control-sm" placeholder="Maximum 100 characters"
-                                maxlength="100" rows="4" style="width: 400pt;"></textarea>
-                            <div *ngIf="addCommentWarning" class="alert alert-danger alert-dismissable" style="width: 400pt; margin-top: 15pt;">
-                                <a class="close" (click)="hideCommentWarning()" aria-label="close">&times;</a> Please write
-                                a review!
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="clear mb-5"></div>
-
-                    <div class="col-sm-12 col-md-8">
-                        <a class="btn btn-primary btn-lg" (click)=submitReview()>Submit</a>
-                    </div>
-
-                </div>
-
-            </form>
-
-        </div>
-
     </div>
-    <br>
-    <div class="review-wrapper" style="padding-top: 50px; padding-left: 100px; padding-right: 250px; margin-bottom: 200pt;">
-
-        <div class="review-header">
-
-            <div class="GridLex-gap-30">
-
-                <div class="GridLex-grid-noGutter-equalHeight GridLex-grid-middle">
-
-                    <div class="GridLex-col-9_sm-8_xs-12_xss-12">
-
-                        <div class="review-rating">
-                            <div class="number">{{rating}}</div>
-                            <div class="rating-wrapper">
-                                <rating [(ngModel)]="rating" [readonly]="true" [float]="true" [titles]="false"></rating>
-                                {{reviews.length}} reviews
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="review-content">
-
-            <ul class="review-list">
-
-                <li class="clearfix" *ngFor="let review of reviews; let i = index">
-
-                    <div class="row">
-
-                        <div class="col-xs-12 col-sm-12 col-md-3">
-                            <div class="review-header">
-                                <h6><a routerLink="/user/{{review.user._id}}">{{review.user.firstName + " " + review.user.lastName}}</a></h6>
-                                <span class="review-date">{{review.time | date:'hh:mm - MMM d, y'}}</span>
-
-                                <div class="rating-item">
-                                    <rating [(ngModel)]="review.rating" [readonly]="true" [float]="true" [titles]="false"></rating>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-9" style="padding-right: 50px;">
-                            <div class="review-replied">
-                                <div class="review-content">
-
-                                    <h4>{{review.comment}}</h4>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-
 </div>
-
 <!-- end Container Wrapper -->
