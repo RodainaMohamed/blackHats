@@ -482,43 +482,54 @@ module.exports.getUnreadCount = function (req, res) {
 // api/thread/getThreads/:userId
 module.exports.getThreads = function (req, res) {
     if (req.user.constructor.modelName === "User") {
-        User.findById(req.params.userId)
-            .populate({
-                path: 'threads'
-            }).exec(function (err, threads) {
-                if (err) return res.status(500).json({
+        Thread.find({
+            "user": req.params.userId
+        }).populate({
+            path: 'business',
+            select: 'name'
+        }).exec(function (err, threads) {
+            //If an error occurred, return an error
+            if (err) {
+                res.status(500).json({
                     error: err,
                     msg: "Error retrieving desired threads",
                     data: null
                 });
-                else {
-                    res.status(200).json({
-                        error: null,
-                        msg: "Threads retrieved Successfully",
-                        data: threads
-                    });
-                }
-            })
+            } else {
+                //returns an array of threads or empty array
+                res.status(200).json({
+                    error: null,
+                    msg: "Threads retrieved Successfully",
+                    data: threads
+                });
+            }
+        });
     } else {
-        Business.findById(req.params.userId)
-            .populate({
-                path: 'threads'
-            }).exec(function (err, threads) {
-                if (err) return res.status(500).json({
+        Thread.find({
+            "business": req.params.userId
+        }).populate({
+            path: 'user',
+            select: 'firstName lastName'
+        }).exec(function (err, threads) {
+            //If an error occurred, return an error
+            if (err) {
+                res.status(500).json({
                     error: err,
                     msg: "Error retrieving desired threads",
                     data: null
                 });
-                else {
-                    res.status(200).json({
-                        error: null,
-                        msg: "Threads retrieved Successfully",
-                        data: threads
-                    });
-                }
-            });
+            } else {
+                //returns an array of threads or empty array
+                res.status(200).json({
+                    error: null,
+                    msg: "Threads retrieved Successfully",
+                    data: threads
+                });
+            }
+        });
     }
 }
+
 
 // api/thread/getMessages/:threadId
 module.exports.getMessages = function (req, res) {
