@@ -4,6 +4,7 @@ import { BookAdvService } from "./bookAdv.service"
 import { AppService } from "../../app.service"
 import { Router } from '@angular/router';
 import { Http, Headers } from '@angular/http';
+import * as moment from 'moment/moment';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -46,7 +47,7 @@ export class BookAdvComponent implements OnInit {
                 this.advertisements = data.data;
                 let i = 0;
                 for (let advertisement of this.advertisements) {
-                    this.getFreeSlot(data.data[i]._id);
+                    this.getFreeSlot(data.data[i]._id, i);
                     i++;
                 }
             }, (err) => {
@@ -65,10 +66,10 @@ export class BookAdvComponent implements OnInit {
 
     }
 
-    getFreeSlot(index) {
+    getFreeSlot(index, i) {
         this.bookAdvService.getFreeSlot(index).subscribe(
             (data) => {
-                this.availableSlots.push(data.data);
+                this.availableSlots[i] = data.data;
             }, (err) => {
                 switch (err.status) {
                     case 404:
@@ -124,13 +125,15 @@ export class BookAdvComponent implements OnInit {
         if (!this.advImgWarning && !this.advNoOfDaysWarning) {
             this.startTimeValue = new Date(this.availableSlots[index]);
             this.endTimeValue = new Date();
-            this.endTimeValue.setDate(this.startTimeValue.getDate() + this.noOfDays[index]);
+            let end = moment(this.startTimeValue);
+            end.add(this.noOfDays[index], 'days');
+            this.endTimeValue = end.toDate();
 
             var handler = (<any>window).StripeCheckout.configure({
                 key: 'pk_test_9AEHvD0gXViwtKYQDpQcLXlY',
                 locale: 'auto',
                 currency: 'egp',
-                token: token => this.gotToken(token, advId)
+                token: token => this.gotToken(token, advId, index)
             });
 
             handler.open({
@@ -144,12 +147,15 @@ export class BookAdvComponent implements OnInit {
         }
     }
 
-    gotToken(token, advId) {
+    gotToken(token, advId, index) {
 
         this.appService.charge(token).subscribe(res => {
             this.bookAdvService.bookAdvSlot(this.startTimeValue, this.endTimeValue, this.advPicture, advId).subscribe(
                 (data) => {
                     bootbox.alert(data.msg);
+                    let tempDate = new Date(this.availableSlots[index]);
+                    tempDate.setDate(this.endTimeValue.getDate() + 1);
+                    this.availableSlots[index] = tempDate;
                 },
                 (err) => {
                     switch (err.status) {
