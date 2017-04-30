@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Activity } from '../businessEdit/activities/activity.model';
 import { Slot } from '../businessEdit/activities/slot.model';
-import {BusinessPageService} from './businessPage.service';
-import {BusinessService} from '../businessEdit/business.service';
+import { BusinessPageService } from './businessPage.service';
+import { BusinessService } from '../businessEdit/business.service';
 import { AppService } from "../app.service"
 
 
@@ -78,6 +78,7 @@ export class ActivityPageComponent implements OnInit {
                 }
             );
         });
+        $("#back-to-top").click();
     }
 
     updateSlots(event: Date) {

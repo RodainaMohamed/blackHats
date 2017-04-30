@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-policy',
   templateUrl: './policy.component.html'
 })
-export class PolicyComponent {
-
+export class PolicyComponent implements OnInit {
+  ngOnInit() {
+    $("#back-to-top").click();
+  }
 }

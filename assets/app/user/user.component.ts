@@ -117,7 +117,7 @@ export class UserComponent implements OnInit {
                         break;
                 }
             });
-
+        $("#back-to-top").click();
     }
 
     onReviewsClick() {

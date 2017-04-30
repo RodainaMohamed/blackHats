@@ -82,7 +82,6 @@ module.exports.bookAdvSlot = function (req, res) {
     const errors = req.validationErrors();
 
     if (errors) {
-        console.log(errors);
         res.status(500).json({
             error: errors,
             msg: "Incomplete Input",
@@ -92,7 +91,6 @@ module.exports.bookAdvSlot = function (req, res) {
         // check if advSlot exists
         AdvSlot.findById(req.params.advSlotId, function (err, slot) {
             if (err) {
-                console.log(1);
                 return res.status(500).json({
                     error: err,
                     msg: "Error Searching For Advertisement Slot",
@@ -118,7 +116,6 @@ module.exports.bookAdvSlot = function (req, res) {
                     newAdvBooking.save(function (err, booking) {
                         // If there is an error return it in response
                         if (err) {
-                            console.log(err);
                             return res.status(500).json({
                                 error: err,
                                 msg: "Error Adding the Booking",
@@ -138,7 +135,6 @@ module.exports.bookAdvSlot = function (req, res) {
                                 function (err, adv) {
                                     //If there is an error, return it in response
                                     if (err) {
-                                        console.log(3);
                                         return res.status(500).json({
                                             error: err,
                                             msg: "Error While Updating Advertisement Slot",
@@ -153,7 +149,6 @@ module.exports.bookAdvSlot = function (req, res) {
                                                 data: null
                                             });
                                         } else {
-                                            console.log(4);
                                             res.status(500).json({
                                                 error: null,
                                                 msg: "Booking was saved, however, it was not added to the schedule of the slot, slot was not found.",
@@ -280,7 +275,6 @@ module.exports.getFreeSlot = function (req, res) {
             data: null
         });
 
-        console.log(lastSlot.advSchedule[0]);
         var freeSlot = lastSlot.advSchedule[0];
 
         //if AdvSlot had no previous bookings, return current date
@@ -301,7 +295,6 @@ module.exports.getFreeSlot = function (req, res) {
             if (freeSlotx < Date.now()) {
                 freeSlotx = Date.now();
             }
-            console.log(freeSlotx);
             //return the first available date for booking
             return res.status(200).json({
                 error: null,

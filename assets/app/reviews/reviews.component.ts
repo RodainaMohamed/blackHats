@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ReviewsService} from './reviews.service';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { ReviewsService } from './reviews.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Headers } from '@angular/http';
 import { Review } from './reviews.model';
 import { AppService } from '../app.service';
@@ -48,6 +48,7 @@ export class ReviewsComponent implements OnInit {
 
     ngOnInit() {
         this.initialize();
+        $("#back-to-top").click();
     }
 
     initialize() {
@@ -220,9 +221,9 @@ export class ReviewsComponent implements OnInit {
                 }
             });
 
-         }
-         // else {
-             //error message
+        }
+        // else {
+        //error message
         // }
 
     }
