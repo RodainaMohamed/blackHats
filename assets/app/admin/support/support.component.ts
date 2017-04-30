@@ -21,6 +21,7 @@ export class SupportComponent implements OnInit {
     },
       err => {
         bootbox.alert(err.msg);
+        $('.modal-backdrop').css('z-index', '-1');
       });
   }
 
@@ -47,15 +48,19 @@ export class SupportComponent implements OnInit {
             bootbox.alert(msg, () => {
               location.reload();
             });
+            $('.modal-backdrop').css('z-index', '-1');
+
           },
             err => {
               bootbox.alert(err.msg, () => {
                 location.reload();
               });
+              $('.modal-backdrop').css('z-index', '-1');
             });
         }
       }
     });
+    $('.modal-backdrop').css('z-index', '-1');
   }
 
   rejectRequest(requestId: string) {
@@ -77,14 +82,17 @@ export class SupportComponent implements OnInit {
             bootbox.alert(msg, () => {
               location.reload();
             });
+            $('.modal-backdrop').css('z-index', '-1');
           },
             err => {
               bootbox.alert(err.msg, () => {
                 location.reload();
               });
+              $('.modal-backdrop').css('z-index', '-1');
             });
         }
       }
     });
+    $('.modal-backdrop').css('z-index', '-1');
   }
 };

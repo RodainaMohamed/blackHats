@@ -20,6 +20,7 @@ export class UnAssignAdminComponent implements OnInit {
         },
             err => {
                 bootbox.alert(err.msg);
+                $('.modal-backdrop').css('z-index', '-1');
             });
     }
 
@@ -46,11 +47,14 @@ export class UnAssignAdminComponent implements OnInit {
                         bootbox.alert(msg, () => {
                             location.reload();
                         });
+                        $('.modal-backdrop').css('z-index', '-1');
+
                     },
                         err => {
                             bootbox.alert(err.msg, () => {
                                 location.reload();
                             });
+                            $('.modal-backdrop').css('z-index', '-1');
                         });
                 }
             }

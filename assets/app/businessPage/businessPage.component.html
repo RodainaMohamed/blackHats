@@ -61,7 +61,8 @@
                             <div class="image" *ngIf="loadDone">
 
                                 <img *ngIf="!logo" src="{{path}}image/businessLogos/x" alt="image" style="height: 105px; width: auto; margin: auto;" />
-                                <img *ngIf="logo" src="{{path}}image/businessLogos/{{logo}}" alt="image" style="height: 105px; width: auto; margin: auto;" />
+                                <img *ngIf="logo" src="{{path}}image/businessLogos/{{logo}}" alt="image" style="height: 105px; width: auto; margin: auto;"
+                                />
                             </div>
 
                             <div class="GridLex-gap-20">
@@ -81,11 +82,18 @@
                                                         class="fa fa-phone"></i> {{phoneNumbers}}</li>
                                                 <li>
                                                     <a *ngIf="userLoggedIn && !favorited" class="btn btn-primary btn-xs btn-border" (click)=addFavorite()>Favorite</a>
-                                                    <label *ngIf="userLoggedIn && favorited" style="color: coral; font-weight: 400;"> This is one of your favorites!</label>
+                                                    <a *ngIf="userLoggedIn && favorited" class="btn btn-primary btn-xs" (click)=deleteFavorite()>Unfavorite</a>
                                                     <a *ngIf="userLoggedIn" routerLink="/business/{{businessId}}/reviews" class="btn btn-primary btn-xs btn-border">Rate and Review</a>
                                                 </li>
                                                 <li>
+                                                    <label *ngIf="userLoggedIn && favorited" style="color: coral; font-weight: 400;"> This is one of your favorites!</label></li>
+                                                <li>
+                                                    <a *ngIf="userLoggedIn" data-toggle="modal" href="#userMessageModal" class="btn btn-primary btn-xs btn-border">Message</a>
                                                 </li>
+                                                <li>
+                                                    <a *ngIf="userLoggedIn" routerLink="/business/{{businessId}}/reviews" class="btn btn-primary btn-xs btn-border">Rate and Review</a>
+                                                </li>
+
                                             </ul>
                                         </div>
 
@@ -351,5 +359,42 @@
         </div>
     </div>
     <!-- end Main Wrapper -->
+    <div id="userMessageModal" class="modal fade login-box-wrapper" style="background-color: #fff; border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);" tabindex="-1" data-width="550" data-backdrop="static" data-keyboard="false"
+        data-replace="true">
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="userMessageClose">&times;</button>
+            <h4 class="modal-title text-center">Send a message</h4>
+        </div>
+
+
+        <div class="modal-body">
+            <div class="row gap-20">
+                <div class="col-sm-12 col-md-12">
+
+                    <div class="form-group" style="padding-left: 15px;">
+                        <label>Your Message </label>
+                        <textarea style="resize: none;" [(ngModel)]="message" name="message" class="form-control form-control-sm" placeholder="Maximum 100 characters"
+                            maxlength="100" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-offset-8 col-md-offset-8 col-md-4 col-sm-4">
+                    <div class="user-login-box-link-action">
+                        <a data-toggle="modal" href="#userForgotPasswordModal" class="block line18 mt-1" (click)="onUserLoginCancel()">View Messages</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-footer text-center">
+            <button type="button" class="btn btn-primary" (click)="sendMessage()">Send</button>
+            <button type="button" data-dismiss="modal" class="btn btn-primary btn-border">Cancel</button>
+        </div>
+    </div>
 </div>
 <!-- end Container Wrapper -->

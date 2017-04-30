@@ -32,7 +32,7 @@
                                             </div>
                                             <ul class="user-meta">
                                                 <li> Email: {{email}}<span class="mh-5 text-muted"></span></li>
-                                                <li> Born: {{birthDate | date:'shortDate' }}<span class="mh-5 text-muted"></span></li>
+                                                <li *ngIf="birthDate"> Born: {{birthDate | date:'shortDate' }}<span class="mh-5 text-muted"></span></li>
                                                 <li> Joined: {{createdAt | date:'shortDate' }}<span class="mh-5 text-muted"></span></li>
 
 
@@ -88,20 +88,23 @@
             <div class="row">
 
                 <div *ngIf="showReviews" class="col-xs-12 col-sm-8 col-md-9 mt-20">
-                    <h2> Reviews </h2>
+                    <br>
                     <user-review></user-review>
                 </div>
 
                 <div *ngIf="showFavorites" class="col-xs-12 col-sm-8 col-md-9 mt-20">
+                    <br>
                     <app-user-favorites></app-user-favorites>
 
                 </div>
 
                 <div *ngIf="showBookings" class="col-xs-12 col-sm-8 col-md-9 mt-20">
+                    <br>
                     <app-user-bookings></app-user-bookings>
                 </div>
 
                 <div *ngIf="editProfile" class="col-xs-12 col-sm-8 col-md-9 mt-20">
+                    <br>
                     <app-editUserProfile (pictureChanged)="pictureChanged($event)"></app-editUserProfile>
                 </div>
 

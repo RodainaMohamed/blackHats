@@ -18,6 +18,7 @@ import { SomethingWrongComponent } from "./errors/500.component";
 import { ContactSupportComponent } from './contactSupport/contactSupport.component';
 import { ActivityPageComponent } from "./businessPage/activityPage.component";
 import { BusinessEditGuard } from "./businessEdit/businessEdit.guard";
+import { DirectMessagingComponent } from "./directMessaging/directMessaging.component";
 
 
 export const NON_ADMIN_ROUTES: Routes = [
@@ -38,5 +39,6 @@ export const NON_ADMIN_ROUTES: Routes = [
     { path: '404-error', component: FourofourComponent},
     { path: 'notAuthorized-error', component: NotAuthorizedErrorComponent},
     { path: '500-error', component: SomethingWrongComponent},
+    { path: 'chat' , component: DirectMessagingComponent },
     { path: '**',redirectTo:'/homepage'}
 ];

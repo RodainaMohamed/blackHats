@@ -22,6 +22,7 @@ export class ReviewComponent implements OnInit {
     },
       err => {
         bootbox.alert(err.msg);
+        $('.modal-backdrop').css('z-index', '-1');
       });
   }
 
@@ -48,17 +49,22 @@ export class ReviewComponent implements OnInit {
             bootbox.alert(msg, () => {
               location.reload();
             });
+            $('.modal-backdrop').css('z-index', '-1');
           },
             err => {
-              bootbox.alert(err.msg);
-              location.reload();
+              bootbox.alert(err.msg, () => {
+                location.reload();
+              });
+              $('.modal-backdrop').css('z-index', '-1');
             });
         }
       }
     });
+    $('.modal-backdrop').css('z-index', '-1');
   }
 
   viewBusiness(businessId: string) {
     this.router.navigate(['/business', businessId]);
+    location.reload();
   }
 };

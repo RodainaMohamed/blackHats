@@ -44,6 +44,7 @@ export class BusinessRegisterComponent {
         this.descriptionRequired = false;
         this.identicalPasswords = false;
         this.emailRequired = false;
+        this.failure = false;
 
         /*
         Calling the signUp function from the service to handle the Business Application operation
@@ -118,6 +119,9 @@ export class BusinessRegisterComponent {
                     this.success = false;
                     this.failure = true;
                     this.message = error.error.msg;
+                    setTimeout(() => {
+                      this.failure = false;
+                    }, 10000);
                 });
         }
     };

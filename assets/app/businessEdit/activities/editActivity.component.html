@@ -46,6 +46,10 @@
 									<div class="col-xs-12 col-sm-12">
 
 										<div class="form-group form-group-lg">
+											<div *ngIf="nameWarning" class="alert alert-danger alert-dismissable">
+													<a class="close" (click)="hideNameWarning()" aria-label="close">&times;</a> Please
+													Activity must have a name!
+											</div>
 											<label>Activity name:</label>
 											<input type="text" class="form-control" [(ngModel)]="name" name="name" required/>
 										</div>
@@ -53,6 +57,11 @@
 									</div>
 
 									<div class="col-xs-12 col-sm-5 col-md-5">
+										<div *ngIf="priceWarning" class="alert alert-danger alert-dismissable">
+												<a class="close" (click)="hidePriceWarning()" aria-label="close">&times;</a> Please
+												You must specify a price for the Activity!
+										</div>
+
 										<label>Price:</label>
 										<div class="input-group mb-15">
 											<input class="form-control" type="number" min="0" [(ngModel)]="price" name="price" required>
@@ -64,6 +73,10 @@
 										<div class="row gap-20">
 											<div class="col-xsw-12 col-xs-6 col-sm-6 col-md-6">
 												<div class="form-group">
+														<div *ngIf="perSlotWarning" class="alert alert-danger alert-dismissable">
+																<a class="close" (click)="hidePerSlotWarning()" aria-label="close">&times;</a> Please
+																You must specify a number of bookings per slot!
+														</div>
 													<label>Bookings per slot?</label>
 													<input type="number" min="1" class="form-control" [(ngModel)]="perSlot" name="perSlot" />
 												</div>
@@ -75,6 +88,10 @@
 									<div class="col-xs-12 col-sm-12">
 
 										<div class="form-group">
+											<div *ngIf="descriptionWarning" class="alert alert-danger alert-dismissable">
+													<a class="close" (click)="hideDescriptionWarning()" aria-label="close">&times;</a> Please
+													Activity must have a description!
+											</div>
 											<label>Brief Description:</label>
 											<textarea style="resize: none;" class="form-control" rows="5" type="text" [(ngModel)]="description" name="description" required></textarea>
 										</div>

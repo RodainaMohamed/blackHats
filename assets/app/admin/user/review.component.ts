@@ -22,6 +22,7 @@ export class ReviewComponent implements OnInit {
       },
         err => {
           bootbox.alert(err.msg);
+          $('.modal-backdrop').css('z-index', '-1');
         })
     });
   }
@@ -49,18 +50,22 @@ export class ReviewComponent implements OnInit {
             bootbox.alert(msg, () => {
               location.reload();
             });
+            $('.modal-backdrop').css('z-index', '-1');
           },
             err => {
               bootbox.alert(err.msg, () => {
                 location.reload();
               });
+              $('.modal-backdrop').css('z-index', '-1');
             });
         }
       }
     });
+    $('.modal-backdrop').css('z-index', '-1');
   }
 
   viewUser(userId: string) {
     this.router.navigate(['/user', userId]);
+    location.reload();
   }
 };

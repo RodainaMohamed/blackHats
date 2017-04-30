@@ -444,6 +444,7 @@ module.exports.searchByLocationAndCategory = function (req, res) {
 
         //get ip address of the client that made the request
         var ip = req.ip;
+        console.log(ip);
 
         //reformat the provided ip to be in a proper pattern
         ip = ip.split(',')[0];

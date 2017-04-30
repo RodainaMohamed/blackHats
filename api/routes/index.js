@@ -14,9 +14,10 @@ const passwordCtrl = require('../controllers/resetPassword.controller');
 const supportCtrl = require('../controllers/support.controller');
 const imagesCtrl = require("../controllers/images.controller");
 const paymentCtrl = require("../controllers/payment.controller");
+const messageCtrl = require("../controllers/message.controller");
 
 
-module.exports = function (passportConfig) {
+module.exports = function(passportConfig) {
     var authenticateUser = passportConfig.passport.authenticate('local-user', {
         successRedirect: '/api/successLogin',
         failureRedirect: '/api/failedLogin',
@@ -130,6 +131,19 @@ module.exports = function (passportConfig) {
     //Advertisement routes
     router.route('/advertisement/bookAdvSlot/:advSlotId').post(passportConfig.isBusinessLoggedIn, advCtrl.bookAdvSlot);
     router.route('/advertisement/addAdvPhoto').post(passportConfig.isBusinessLoggedIn, advCtrl.uploadAdv);
+
+    //Direct Messaging routes
+    router.route('/thread/add/:id').post(passportConfig.isLoggedIn, messageCtrl.createThread);
+    router.route('/thread/addMessage/:threadId').post(passportConfig.isLoggedIn, messageCtrl.addMessage);
+    router.route('/thread/markRead/:threadId').put(passportConfig.isLoggedIn, messageCtrl.markRead);
+    router.route('/thread/deleteThread/:threadId').delete(passportConfig.isLoggedIn, messageCtrl.deleteThread);
+    router.route('/thread/deleteMessage/:messageId').delete(passportConfig.isLoggedIn, messageCtrl.deleteMessage);
+    router.route('/thread/getUnread/:userId').get(passportConfig.isLoggedIn, messageCtrl.getUnreadCount);
+    router.route('/thread/getThreads/:userId').get(passportConfig.isLoggedIn, messageCtrl.getThreads);
+    router.route('/thread/getMessages/:threadId').get(passportConfig.isLoggedIn, messageCtrl.getMessages);
+    router.route('/thread/findExistingThread').post(passportConfig.isLoggedIn, messageCtrl.findExistingThread);
+
+
 
     return router;
 };
