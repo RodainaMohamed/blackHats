@@ -1,6 +1,6 @@
-import { Component, OnInit, NgModule  } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { DirectMessagingService } from './directMessaging.service';
-import {Http, Headers } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from '../app.service';
 
@@ -16,6 +16,10 @@ export class DirectMessagingComponent implements OnInit {
     private thread: Object;
     private destID: String;
     message: String;
+    private threads: [Object];
+    private messages: [Object];
+    private isUser: boolean = true;
+    private srcID: string;
 
 
     constructor(
@@ -26,7 +30,33 @@ export class DirectMessagingComponent implements OnInit {
         private route: ActivatedRoute
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.appService.getCurrentUser().subscribe(
+            (user) => {
+                if (user.constructor.name === "User") {
+                    this.srcID = user.data._id;
+                    this.isUser = true;
+                }
+                else {
+                    this.srcID = user.data._id;
+                    this.isUser = false;
+                }
+                this.getThreads();
+            },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            });
+    }
 
     sendMessage() {
 
@@ -103,5 +133,83 @@ export class DirectMessagingComponent implements OnInit {
                             });
                     });
             });
+    }
+
+    getThreads() {
+        this.directMessagingService.getThreads(this.srcID).subscribe(
+            (threads) => {
+                this.threads = threads.data;
+            },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            });
+    }
+
+    getMessages(threadID) {
+        this.directMessagingService.getMessages(threadID).subscribe(
+            (messages) => {
+                this.messages = messages.data;
+            },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            });
+    }
+
+    deleteThread(threadID) {
+        this.directMessagingService.deleteThread(threadID).subscribe(
+            (data) => { },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            }
+        )
+    }
+
+    deleteMessage(messageID) {
+        this.directMessagingService.deleteMessage(messageID).subscribe(
+            (data) => { },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            }
+        )
     }
 }
