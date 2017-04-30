@@ -111,7 +111,8 @@ export class BusinessRegisterComponent {
                 (data) => {
                     this.success = true;
                     setTimeout(() => {
-                        // location.reload();
+                        this.success = false;
+                        $("#businessRegisterClose").click();
                     }, 5000);
                 },
                 (error) => {

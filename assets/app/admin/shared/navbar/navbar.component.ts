@@ -13,6 +13,7 @@ export class NavbarComponent {
   logout() {
     this.adminService.logout().subscribe(response => {
       this.router.navigateByUrl('/');
+      location.reload();
     });
   }
 };

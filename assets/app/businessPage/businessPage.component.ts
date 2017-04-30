@@ -223,7 +223,7 @@ export class BusinessPageComponent implements OnInit {
 
             this.businessPageService.updateInteractivity(this.businessId).subscribe(
                 (info) => {
-
+                    
                 }, (err) => {
                     switch (err.status) {
                         case 404:
@@ -270,6 +270,43 @@ export class BusinessPageComponent implements OnInit {
                         break;
                 }
             });
+    }
+
+    deleteFavorite() {
+        bootbox.confirm({
+            title: "Delete Favorite",
+            message: "Are you sure you want to remove this business from your favorites?",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancel'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Confirm'
+                }
+            },
+            callback: (result) => {
+                if (result) {
+                    this.businessPageService.deleteFavorite(this.businessId).subscribe(
+                        (data) => {
+                            this.favorited = false;
+                        },
+                        (err) => {
+                            switch (err.status) {
+                                case 404:
+                                    this.router.navigateByUrl('/404-error');
+                                    break;
+                                case 401:
+                                    this.router.navigateByUrl('/notAuthorized-error');
+                                    break;
+                                default:
+                                    this.router.navigateByUrl('/500-error');
+                                    break;
+                            }
+                        }
+                    );
+                }
+            }
+        });
     }
 
     truncate(text) {

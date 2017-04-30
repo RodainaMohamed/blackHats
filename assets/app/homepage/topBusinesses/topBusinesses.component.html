@@ -1,4 +1,4 @@
-<div class="container pt-70 pb-60 clearfix">
+<div *ngIf="businesses.length > 0" class="container pt-70 pb-60 clearfix">
 
 	<div class="row">
 
@@ -24,8 +24,8 @@
 					<div class="top-destination-item">
 						<a routerLink="/business/{{business.businessId}}">
 							<div class="image">
-								<img *ngIf="!business.logo" src="http://localhost:8080/api/image/businessLogos/x" alt="images" />
-								<img *ngIf="business.logo" src="http://localhost:8080/api/image/businessLogos/{{business.logo}}" alt="images" />
+								<img *ngIf="!business.logo" src="http://localhost:8080/api/image/businessLogos/x" alt="images" style="height: 350px;"/>
+								<img *ngIf="business.logo" src="http://localhost:8080/api/image/businessLogos/{{business.logo}}" alt="images" style="height: 350px;"/>
 							</div>
 							<h4 class="uppercase"><span>{{business.name}}</span></h4>
 						</a>

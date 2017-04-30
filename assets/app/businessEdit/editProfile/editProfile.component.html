@@ -7,8 +7,8 @@
 		<div class="form-group bootstrap-fileinput-style-01">
 			<label>Logo</label>
 			<br>
-			<img *ngIf="!logo" class='img-circle' src="{{path}}x" alt="Business Logo" style="width:200px;height:200px">
-			<img *ngIf="logo" class='img-circle' src="{{path}}{{logo}}" alt="Business Logo" style="width:200px;height:200px">
+			<img *ngIf="!logo" class='img-circle' src="{{path}}x" alt="Business Logo" style="width:200px;height:200px; margin:auto;">
+			<img *ngIf="logo" class='img-circle' src="{{path}}{{logo}}" alt="Business Logo" style="width:200px;height:200px; margin: auto;">
 			<br>
 			<div class="form-horizontal">
 				<div class="form-group">
@@ -85,20 +85,6 @@
 	</div>
 
 	<div class="clear"></div>
-
-	<!-- <div class="form-horizontal"> -->
-	<!-- <div class="form-group"> -->
-	<!-- <label class="col-sm-3 col-md-2 control-label">Required payment</label> -->
-	<!-- <div class="col-sm-5 col-md-5">
-							<select class="selectpicker show-tick form-control" data-live-search="false" [(ngModel)]="payFmentRequired" name="paymentRequired">
-								<option value="1">Full payment</option>
-								<option value="2">Deposit</option>
-								<option value="3" selected>No payment</option>
-							</select>
-						</div> -->
-
-	<!-- </div> -->
-	<!-- </div> -->
 
 	<div class="form-horizontal">
 		<div class="form-group">
