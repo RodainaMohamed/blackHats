@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const geoip = require('geoip-lite');
+const publicIp = require('public-ip');
 const randtoken = require('rand-token');
 const emailSender = require('../config/emailSender');
 const bcrypt = require('bcryptjs');
@@ -218,7 +219,9 @@ module.exports.deleteAccount = function (req, res) {
             });
         else {
             req.logout();
-            res.status(200).json({success: true});
+            res.status(200).json({
+                success: true
+            });
         }
     });
 };
@@ -442,47 +445,82 @@ module.exports.searchByLocationAndCategory = function (req, res) {
         var lat = 0;
         var lng = 0;
 
-        //get ip address of the client that made the request
-        var ip = req.ip;
-        console.log(ip);
+        publicIp.v4().then(ip => {
+            //look up ip address location
+            var geo = geoip.lookup(ip);
+            //check if the ip provided valid and has a location
+            if (geo) {
+                lat = geo.ll[0];
+                lng = geo.ll[1];
+            }
 
-        //reformat the provided ip to be in a proper pattern
-        ip = ip.split(',')[0];
-        ip = ip.split(':').slice(-1)[0];
+            //if no category was chosen get by location nearby only
+            if (category === "All") {
+                findQuery = {
+                    verified: true,
+                    "location.coordinates": {
+                        $near: {
+                            $geometry: {
+                                type: "Point",
+                                coordinates: [lng, lat]
+                            },
 
-        /*the ip when testing in localhost will always be 127.0.0.1 but on the
-        deployed server it will work with real ips so to test put you real ip
-        address instead of the existing ip in lookup, you can get it from whatismyip.com
-        */
-
-        //look up ip address location
-        var geo = geoip.lookup(ip);
-
-        //check if the ip provided valid and has a location
-        if (geo) {
-            lat = geo.ll[0];
-            lng = geo.ll[1];
-        }
-
-        //if no category was chosen get by location nearby only
-        if (category === "All") {
-            findQuery = {
-                verified: true,
-                "location.coordinates": {
-                    $near: {
-                        $geometry: {
-                            type: "Point",
-                            coordinates: [lng, lat]
-                        },
-                        //max distance in metres, so this is 50 km
-                        $maxDistance: 50 * 1000
+                            //max distance in metres, so this is 50 km
+                            $maxDistance: 50 * 1000
+                        }
                     }
                 }
             }
-        }
 
-        //if category was chosen get by location nearby and category
-        else {
+            //if category was chosen get by location nearby and category
+            else {
+                findQuery = {
+                    verified: true,
+                    "category": {
+                        //is the category
+                        $regex: category,
+                        //Ignore whitespace characters and case insensitive
+                        $options: "ix"
+                    },
+                    "location.coordinates": {
+                        $near: {
+                            $geometry: {
+                                type: "Point",
+                                coordinates: [lng, lat]
+                            },
+                            //max distance in metres, so this is 50 km
+                            $maxDistance: 50 * 1000
+                        }
+                    }
+                }
+            }
+            Business.find(findQuery).sort(sort).select('-password').exec(function (err, businesses) {
+
+                //if an error occurred, return the error
+                if (err)
+                    res.status(500).json({
+                        error: err,
+                        msg: null,
+                        data: null
+                    });
+
+                //return the found businesses or an empty array
+                else {
+                    res.status(200).json({
+                        error: null,
+                        msg: null,
+                        data: businesses
+                    });
+                }
+            });
+        });
+    }
+
+    //if location was a regular city
+
+    //if location and category were chosen
+    else {
+        if (location !== "All" && category !== "All") {
             findQuery = {
                 verified: true,
                 "category": {
@@ -491,48 +529,6 @@ module.exports.searchByLocationAndCategory = function (req, res) {
                     //Ignore whitespace characters and case insensitive
                     $options: "ix"
                 },
-                "location.coordinates": {
-                    $near: {
-                        $geometry: {
-                            type: "Point",
-                            coordinates: [lng, lat]
-                        },
-                        //max distance in metres, so this is 50 km
-                        $maxDistance: 50 * 1000
-                    }
-                }
-            }
-        }
-    }
-
-    //if location was a regular city
-
-    //if location and category were chosen
-    else if (location !== "All" && category !== "All") {
-        findQuery = {
-            verified: true,
-            "category": {
-                //is the category
-                $regex: category,
-                //Ignore whitespace characters and case insensitive
-                $options: "ix"
-            },
-            "location.city": {
-                //Starts with or is the city
-                $regex: "^" + location,
-                //Ignore whitespace characters and case insensitive
-                $options: "ix"
-            }
-        };
-    }
-
-    //if nothing was chosen or only one was chosen
-    else if (location === "All" || category === "All") {
-
-        //if location was chosen
-        if (location !== "All") {
-            findQuery = {
-                verified: true,
                 "location.city": {
                     //Starts with or is the city
                     $regex: "^" + location,
@@ -542,47 +538,61 @@ module.exports.searchByLocationAndCategory = function (req, res) {
             };
         }
 
-        //if category was chosen
-        else if (category !== "All") {
-            findQuery = {
-                verified: true,
-                "category": {
-                    //is the category
-                    $regex: category,
-                    //Ignore whitespace characters and case insensitive
-                    $options: "ix"
-                }
-            };
-        }
+        //if nothing was chosen or only one was chosen
+        else if (location === "All" || category === "All") {
 
-        //if nothing was chosen return all
-        else
-            findQuery = {
-                verified: true,
-            };
+            //if location was chosen
+            if (location !== "All") {
+                findQuery = {
+                    verified: true,
+                    "location.city": {
+                        //Starts with or is the city
+                        $regex: "^" + location,
+                        //Ignore whitespace characters and case insensitive
+                        $options: "ix"
+                    }
+                };
+            }
+
+            //if category was chosen
+            else if (category !== "All") {
+                findQuery = {
+                    verified: true,
+                    "category": {
+                        //is the category
+                        $regex: category,
+                        //Ignore whitespace characters and case insensitive
+                        $options: "ix"
+                    }
+                };
+            }
+
+            //if nothing was chosen return all
+            else
+                findQuery = {
+                    verified: true,
+                };
+        }
+        Business.find(findQuery).sort(sort).select('-password').exec(function (err, businesses) {
+
+            //if an error occurred, return the error
+            if (err)
+                res.status(500).json({
+                    error: err,
+                    msg: null,
+                    data: null
+                });
+
+            //return the found businesses or an empty array
+            else {
+                res.status(200).json({
+                    error: null,
+                    msg: null,
+                    data: businesses
+                });
+            }
+        });
     }
-
-    //execute the query
-
-    Business.find(findQuery).sort(sort).select('-password').exec(function (err, businesses) {
-
-        //if an error occurred, return the error
-        if (err)
-            res.status(500).json({
-                error: err,
-                msg: null,
-                data: null
-            });
-
-        //return the found businesses or an empty array
-        else {
-            res.status(200).json({
-                error: null,
-                msg: null,
-                data: businesses
-            });
-        }
-    });
 };
 
 

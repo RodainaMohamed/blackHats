@@ -7,15 +7,15 @@ import { Router } from '@angular/router';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent {
+export class SearchComponent{
 
   constructor(private router: Router) { }
 
   searchClicked(result: string) {
-    this.router.navigate(['search'], { queryParams: { result: result, location: "undefined", category: "undefined"} });
+    this.router.navigate(['search'], { queryParams: { result: result } });
   }
 
   exploreClicked(location: string, category: string) {
-    this.router.navigate(['search'], { queryParams: { result: "undefined", location: location, category: category} });
+    this.router.navigate(['search'], { queryParams: { location: location, category: category } });
   }
 }

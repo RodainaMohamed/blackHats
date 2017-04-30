@@ -58,7 +58,7 @@ export class BusinessPageComponent implements OnInit {
 
     ngOnInit() {
         this.initialize();
-
+        $("#back-to-top").click();
     }
     initialize() {
         this.activatedRoute.params.subscribe((params: Params) => {
