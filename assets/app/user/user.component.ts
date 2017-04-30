@@ -57,12 +57,12 @@ export class UserComponent implements OnInit {
                             this.birthDate = data.user.birthDate;
                             this.createdAt = data.user.createdAt;
                             if (data.user.profilePicture != null) {
-                                this.path = "http://54.213.175.206:8080/api/image/profilePictures/";
+                                this.path = "http://localhost:8080/api/image/profilePictures/";
                                 this.profilePicture = data.user.profilePicture;
                             }
                             else {
                                 this.path = "";
-                                this.profilePicture = "http://54.213.175.206:8080/api/image/profilePictures/defaultpp.jpg";
+                                this.profilePicture = "http://localhost:8080/api/image/profilePictures/defaultpp.jpg";
                             }
                         }
 
@@ -79,12 +79,12 @@ export class UserComponent implements OnInit {
                                     this.birthDate = info.data.birthDate;
                                     this.createdAt = info.data.createdAt;
                                     if (info.data.profilePicture != null) {
-                                        this.path = "http://54.213.175.206:8080/api/image/profilePictures/";
+                                        this.path = "http://localhost:8080/api/image/profilePictures/";
                                         this.profilePicture = info.data.profilePicture;
                                     }
                                     else {
                                         this.path = "";
-                                        this.profilePicture = "http://54.213.175.206:8080/api/image/profilePictures/defaultpp.jpg";
+                                        this.profilePicture = "http://localhost:8080/api/image/profilePictures/defaultpp.jpg";
                                     }
 
                                 }, (err) => {
@@ -153,7 +153,7 @@ export class UserComponent implements OnInit {
     }
 
     pictureChanged(path: string) {
-        this.path = "http://54.213.175.206:8080/api/image/profilePictures/";
+        this.path = "http://localhost:8080/api/image/profilePictures/";
         this.profilePicture = path;
     }
 }

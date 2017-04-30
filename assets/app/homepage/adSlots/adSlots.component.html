@@ -24,8 +24,8 @@
 						<div class="top-destination-item">
 							<a routerLink="/business/{{bookingSlot.businessId}}">
 								<div class="image">
-									<img *ngIf="!bookingSlot.image" src="http://54.213.175.206:8080/api/image/businessLogos/x" alt="images" [ngStyle]="{'width': bookingSlot.length, 'height': bookingSlot.width}"/>
-									<img *ngIf="bookingSlot.image" src="http://54.213.175.206:8080/api/image/businessAds/{{bookingSlot.image}}" alt="images" [ngStyle]="{'width': bookingSlot.length, 'height': bookingSlot.width}"/>
+									<img *ngIf="!bookingSlot.image" src="http://localhost:8080/api/image/businessLogos/x" alt="images"/>
+									<img *ngIf="bookingSlot.image" src="http://localhost:8080/api/image/businessAds/{{bookingSlot.image}}" alt="images"/>
 								</div>
 							</a>
 
