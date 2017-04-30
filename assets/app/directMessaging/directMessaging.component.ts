@@ -6,7 +6,8 @@ import { AppService } from '../app.service';
 
 @Component({
     selector: 'app-directMessaging',
-    templateUrl: './directMessaging.component.html'
+    templateUrl: './directMessaging.component.html',
+    styleUrls: ['./directMessaging.component.css']
 })
 
 export class DirectMessagingComponent implements OnInit {

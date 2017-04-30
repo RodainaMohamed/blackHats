@@ -55,6 +55,7 @@ import { ContactSupportComponent } from './contactSupport/contactSupport.compone
 import { ActivityPageComponent } from "./businessPage/activityPage.component";
 import { AdminComponent } from './admin/admin.component';
 import { LoaderComponent } from './loader.component';
+import { DirectMessagingComponent } from './directMessaging/directMessaging.component';
 
 import { BusinessPageService } from "./businessPage/businessPage.service";
 import { ReviewsService } from "./reviews/reviews.service";
@@ -125,6 +126,7 @@ const DROPZONE_CONFIG: DropzoneConfigInterface = {
     FocusDirective,
     ContactSupportComponent,
     LoaderComponent,
+    DirectMessagingComponent,
     AdminComponent
   ],
   imports: [
