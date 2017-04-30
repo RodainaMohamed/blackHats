@@ -22,7 +22,7 @@
 						<a routerLink="/homepage" >Home</a>
 					</li>
 					<li>
-						<a routerLink="/search" [queryParams]="{result: undefined, location:'All', category: 'All'}">Explore</a>
+						<a routerLink="/search" [queryParams]="{location:'All', category: 'All'}">Explore</a>
 					</li>
 					<li *ngIf="loggedin && isUser">
 						<a routerLink="/user/{{user._id}}">Profile</a>

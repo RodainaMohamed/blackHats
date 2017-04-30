@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from "../user.service";
 import { AppService } from '../../app.service';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {UserComponent} from "../user.component";
+import { UserComponent } from "../user.component";
 
 
 @Component({
@@ -38,6 +38,7 @@ export class ReviewComponent implements OnInit {
 
     //hassaan:
     ngOnInit() {
+
         this.activatedRoute.params.subscribe(
             (params: Params) => {
                 this.userId = params['userId'];
@@ -92,8 +93,6 @@ export class ReviewComponent implements OnInit {
                         break;
                 }
             });
-
-
     }
 
     onDelete(i) {
@@ -109,14 +108,14 @@ export class ReviewComponent implements OnInit {
                     label: '<i class="fa fa-check"></i> Confirm'
                 }
             },
-            callback: function(result) {
+            callback: function (result) {
                 if (result) {
                     _this.editIndex = i;
                     _this.userService.deleteReview(_this.reviews[i]._id).subscribe(
                         (data) => {
                             _this.reviews.splice(i, 1);
                             _this.editing[i] = false;
-                            _this.count = _this.count -1;
+                            _this.count = _this.count - 1;
                         },
                         (err) => {
                             switch (err.status) {

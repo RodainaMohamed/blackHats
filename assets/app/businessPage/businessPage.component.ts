@@ -66,7 +66,7 @@ export class BusinessPageComponent implements OnInit {
 
     ngOnInit() {
         this.initialize();
-
+        $("#back-to-top").click();
     }
 
     initialize() {

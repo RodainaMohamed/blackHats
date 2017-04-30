@@ -53,7 +53,7 @@ export class ResetPasswordComponent implements OnInit {
                     }
                 });
             })
-
+        $("#back-to-top").click();
     }
 
     onResetPassword() {

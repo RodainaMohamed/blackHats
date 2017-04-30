@@ -22,6 +22,7 @@ export class VerifyComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        $("#back-to-top").click();
 
         this.route.params.subscribe(
             (params) => {

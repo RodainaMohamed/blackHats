@@ -28,6 +28,8 @@ export class SearchResultComponent implements OnInit, AfterViewChecked {
     ngOnInit() {
         this.getQueryParams();
         this.search();
+        $("#back-to-top").click();
+
     }
 
 
@@ -84,13 +86,13 @@ export class SearchResultComponent implements OnInit, AfterViewChecked {
 
     previous() {
         if (!(this.pageNumber < 1)) {
-            this.updatePage(this.pageNumber-1);
+            this.updatePage(this.pageNumber - 1);
         }
     }
 
     next() {
         if (this.pageNumber < this.pagingIndex.length) {
-            this.updatePage(this.pageNumber+1);
+            this.updatePage(this.pageNumber + 1);
         }
     }
 

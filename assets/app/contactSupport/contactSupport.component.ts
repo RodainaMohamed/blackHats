@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ContactSupportService } from './contactSupport.service';
 
 @Component({
@@ -7,7 +7,12 @@ import { ContactSupportService } from './contactSupport.service';
     templateUrl: './contactSupport.component.html'
 })
 
-export class ContactSupportComponent {
+export class ContactSupportComponent implements OnInit {
+
+    ngOnInit() {
+        $("#back-to-top").click();
+    }
+    
     constructor(private contactService: ContactSupportService, private router: Router) { }
 
     submitForm(title: string, contactEmail: string, contactPhoneNumber: string, accountType: string, registeredEmail: string, description: string) {
