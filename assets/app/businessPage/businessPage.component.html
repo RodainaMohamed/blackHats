@@ -81,7 +81,7 @@
                                                         class="fa fa-phone"></i> {{phoneNumbers}}</li>
                                                 <li>
                                                     <a *ngIf="userLoggedIn && !favorited" class="btn btn-primary btn-xs btn-border" (click)=addFavorite()>Favorite</a>
-                                                    <label *ngIf="userLoggedIn && favorited" style="color: coral; font-weight: 400;"> This is one of your favorites!</label>
+                                                    <a *ngIf="userLoggedIn && favorited" class="btn btn-primary btn-xs" (click)=deleteFavorite()>Unfavorite</a>
                                                     <a *ngIf="userLoggedIn" routerLink="/business/{{businessId}}/reviews" class="btn btn-primary btn-xs btn-border">Rate and Review</a>
                                                 </li>
                                                 <li>

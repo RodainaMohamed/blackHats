@@ -19,9 +19,10 @@ export class VerifyComponent implements OnInit {
     this.businessService.getUnverifiedBusinesses().subscribe(businesses => {
       this.businesses = businesses
     },
-    err => {
-      bootbox.alert(err.msg);
-    });
+      err => {
+        bootbox.alert(err.msg);
+        $('.modal-backdrop').css('z-index', '-1');
+      });
   }
 
   isLoading() {
@@ -47,11 +48,13 @@ export class VerifyComponent implements OnInit {
             bootbox.alert(msg, () => {
               location.reload();
             });
+            $('.modal-backdrop').css('z-index', '-1');
           },
             err => {
               bootbox.alert(err.msg, () => {
                 location.reload();
               });
+              $('.modal-backdrop').css('z-index', '-1');
             });
         }
       }
@@ -77,14 +80,17 @@ export class VerifyComponent implements OnInit {
             bootbox.alert(msg, () => {
               location.reload();
             });
+            $('.modal-backdrop').css('z-index', '-1');
           },
             err => {
               bootbox.alert(err.msg, () => {
                 location.reload();
               });
+              $('.modal-backdrop').css('z-index', '-1');
             });
         }
       }
     });
+    $('.modal-backdrop').css('z-index', '-1');
   }
 };

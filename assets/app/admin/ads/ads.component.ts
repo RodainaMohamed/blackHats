@@ -27,6 +27,7 @@ export class AdsComponent implements OnInit {
         bootbox.alert(err.msg, () => {
           location.reload();
         });
+        $('.modal-backdrop').css('z-index', '-1');
       });
   }
 
@@ -52,16 +53,21 @@ export class AdsComponent implements OnInit {
           this.adsService.deleteSlot(slotId).subscribe(msg => {
             bootbox.alert(msg, () => {
               location.reload();
-            })
+            });
+            $('.modal-backdrop').css('z-index', '-1');
+
           },
             err => {
               bootbox.alert(err.msg, () => {
                 location.reload();
               });
+              $('.modal-backdrop').css('z-index', '-1');
+
             });
         }
       }
     });
+    $('.modal-backdrop').css('z-index', '-1');
   }
 
   preventDefault(event: Event): void {
@@ -87,14 +93,17 @@ export class AdsComponent implements OnInit {
             bootbox.alert(msg, () => {
               location.reload();
             });
+            $('.modal-backdrop').css('z-index', '-1');
           },
             err => {
               bootbox.alert(err.msg, () => {
                 location.reload();
               });
+              $('.modal-backdrop').css('z-index', '-1');
             });
         }
       }
     });
+    $('.modal-backdrop').css('z-index', '-1');
   }
 };

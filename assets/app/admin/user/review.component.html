@@ -47,7 +47,7 @@
 
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-xs" [disabled]="isLoading()" (click)="viewUser(user._id)"><i class="fa fa-user"></i> View </button>
+                                                    <button *ngIf="user.verified" class="btn btn-primary btn-xs" [disabled]="isLoading()" (click)="viewUser(user._id)"><i class="fa fa-user"></i> View </button>
                                                     <button class="btn btn-danger btn-xs" [disabled]="isLoading()" (click)="deleteUser(user._id, user.verified)"><i class="fa fa-trash-o"></i> Suspend </button>
                                                 </td>
                                             </tr>
