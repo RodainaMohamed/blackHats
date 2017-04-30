@@ -50,6 +50,7 @@ export class RegisterComponent {
         this.passwordRequired = false;
         this.passwordLength = false;
         this.identicalPasswords = false;
+        this.failure = false;
 
 
         if (!this.firstName || this.firstName.length == 0) {
@@ -140,7 +141,9 @@ export class RegisterComponent {
                     this.success = false;
                     this.failure = true;
                     this.message = error.error.msg;
-                    // $("#userRegisterModal").scrollTop(0);
+                    setTimeout(() => {
+                      this.failure = false;
+                    }, 10000);
                 }
                 );
         }

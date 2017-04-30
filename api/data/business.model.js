@@ -49,6 +49,10 @@ const businessSchema = new mongoose.Schema({
     tags: [{
         type: String
     }],
+  	threads: [{
+  		type: mongoose.Schema.Types.ObjectId,
+  		ref: "Thread"
+  	}],
     category: {
         type: String
     },
