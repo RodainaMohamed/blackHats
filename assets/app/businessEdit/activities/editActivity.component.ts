@@ -32,9 +32,13 @@ export class EditActivityComponent implements OnInit {
     showFakeInput = false;
 
     //warning
-
+    nameWarning = false;
     addSlotWarning = false;
     warningMessage = "";
+    depositWarning = false;
+    descriptionWarning = false;
+    priceWarning = false;
+    perSlotWarning = false;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -101,6 +105,31 @@ export class EditActivityComponent implements OnInit {
     }
 
     onSave() {
+      if (!this.name || this.name.length == 0) {
+          this.nameWarning = true;
+      }
+      else {
+          this.nameWarning = false;
+      }
+      if (!this.description || this.description.length == 0) {
+          this.descriptionWarning = true;
+      }
+      else {
+          this.descriptionWarning = false;
+      }
+      if (!this.price || this.price == 0) {
+          this.priceWarning = true;
+      }
+      else {
+          this.priceWarning = false;
+      }
+      if (!this.perSlot || this.perSlot == 0) {
+          this.perSlotWarning = true;
+      }
+      else {
+          this.perSlotWarning = false;
+      }
+      if(!this.descriptionWarning && !this.nameWarning && !this.priceWarning && !this.perSlotWarning)
         this.activity.name = this.name;
         this.activity.description = this.description;
         this.activity.price = this.price;
@@ -212,54 +241,79 @@ export class EditActivityComponent implements OnInit {
     hideSlotWarning() {
         this.addSlotWarning = false;
     }
+    hideNameWarning() {
+      this.nameWarning = false;
+    }
+    hideDescriptionWarning() {
+      this.descriptionWarning = false;
+    }
+    hidePriceWarning() {
+      this.priceWarning = false;
+    }
+    hidePerSlotWarning(){
+      this.perSlotWarning = false;
+    }
 
     addSlot() {
         if (this.newStart && this.newEnd) {
-            let newSlot = new Slot(
-                this.newStart,
-                this.newEnd
-            )
-            this.businessService.addSlot(newSlot, this.activity).subscribe(
-                (data) => {
-                    this.activity.slots.push(newSlot);
-                    this.activity.slots.sort(function(a, b) {
-                        var one = b.startTime;
-                        var two = a.startTime;
-                        one.setDate(12);
-                        one.setMonth(12);
-                        one.setFullYear(2012);
-                        two.setDate(12);
-                        two.setMonth(12);
-                        two.setFullYear(2012);
-                        return this.two - this.one;
-                    });
-                    this.newStart = null;
-                    this.newEnd = null;
+            if (this.newStart > this.newEnd) {
+                this.warningMessage = "End Time has to be after the Start Time";
+                this.addSlotWarning = true;
+                setTimeout(() => {
                     this.addSlotWarning = false;
-                },
-                (err) => {
-                    switch (err.status) {
-                        case 405:
-                            this.warningMessage = "This slot overlaps another slot";
-                            this.addSlotWarning = true;
-                            break;
-                        case 404:
-                            this.router.navigateByUrl('/404-error');
-                            break;
-                        case 401:
-                            this.router.navigateByUrl('/notAuthorized-error');
-                            break;
-                        default:
-                            this.router.navigateByUrl('/500-error');
-                            break;
-                    }
-                });
+                }, 5000);
+            }
+            else {
+                let newSlot = new Slot(
+                    this.newStart,
+                    this.newEnd
+                )
+                this.businessService.addSlot(newSlot, this.activity).subscribe(
+                    (data) => {
+                        this.activity.slots.push(newSlot);
+                        this.activity.slots.sort(function(a, b) {
+                            var one = b.startTime;
+                            var two = a.startTime;
+                            one.setDate(12);
+                            one.setMonth(12);
+                            one.setFullYear(2012);
+                            two.setDate(12);
+                            two.setMonth(12);
+                            two.setFullYear(2012);
+                            return this.two - this.one;
+                        });
+                        this.newStart = null;
+                        this.newEnd = null;
+                        this.addSlotWarning = false;
+                    },
+                    (err) => {
+                        switch (err.status) {
+                            case 405:
+                                this.warningMessage = "This slot overlaps another slot";
+                                this.addSlotWarning = true;
+                                break;
+                            case 404:
+                                this.router.navigateByUrl('/404-error');
+                                break;
+                            case 401:
+                                this.router.navigateByUrl('/notAuthorized-error');
+                                break;
+                            default:
+                                this.router.navigateByUrl('/500-error');
+                                break;
+                        }
+                    });
+            }
         }
         else {
             this.warningMessage = "Please choose a start and end time";
             this.addSlotWarning = true;
+            setTimeout(() => {
+                this.addSlotWarning = false;
+            }, 5000);
         }
     }
+
 
     onUploadError(args: any) {
     }
