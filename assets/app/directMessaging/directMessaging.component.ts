@@ -21,11 +21,13 @@ export class DirectMessagingComponent implements OnInit {
     private isUser: boolean = true;
     private srcID: string;
 
+
     private currentThread: = {
       messages: []
     };
     private newMessage: String;
     private index = 0;
+    private noThreads = true;
 
 
     constructor(
@@ -133,7 +135,11 @@ export class DirectMessagingComponent implements OnInit {
             (threads) => {
                 this.threads = threads.data;
                 if(this.threads.length != 0){
+                  this.nothreads = false
                   this.currentThread = this.threads[0];
+                }
+                else{
+                  this.nothreads = true
                 }
             },
             (err) => {

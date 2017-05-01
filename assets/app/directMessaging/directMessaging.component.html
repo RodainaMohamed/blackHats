@@ -3,11 +3,18 @@
     <div class="main-wrapper scrollspy-container">
         <div class="main_section">
             <div class="container" style="padding-top: 50px; padding-bottom: 73px;">
-                <div class="chat_container">
+              <div *ngIf="noThreads">
+                <h1> You have no threads </h1>
+              </div>
+                <div *ngIf="!noThreads" class="chat_container">
                     <div class="col-sm-3 chat_sidebar">
                         <div class="row">
                             <div class="member_list">
                                 <ul class="list-unstyled">
+                                  <div *ngIf="noThreads">
+                                    <h1> No Threads </h1>
+                                  </div>
+                                  <div *ngIf="!noThreads">
                                     <li class="left clearfix" *ngFor="let thread of threads; let i = index" (click)="onClick(i)">
                                         <div *ngIf="isUser">
                                             <span *ngIf="thread.business.logo" class="chat-img pull-left">
@@ -35,6 +42,7 @@
                                             </div>
                                         </div>
                                     </li>
+                                  </div>
                                 </ul>
                             </div>
                         </div>
@@ -96,7 +104,7 @@
                             </ul>
                         </div>
                         <!--chat_area-->
-                        <div class="message_write">
+                        <div *ngIf="!noThreads" class="message_write">
                             <textarea style="resize: none;" [(ngModel)]="newMessage" name="newMessage" class="form-control" placeholder="Type a message"></textarea>
                             <div class="clearfix"></div>
                             <div class="chat_bottom">
