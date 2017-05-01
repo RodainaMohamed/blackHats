@@ -132,7 +132,9 @@ export class DirectMessagingComponent implements OnInit {
         this.directMessagingService.getThreads(this.srcID).subscribe(
             (threads) => {
                 this.threads = threads.data;
-                this.currentThread = this.threads[0];
+                if(this.threads.length != 0){
+                  this.currentThread = this.threads[0];
+                }
             },
             (err) => {
                 switch (err.status) {
