@@ -72,6 +72,7 @@ module.exports.addReview = function (req, res) {
 
     //Validating entries
     req.checkBody('rating', 'Rating is required.').notEmpty();
+    req.checkBody('comment', 'Comment is required.').notEmpty();
 
     var errors = req.validationErrors();
 
@@ -269,6 +270,7 @@ module.exports.editReview = function (req, res) {
 
     //Validating entries
     req.checkBody('rating', 'Rating is required.').notEmpty();
+    req.checkBody('comment', 'Comment is required.').notEmpty();
 
     var errors = req.validationErrors();
 

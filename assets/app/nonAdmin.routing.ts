@@ -39,6 +39,6 @@ export const NON_ADMIN_ROUTES: Routes = [
     { path: '404-error', component: FourofourComponent},
     { path: 'notAuthorized-error', component: NotAuthorizedErrorComponent},
     { path: '500-error', component: SomethingWrongComponent},
-    { path: 'chat' , component: DirectMessagingComponent },
+    // { path: 'chat' , component: DirectMessagingComponent },
     { path: '**',redirectTo:'/homepage'}
 ];

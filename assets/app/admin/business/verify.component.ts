@@ -59,6 +59,7 @@ export class VerifyComponent implements OnInit {
         }
       }
     });
+    $('.modal-backdrop').css('z-index', '-1');
   }
 
   rejectBusiness(businessId: string) {

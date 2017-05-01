@@ -41,7 +41,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Price <span class="required">*</span>
                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="price" required="required" placeholder="Price" class="form-control col-md-7 col-xs-12" [(ngModel)]='price' name="price">
+                                            <input id="price" required="required" placeholder="Price" class="form-control col-md-7 col-xs-12" [(ngModel)]='price' name="price" type="number" min="0">
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -49,7 +49,7 @@
                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="length" required="required" placeholder="Length" class="form-control col-md-7 col-xs-12" [(ngModel)]='length'
-                                                name="length">
+                                                name="length" type="number" min="50" max="350">
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -57,7 +57,7 @@
                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="width" id="width" required="required" placeholder="Width" class="form-control col-md-7 col-xs-12" [(ngModel)]='width'
-                                                name="width">
+                                                name="width" type="number" min="50" max="350">
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>

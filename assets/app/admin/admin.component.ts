@@ -1,15 +1,11 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'my-app-admin',
-    template: `<router-outlet></router-outlet>`,
+    template: `<div id="introLoader" class="introLoading"> <router-outlet></router-outlet>`,
     styleUrls: ['./admin.component.css']
 })
 
-export class AdminComponent implements AfterViewInit {
-    ngAfterViewInit() {
-        var s1 = document.createElement("script");
-        s1.src = "/admin/js/custom.min.js";
-        document.getElementsByTagName('body')[0].appendChild(s1);
-    }
+export class AdminComponent {
+    
 }

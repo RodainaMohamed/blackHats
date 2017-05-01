@@ -19,6 +19,10 @@ export class BusinessService {
                 const businesses = response.json().data;
                 let transformedBusinesses: Business[] = [];
                 for (let business of businesses) {
+                    if (!business.location)
+                        business.location = { city: "None" };
+                    else if(!business.location.city)
+                            business.location.city = "None";    
                     transformedBusinesses.push(new Business(
                         business._id,
                         business.name, business.email, business.location, business.averageRating, business.createdAt

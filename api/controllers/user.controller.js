@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const User = mongoose.model('User');
 const Business = mongoose.model('Business');
 const TempUser = mongoose.model('TempUser');
-
+const Review = mongoose.model('Review');
 
 /*
     Post Function, to register a new user into the temp users database and send the
@@ -218,9 +218,35 @@ module.exports.deleteAccount = function (req, res) {
                 data: null
             });
         else {
-            req.logout();
-            res.status(200).json({
-                success: true
+            Business.update({}, {
+                $pull: {
+                    "reviews": req.user._id
+                }
+            }, function (err) {
+                if (err) {
+                    res.status(500).json({
+                        error: err,
+                        msg: null,
+                        data: null
+                    });
+                } else {
+                    Review.remove({
+                        user: req.user._id
+                    }, function (err) {
+                        if (err) {
+                            res.status(500).json({
+                                error: err,
+                                msg: null,
+                                data: null
+                            });
+                        } else {
+                            req.logout();
+                            res.status(200).json({
+                                success: true
+                            });
+                        }
+                    });
+                }
             });
         }
     });

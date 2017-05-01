@@ -59,5 +59,7 @@ export class UnAssignAdminComponent implements OnInit {
                 }
             }
         });
+        $('.modal-backdrop').css('z-index', '-1');
     }
+
 };

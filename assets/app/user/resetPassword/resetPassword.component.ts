@@ -81,7 +81,9 @@ export class ResetPasswordComponent implements OnInit {
 
         if (!this.passwordWarning && !this.confirmPasswordWarning) {
             this.resetPasswordService.passwordId(this.id, this.password, this.confirmPassword).subscribe(data => {
+                bootbox.alert(data.msg, ()=>{
                 this.router.navigate(["/"]);
+                });
             }, err => {
                 this.password = null;
                 this.confirmPassword = null;

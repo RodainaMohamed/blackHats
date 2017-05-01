@@ -36,7 +36,6 @@ export class ReviewsComponent implements OnInit {
     addCommentWarning = false;
     addRatingWarning = false;
     userLoggedIn = false;
-    favorited = false;
     noPhotos = false;
 
     constructor(
@@ -62,11 +61,6 @@ export class ReviewsComponent implements OnInit {
                         this.userLoggedIn = true;
                         this.userId = info.user._id;
                         this.user = info.user;
-                        if (info.user.favorites.includes(this.businessId)) {
-                            this.favorited = true;
-                        } else {
-                            this.favorited = false;
-                        }
                     } else {
                         this.userLoggedIn = false;
                     }
@@ -117,23 +111,7 @@ export class ReviewsComponent implements OnInit {
                     }
                 });
 
-            this.reviewsService.getAverageRating(this.businessId).subscribe(
-                (info) => {
-                    this.rating = info.data.toFixed(1);
-                    this.ratingNumber += this.rating;
-                }, (err) => {
-                    switch (err.status) {
-                        case 404:
-                            this.router.navigateByUrl('/404-error');
-                            break;
-                        case 401:
-                            this.router.navigateByUrl('/notAuthorized-error');
-                            break;
-                        default:
-                            this.router.navigateByUrl('/500-error');
-                            break;
-                    }
-                });
+            this.getAverageRating();
 
             this.reviewsService.getReviews(this.businessId).subscribe(
                 (info) => {
@@ -166,28 +144,8 @@ export class ReviewsComponent implements OnInit {
         });
     }
 
-    addFavorite() {
-        this.reviewsService.addFavorite(this.businessId).subscribe(
-            (info) => {
-                this.favorited = true;
-                this.initialize();
-            }, (err) => {
-                switch (err.status) {
-                    case 404:
-                        this.router.navigateByUrl('/404-error');
-                        break;
-                    case 401:
-                        this.router.navigateByUrl('/notAuthorized-error');
-                        break;
-                    default:
-                        this.router.navigateByUrl('/500-error');
-                        break;
-                }
-            });
-    }
-
     submitReview() {
-        if (!this.addComment || this.addComment.length == 0) {
+        if (!this.addComment || this.addComment.trim().length == 0) {
             this.addCommentWarning = true;
         }
         else {
@@ -207,6 +165,7 @@ export class ReviewsComponent implements OnInit {
                 this.reviews.push(new Review(info.data.comment, info.data.rating, info.data.business, { "firstName": this.user.firstName, "lastName": this.user.lastName, "_id": info.data.user }, info.data.time));
                 this.addComment = null;
                 this.addRating = null;
+                this.getAverageRating();
             }, (err) => {
                 switch (err.status) {
                     case 404:
@@ -222,10 +181,6 @@ export class ReviewsComponent implements OnInit {
             });
 
         }
-        // else {
-        //error message
-        // }
-
     }
 
     hideCommentWarning() {
@@ -236,5 +191,24 @@ export class ReviewsComponent implements OnInit {
         this.addRatingWarning = false;
     }
 
+    getAverageRating(){
+        this.reviewsService.getAverageRating(this.businessId).subscribe(
+                (info) => {
+                    this.rating = info.data.toFixed(1);
+                    this.ratingNumber += this.rating;
+                }, (err) => {
+                    switch (err.status) {
+                        case 404:
+                            this.router.navigateByUrl('/404-error');
+                            break;
+                        case 401:
+                            this.router.navigateByUrl('/notAuthorized-error');
+                            break;
+                        default:
+                            this.router.navigateByUrl('/500-error');
+                            break;
+                    }
+                });
+    }
 
 }

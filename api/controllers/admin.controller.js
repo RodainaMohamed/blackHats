@@ -7,6 +7,7 @@ const TempUser = mongoose.model("TempUser");
 const SupportRequest = mongoose.model("SupportRequest");
 const emailSender = require('../config/emailSender');
 const AdvSlot = mongoose.model('AdvSlot');
+const Review = mongoose.model('Review');
 
 
 /*
@@ -100,26 +101,53 @@ module.exports.deleteBusiness = function (req, res) {
             });
         } else {
             if (business) {
-                if (business.verified) {
-                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
-                    var subject = 'Account Suspended';
-                } else {
-                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was rejected.\n\nThank you for considering Black Hats.';
-                    var subject = 'Account Rejected';
-                }
-                emailSender.sendEmail(subject, business.email, text, null, function (err, info) {
+                Review.find({
+                    "business": req.params.businessId
+                }).populate('user').exec(function (err, userReviews) {
                     if (err) {
                         res.status(500).json({
-                            error: null,
-                            msg: 'Business was deleted, however the business was not notified.',
+                            error: err,
+                            msg: null,
                             data: null
                         });
                     } else {
-                        res.status(200).json({
-                            error: null,
-                            msg: 'Business was deleted and notified.',
-                            data: null
+                        // loopHelper(userReviews, function () {
+
+                        Review.remove({
+                            "business": req.params.businessId
+                        }, function (err) {
+                            if (err) {
+                                res.status(500).json({
+                                    error: err,
+                                    msg: null,
+                                    data: null
+                                });
+                            } else {
+                                if (business.verified) {
+                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
+                                    var subject = 'Account Suspended';
+                                } else {
+                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was rejected.\n\nThank you for considering Black Hats.';
+                                    var subject = 'Account Rejected';
+                                }
+                                emailSender.sendEmail(subject, business.email, text, null, function (err, info) {
+                                    if (err) {
+                                        res.status(500).json({
+                                            error: null,
+                                            msg: 'Business was deleted, however the business was not notified.',
+                                            data: null
+                                        });
+                                    } else {
+                                        res.status(200).json({
+                                            error: null,
+                                            msg: 'Business was deleted and notified.',
+                                            data: null
+                                        });
+                                    }
+                                });
+                            }
                         });
+                        // });
                     }
                 });
             } else
@@ -132,6 +160,17 @@ module.exports.deleteBusiness = function (req, res) {
     });
 };
 
+var loopHelper = function (array, callback) {
+    var length = array.length;
+    array.forEach(function (item, index) {
+        item.user.reviews.pull(array._id);
+        item.user.save();
+        if (index === length - 1) {
+            callback();
+        }
+        console.log(index);
+    });
+};
 
 /*
     Put function that makes a user an admin.
@@ -275,21 +314,33 @@ module.exports.deleteUser = function (req, res) {
                             data: null
                         });
                     else {
-                        var text = 'Hello ' + username + ',\n\nUnfortunately, your account was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
-                        var subject = 'Account Suspended';
-
-                        emailSender.sendEmail(subject, email, text, null, function (err, info) {
+                        Review.remove({
+                            user: req.params.userId
+                        }, function (err) {
                             if (err) {
                                 res.status(500).json({
-                                    error: null,
-                                    msg: 'User was deleted, however the user was not notified.',
+                                    error: err,
+                                    msg: null,
                                     data: null
                                 });
                             } else {
-                                res.status(200).json({
-                                    error: null,
-                                    msg: 'User was deleted and notified.',
-                                    data: null
+                                var text = 'Hello ' + username + ',\n\nUnfortunately, your account was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
+                                var subject = 'Account Suspended';
+
+                                emailSender.sendEmail(subject, email, text, null, function (err, info) {
+                                    if (err) {
+                                        res.status(500).json({
+                                            error: null,
+                                            msg: 'User was deleted, however the user was not notified.',
+                                            data: null
+                                        });
+                                    } else {
+                                        res.status(200).json({
+                                            error: null,
+                                            msg: 'User was deleted and notified.',
+                                            data: null
+                                        });
+                                    }
                                 });
                             }
                         });
