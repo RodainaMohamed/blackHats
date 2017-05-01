@@ -1,23 +1,65 @@
-<script src="https://use.fontawesome.com/45e03a14ce.js"></script>
 <div class="container-wrapper">
-    <div class="main-wrapper scrollspy-container">
-        <div class="main_section">
+    <div class="main-wrapper scrollspy-container"  style="min-height: 500px;">
+        <!-- start Breadcrumb -->
+
+        <div class="breadcrumb-wrapper">
             <div class="container">
-                <div class="chat_container">
+                <ol class="breadcrumb">
+                    <li><a routerLink="/homepage">Home</a></li>
+                    <li class="active">Inbox</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- end Breadcrumb -->
+        <!--<div class="main_section">-->
+        <div class="pt-50">
+            <div class="container" style="padding-top: 50px; padding-bottom: 73px;">
+                <div *ngIf="noThreads">
+                    <div class="section-title">
+
+                        <h2>Inbox</h2>
+                        <p>You have no open conversations, start some with the businesses you want to know more about.</p>
+
+                    </div>
+                </div>
+                <div *ngIf="!noThreads" class="chat_container">
                     <div class="col-sm-3 chat_sidebar">
                         <div class="row">
                             <div class="member_list">
                                 <ul class="list-unstyled">
-                                    <option *ngFor="let thread of threads">
-                                        <li class="left clearfix">
-                                            <div *ngIf="isUser" class="header_sec">
-                                                <strong class="primary-font">{{thread.firstName}}  {{thread.lastName}}</strong>
+                                    <div *ngIf="noThreads">
+                                        <h1> No Threads </h1>
+                                    </div>
+                                    <div *ngIf="!noThreads">
+                                        <li class="left clearfix" *ngFor="let thread of threads; let i = index" (click)="onClick(i)">
+                                            <div *ngIf="isUser">
+                                                <span *ngIf="thread.business.logo" class="chat-img pull-left">
+                                              <img src="http://54.213.175.206:8080/api/image/businessLogos/{{thread.business.logo}}" alt="User Avatar" class="img-circle">
+                                            </span>
+                                                <span *ngIf="!thread.business.logo" class="chat-img pull-left">
+                                              <img src="http://54.213.175.206:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
+                                            </span>
+                                                <div class="chat-body clearfix">
+                                                    <div class="header_sec">
+                                                        <strong class="primary-font">{{thread.business.name}}</strong>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div *ngIf="!isUser" class="header_sec">
-                                                <strong class="primary-font">{{thread.name}}</strong>
+
+                                            <div *ngIf="!isUser">
+                                                <span class="chat-img pull-left">
+                                              <img *ngIf="thread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/{{thread.user.profilePicture}}" alt="User Avatar" class="img-circle">
+                                              <img *ngIf="!thread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
+                                            </span>
+                                                <div class="chat-body clearfix">
+                                                    <div class="header_sec">
+                                                        <strong class="primary-font">{{thread.user.firstName}} {{thread.user.lastName}}</strong>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </li>
-                                    </option>
+                                    </div>
                                 </ul>
                             </div>
                         </div>
@@ -26,74 +68,70 @@
                     <div class="col-sm-9 message_section">
                         <div class="chat_area">
                             <ul class="list-unstyled">
-                                <li class="left clearfix">
-                                    <span class="chat-img1 pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                                    <div class="chat-body1 clearfix">
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
-                                            a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-                                            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-                                        <div class="chat_time pull-right">09:40PM</div>
+                                <div *ngFor="let message of currentThread.messages; let j = index">
+                                    <div *ngIf="isUser">
+                                        <li *ngIf="message.byUser" class="left clearfix">
+                                            <span class="chat-img1 pull-left">
+                                          <img *ngIf="currentThread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
+                                          <img *ngIf="!currentThread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
+                                        </span>
+                                            <div class="chat-body1 clearfix">
+                                                <p>{{message.content}}</p>
+                                                <div class="chat_time pull-right">{{message.dateCreated | date: 'shortTime'}}</div>
+                                            </div>
+                                        </li>
+                                        <li *ngIf="!message.byUser" class="left clearfix admin_chat">
+                                            <span *ngIf="currentThread.business.logo" class="chat-img pull-right">
+                                        <img src="http://54.213.175.206:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
+                                      </span>
+                                            <span *ngIf="!currentThread.business.logo" class="chat-img pull-right">
+                                        <img src="http://54.213.175.206:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
+                                      </span>
+                                            <div class="chat-body1 clearfix">
+                                                <p>{{message.content}}</p>
+                                                <div class="chat_time pull-left">{{message.dateCreated | date: 'shortTime'}}</div>
+                                            </div>
+                                        </li>
                                     </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img1 pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                                    <div class="chat-body1 clearfix">
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
-                                            a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-                                            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-                                        <div class="chat_time pull-right">09:40PM</div>
+                                    <div *ngIf="!isUser">
+                                        <li *ngIf="message.byUser" class="left clearfix admin_chat">
+                                            <span class="chat-img1 pull-right">
+                                          <img *ngIf="currentThread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
+                                          <img *ngIf="!currentThread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
+                                        </span>
+                                            <div class="chat-body1 clearfix">
+                                                <p>{{message.content}}</p>
+                                                <div class="chat_time pull-left">{{message.dateCreated | date: 'shortTime'}}</div>
+                                            </div>
+                                        </li>
+                                        <li *ngIf="!message.byUser" class="left clearfix">
+                                            <span *ngIf="currentThread.business.logo" class="chat-img pull-left">
+                                        <img src="http://54.213.175.206:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
+                                      </span>
+                                            <span *ngIf="!currentThread.business.logo" class="chat-img pull-right">
+                                        <img src="http://54.213.175.206:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
+                                      </span>
+                                            <div class="chat-body1 clearfix">
+                                                <p>{{message.content}}</p>
+                                                <div class="chat_time pull-right">{{message.dateCreated | date: 'shortTime'}}</div>
+                                            </div>
+                                        </li>
                                     </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img1 pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                                    <div class="chat-body1 clearfix">
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
-                                            a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-                                            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-                                        <div class="chat_time pull-right">09:40PM</div>
-                                    </div>
-                                </li>
-                                <li class="left clearfix admin_chat">
-                                    <span class="chat-img1 pull-right">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                                    <div class="chat-body1 clearfix">
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
-                                            a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-                                            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-                                        <div class="chat_time pull-left">09:40PM</div>
-                                    </div>
-                                </li>
-                                <li class="left clearfix admin_chat">
-                                    <span class="chat-img1 pull-right">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                                    <div class="chat-body1 clearfix">
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
-                                            a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-                                            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-                                        <div class="chat_time pull-left">09:40PM</div>
-                                    </div>
-                                </li>
+                                </div>
                             </ul>
                         </div>
                         <!--chat_area-->
-                        <div class="message_write">
-                            <textarea class="form-control" placeholder="type a message"></textarea>
+                        <div *ngIf="!noThreads" class="message_write">
+                            <textarea style="resize: none;" [(ngModel)]="newMessage" name="newMessage" class="form-control" placeholder="Type a message"></textarea>
                             <div class="clearfix"></div>
                             <div class="chat_bottom">
-                                <a href="#" class="pull-right btn btn-success">
- Send</a></div>
+                                <a (click)="onSend()" class="pull-right btn btn-success">Send</a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!--message_section-->
+                <!--</div>-->
             </div>
         </div>
     </div>

@@ -885,7 +885,9 @@ module.exports.deleteActivity = function(req, res) {
 */
 module.exports.getActivity = function(req, res) {
     //select all fields except password
-    Activity.findById(req.params.activityId).exec(function(err, activity) {
+    Activity.findById(req.params.activityId).populate({
+      path: "business"
+    }).exec(function(err, activity) {
         //if error occured
         if (err) {
             res.status(500).json({

@@ -14,7 +14,7 @@ export class DirectMessagingService {
       userID: user,
       businessID: business
     };
-    return this.http.post('http://localhost:8080/api/thread/findExistingThread', body, { headers: headers }).map(res => res.json());
+    return this.http.post('http://54.213.175.206:8080/api/thread/findExistingThread', body, { headers: headers }).map(res => res.json());
   }
 
   newThread(destID, message) {
@@ -23,7 +23,7 @@ export class DirectMessagingService {
     let body = {
       message: message
     }
-    return this.http.post('http://localhost:8080/api/thread/add/' + destID, body, { headers: headers }).map(res => res.json());
+    return this.http.post('http://54.213.175.206:8080/api/thread/add/' + destID, body, { headers: headers }).map(res => res.json());
   }
 
   addMessage(threadID, message) {
@@ -32,27 +32,27 @@ export class DirectMessagingService {
     let body = {
       content: message
     }
-    return this.http.post('http://localhost:8080/api/thread/addMessage/' + threadID, body, { headers: headers }).map(res => res.json());
+    return this.http.post('http://54.213.175.206:8080/api/thread/addMessage/' + threadID, body, { headers: headers }).map(res => res.json());
   }
 
   getThreads(srcID) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:8080/api/thread/getThreads/' + srcID, { headers: headers }).map(res => res.json());
+    return this.http.get('http://54.213.175.206:8080/api/thread/getThreads/' + srcID, { headers: headers }).map(res => res.json());
   }
   deleteThread(threadID) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.delete('http://localhost:8080/api/thread/deleteThread/' + threadID, { headers: headers }).map(res => res.json());
+    return this.http.delete('http://54.213.175.206:8080/api/thread/deleteThread/' + threadID, { headers: headers }).map(res => res.json());
   }
   getMessages(threadID) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:8080/api/thread/getMessages/' + threadID, { headers: headers }).map(res => res.json());
+    return this.http.get('http://54.213.175.206:8080/api/thread/getMessages/' + threadID, { headers: headers }).map(res => res.json());
   }
   deleteMessage(messageID) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.delete('http://localhost:8080/api/thread/deleteMessage/' + messageID, { headers: headers }).map(res => res.json());
+    return this.http.delete('http://54.213.175.206:8080/api/thread/deleteMessage/' + messageID, { headers: headers }).map(res => res.json());
   }
 }

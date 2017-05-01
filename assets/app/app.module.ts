@@ -78,6 +78,7 @@ import { EditUserProfileService } from "./user/editProfile/editProfile.service";
 import { ContactSupportService } from './contactSupport/contactSupport.service';
 import { BusinessEditGuard } from "./businessEdit/businessEdit.guard";
 import { AdminModule } from "./admin/admin.module";
+import { ChatGuard } from "./directMessaging/chat.guard";
 
 const DROPZONE_CONFIG: DropzoneConfigInterface = {
   acceptedFiles: 'image/*'
@@ -167,7 +168,8 @@ const DROPZONE_CONFIG: DropzoneConfigInterface = {
     ContactSupportService,
     BusinessEditGuard,
     AdminGuard,
-    DirectMessagingService
+    DirectMessagingService,
+    ChatGuard
   ],
   bootstrap: [AppComponent]
 })
