@@ -133,6 +133,7 @@ export class ActivityPageComponent implements OnInit {
         var handler = (<any>window).StripeCheckout.configure({
             key: 'pk_test_9AEHvD0gXViwtKYQDpQcLXlY',
             locale: 'auto',
+            currency: 'egp',
             token: token => this.gotToken(token, index)
         });
 

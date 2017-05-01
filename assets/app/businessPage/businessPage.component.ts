@@ -130,7 +130,8 @@ export class BusinessPageComponent implements OnInit {
 
                     if (info.data.photos.length != 0) {
                         this.photos.length = info.data.photos.length - 1;
-                        this.photos[0] = info.data.photos[1];
+                        if(info.data.photos.length > 1)
+                            this.photos[0] = info.data.photos[1];
                         for (var _i = 1; _i < this.photos.length; _i++) {
                             this.photos[_i] = info.data.photos[_i + 1];
                         }
@@ -141,7 +142,7 @@ export class BusinessPageComponent implements OnInit {
                     }
                     this.paymentRequired = info.data.paymentRequired;
                     if (info.data.deposit != null) {
-                        this.deposit = info.data.deposit * 100;
+                        this.deposit = info.data.deposit;
                         this.depositAvailable = true;
                     }
                     switch (this.paymentRequired) {

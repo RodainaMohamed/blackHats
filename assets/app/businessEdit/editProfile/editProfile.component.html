@@ -58,7 +58,8 @@
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label">City</label>
 			<div class="col-sm-5 col-md-5">
-				<select class="selectpicker show-tick form-control" placeholder="Choose a City" data-live-search="false" [(ngModel)]="city" name="city">
+				<select class="selectpicker show-tick form-control" placeholder="Choose a City" data-live-search="false" [(ngModel)]="city"
+				    name="city">
 								<option value="Cairo">Cairo</option>
 								<option value="Giza">Giza</option>
 								<option value="Alexandria">Alexandria</option>
@@ -75,11 +76,13 @@
 			<label class="col-sm-3 col-md-2 control-label">Working Hours</label>
 			<div class="col-sm-3 col-md-3">
 				<label>From:</label>
-				<input name="workingFrom" [ngModel]="workingFrom | date: 'shortTime'" [(dateTimePicker)]="workingFrom" [pickerType]="'time'" [mode]="'dropdown'" [theme]="'gray'" [hourTime]=" '12' " class="form-control" />
+				<input name="workingFrom" [ngModel]="workingFrom | date: 'shortTime'" [(dateTimePicker)]="workingFrom" [pickerType]="'time'"
+				    [mode]="'dropdown'" [theme]="'gray'" [hourTime]=" '12' " class="form-control" />
 			</div>
 			<div class="col-xs-3 col-sm-3">
 				<label>To:</label>
-				<input name="workingTo" [ngModel]="workingTo | date: 'shortTime'" [(dateTimePicker)]="workingTo" [pickerType]="'time'" [mode]="'dropdown'" [theme]="'gray'" [hourTime]=" '12' " class="form-control" />
+				<input name="workingTo" [ngModel]="workingTo | date: 'shortTime'" [(dateTimePicker)]="workingTo" [pickerType]="'time'" [mode]="'dropdown'"
+				    [theme]="'gray'" [hourTime]=" '12' " class="form-control" />
 			</div>
 		</div>
 	</div>
@@ -90,7 +93,8 @@
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label">Category</label>
 			<div class="col-sm-5 col-md-5">
-				<select class="selectpicker show-tick form-control" placeholder="Choose a category" data-live-search="false" [(ngModel)]="category" name="category">
+				<select class="selectpicker show-tick form-control" placeholder="Choose a category" data-live-search="false" [(ngModel)]="category"
+				    name="category">
 								<option value="Room Escape">Room Escape</option>
 								<option value="Trampoline">Trampoline</option>
 								<option value="Go Karts">Go Karts</option>
@@ -223,7 +227,8 @@
 							<div class="form-group">
 								<label class="col-sm-3 col-md-2 control-label">Required payment</label>
 								<div class="col-sm-5 col-md-5">
-									<select class="selectpicker show-tick form-control" data-live-search="false" #t (change)="showDeposit(t.value)" [(ngModel)]="paymentRequired" name="paymentRequired">
+									<select class="selectpicker show-tick form-control" data-live-search="false" #t (change)="showDeposit(t.value)" [(ngModel)]="paymentRequired"
+									    name="paymentRequired">
 													<option value="1">Full payment</option>
 													<option value="2">Deposit</option>
 													<option value="3" selected>No payment</option>
@@ -243,7 +248,11 @@
 								<div *ngIf="depositFlag == true" class="form-group">
 									<label class="col-sm-3 col-md-2 control-label">Deposit</label>
 									<div class="col-sm-5 col-md-5">
-										<input type="number" min="0" class="form-control" [(ngModel)]="deposit" name="deposit">
+										<div class="input-group mb-15">
+
+											<input type="number" min="1" max="100" class="form-control" [(ngModel)]="deposit" name="deposit">
+											<span class="input-group-addon">%</span>
+										</div>
 									</div>
 								</div>
 							</div>

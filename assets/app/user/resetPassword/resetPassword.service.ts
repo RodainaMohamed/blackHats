@@ -23,7 +23,7 @@ export class ResetPasswordService {
           password: password,
           confirmPassword: confirmPassword
         }
-    return this.http.put('http://localhost:8080/api/resetPassword/' + id, body, {headers: headers}).map(res => {return res.json().data}); 
+    return this.http.put('http://localhost:8080/api/resetPassword/' + id, body, {headers: headers}).map(res => res.json()); 
   }
     
 }
