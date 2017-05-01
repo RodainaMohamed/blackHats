@@ -32,7 +32,6 @@ module.exports = function(passportConfig) {
     });
 
     //For testing
-
     router.route('/charge').post(paymentCtrl.charge);
 
     //Not logged in only routes

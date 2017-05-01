@@ -24,7 +24,7 @@
                                 <span class="label label-info">{{business.email}}</span>
                             </div>
                             <h4>{{business.name}}</h4>
-                            <ul class="user-meta">
+                            <ul *ngIf="business.address" class="user-meta">
                                 <li><i class="fa fa-map-marker"></i> {{business.address}}</li>
                             </ul>
                             <div class="row gap-10">
@@ -35,7 +35,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-xs-12 col-sm-5">
-                                    <a routerLink="business/{{business._id}}" class="block mt-10 mt-0-xs text-right text-left-xs">view profile <i class="ion-android-arrow-forward"></i></a>
+                                    <a routerLink="/business/{{business._id}}" class="block mt-10 mt-0-xs text-right text-left-xs">view business <i class="ion-android-arrow-forward"></i></a>
                                 </div>
                             </div>
 

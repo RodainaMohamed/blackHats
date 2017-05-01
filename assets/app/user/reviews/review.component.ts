@@ -17,8 +17,7 @@ export class ReviewComponent implements OnInit {
 
     count: number = 0;
     reviews: any[];
-    //reviews: Review[];
-    userId: String = "";//"58e8d26b86e48c253b2c3c1e";
+    userId: String = "";
     averageString: String;
     loggedIn: Boolean;
     editing: Boolean[] = [];
@@ -26,6 +25,7 @@ export class ReviewComponent implements OnInit {
     editComment: String;
     editRating: Number;
     isUser = false;
+    editCommentWarning = false;
 
 
     constructor(
@@ -36,7 +36,6 @@ export class ReviewComponent implements OnInit {
         private router: Router,
         private http: Http) { }
 
-    //hassaan:
     ngOnInit() {
 
         this.activatedRoute.params.subscribe(
@@ -137,6 +136,12 @@ export class ReviewComponent implements OnInit {
     }
 
     onSave(i) {
+        if (!this.editComment || this.editComment.trim().length == 0) {
+            return this.editCommentWarning = true;
+        }
+        else {
+            this.editCommentWarning = false;
+        }
         this.editIndex = i;
         this.userService.editReview(this.reviews[i]._id, this.editComment, this.editRating).subscribe(
             (data) => {
@@ -147,13 +152,24 @@ export class ReviewComponent implements OnInit {
                 this.editRating = null;
             },
             (err) => {
-                bootbox.alert(err.msg);
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
             });
     }
 
     onCancel(i) {
         this.editIndex = i;
         this.editing[i] = false;
+        this.hideCommentWarning();
     }
 
     onEdit(i) {
@@ -165,6 +181,7 @@ export class ReviewComponent implements OnInit {
         this.editRating = this.reviews[i].rating;
     }
 
-
-
+    hideCommentWarning() {
+        this.editCommentWarning = false;
+    }
 }
