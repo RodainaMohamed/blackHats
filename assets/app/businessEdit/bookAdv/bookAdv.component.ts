@@ -17,7 +17,7 @@ export class BookAdvComponent implements OnInit {
     availableSlots: Date[] = [];
     date: Date;
     noOfDays: number[] = [];
-    public uploader: FileUploader = new FileUploader({ url: 'http://54.213.175.206:8080/api/advertisement/addAdvPhoto', itemAlias: "myfile" });;
+    public uploader: FileUploader = new FileUploader({ url: 'http://localhost:8080/api/advertisement/addAdvPhoto', itemAlias: "myfile" });;
     startTime: Date = new Date();
     endTime: Date = new Date();
     startTimeValue: Date = new Date();
@@ -37,7 +37,7 @@ export class BookAdvComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.advPicture = "http://54.213.175.206:8080/api/image/businessAds/defaultAPic.jpg";
+        this.advPicture = "http://localhost:8080/api/image/businessAds/defaultAPic.jpg";
         this.showAdvSlots();
     }
 
@@ -102,7 +102,7 @@ export class BookAdvComponent implements OnInit {
                     break;
             }
             this.advPicture = JSON.parse(response).data;
-            this.path = "http://54.213.175.206:8080/api/image/businessAds/";
+            this.path = "http://localhost:8080/api/image/businessAds/";
         }
     }
 
@@ -116,7 +116,7 @@ export class BookAdvComponent implements OnInit {
         else {
             this.advNoOfDaysWarning = false;
         }
-        if (!this.advPicture || this.advPicture.length == 0 || this.advPicture === "http://54.213.175.206:8080/api/image/businessAds/defaultAPic.jpg") {
+        if (!this.advPicture || this.advPicture.length == 0 || this.advPicture === "http://localhost:8080/api/image/businessAds/defaultAPic.jpg") {
             this.advImgWarning = true;
         }
         else {
