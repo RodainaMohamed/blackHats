@@ -364,7 +364,7 @@
 
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="userMessageClose">&times;</button>
-            <h4 class="modal-title text-center">Send a message</h4>
+            <h4 style="text-transform: none;" class="modal-title text-center">Send a message</h4>
         </div>
 
 
@@ -372,24 +372,25 @@
             <div class="row gap-20">
                 <div class="col-sm-12 col-md-12">
 
-                    <div class="form-group" style="padding-left: 15px;">
+                    <div *ngIf="!messageDone" class="form-group" style="padding-left: 15px;">
                         <label>Your Message </label>
                         <textarea style="resize: none;" [(ngModel)]="message" name="message" class="form-control form-control-sm" placeholder="Maximum 100 characters"
                             maxlength="100" rows="4"></textarea>
                     </div>
-                </div>
-                <div class="col-sm-offset-8 col-md-offset-8 col-md-4 col-sm-4">
-                    <div class="user-login-box-link-action">
-                        <a data-toggle="modal" href="#userForgotPasswordModal" class="block line18 mt-1" (click)="onUserLoginCancel()">View Messages</a>
+                    <div *ngIf="messageDone">
+                      <label>Your Message has been successfully sent!</label>
                     </div>
                 </div>
+
 
             </div>
         </div>
 
         <div class="modal-footer text-center">
-            <button type="button" class="btn btn-primary" (click)="sendMessage()">Send</button>
-            <button type="button" data-dismiss="modal" class="btn btn-primary btn-border">Cancel</button>
+            <button type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="goToMessages()">Your Messages</button>
+            <button *ngIf="!messageDone" type="button" class="btn btn-primary" (click)="sendMessage()">Send</button>
+            <button *ngIf="!messageDone" type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="onMessageCancel()">Cancel</button>
+            <button *ngIf="messageDone" type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="onMessageDone()">Done</button>
         </div>
     </div>
 </div>

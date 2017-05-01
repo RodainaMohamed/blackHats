@@ -54,6 +54,7 @@ export class BusinessPageComponent implements OnInit {
     private thread: Object;
     private destID: String;
     message: String;
+    messageDone: Boolean = false;
 
     constructor(
         private businessPageService: BusinessPageService,
@@ -70,6 +71,7 @@ export class BusinessPageComponent implements OnInit {
     }
 
     initialize() {
+        this.messageDone = false;
         this.activatedRoute.params.subscribe((params: Params) => {
             this.businessId = params['businessId'];
 
@@ -223,7 +225,7 @@ export class BusinessPageComponent implements OnInit {
 
             this.businessPageService.updateInteractivity(this.businessId).subscribe(
                 (info) => {
-                    
+
                 }, (err) => {
                     switch (err.status) {
                         case 404:
@@ -327,10 +329,36 @@ export class BusinessPageComponent implements OnInit {
 
                 this.directMessagingService.existingThread(this.user, this.business).subscribe(
                     (thread) => {
-                        this.thread = thread.data;
-                        this.directMessagingService.addMessage(this.thread._id, this.message).subscribe(
-                            (data) => { },
-                            (err) => {
+                        if(thread.data){
+                          this.thread = thread.data;
+                          this.directMessagingService.addMessage(this.thread._id, this.message).subscribe(
+                              (data) => {
+                                console.log("done");
+                                this.messageDone = true;
+                              },
+                              (err) => {
+                                  switch (err.status) {
+                                      case 404:
+                                          this.router.navigateByUrl('/404-error');
+                                          break;
+                                      case 401:
+                                          this.router.navigateByUrl('/notAuthorized-error');
+                                          break;
+                                      default:
+                                          this.router.navigateByUrl('/500-error');
+                                          break;
+                                  }
+                              }
+                          )
+                        }
+                        else{
+                          this.directMessagingService.newThread(this.destID, this.message).subscribe(
+                              (thread) => {
+                                  console.log("done");
+                                  this.thread = thread.data;
+                                  this.messageDone = true;
+                              },
+                              (err) => {
                                 switch (err.status) {
                                     case 404:
                                         this.router.navigateByUrl('/404-error');
@@ -342,28 +370,33 @@ export class BusinessPageComponent implements OnInit {
                                         this.router.navigateByUrl('/500-error');
                                         break;
                                 }
-                            }
-                        )
+                              });
+                        }
                     },
                     (err) => {
-                        this.directMessagingService.newThread(this.destID, this.message).subscribe(
-                            (thread) => {
-                                this.thread = thread.data;
-                            },
-                            (err) => {
-                                switch (err.status) {
-                                    case 404:
-                                        this.router.navigateByUrl('/404-error');
-                                        break;
-                                    case 401:
-                                        this.router.navigateByUrl('/notAuthorized-error');
-                                        break;
-                                    default:
-                                        this.router.navigateByUrl('/500-error');
-                                        break;
-                                }
-                            });
+                      switch (err.status) {
+                          case 404:
+                              this.router.navigateByUrl('/404-error');
+                              break;
+                          case 401:
+                              this.router.navigateByUrl('/notAuthorized-error');
+                              break;
+                          default:
+                              this.router.navigateByUrl('/500-error');
+                              break;
+                      }
                     });
             });
+    }
+
+    onMessageDone(){
+      this.messageDone = false;
+      this.message = null;
+    }
+    goToMessages(){
+      this.router.navigateByUrl('/chat');
+    }
+    onMessageCancel(){
+      this.message = null;
     }
 }

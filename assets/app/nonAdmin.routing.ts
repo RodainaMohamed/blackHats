@@ -19,6 +19,7 @@ import { ContactSupportComponent } from './contactSupport/contactSupport.compone
 import { ActivityPageComponent } from "./businessPage/activityPage.component";
 import { BusinessEditGuard } from "./businessEdit/businessEdit.guard";
 import { DirectMessagingComponent } from "./directMessaging/directMessaging.component";
+import { ChatGuard } from "./directMessaging/chat.guard";
 
 
 export const NON_ADMIN_ROUTES: Routes = [
@@ -39,6 +40,6 @@ export const NON_ADMIN_ROUTES: Routes = [
     { path: '404-error', component: FourofourComponent},
     { path: 'notAuthorized-error', component: NotAuthorizedErrorComponent},
     { path: '500-error', component: SomethingWrongComponent},
-    { path: 'chat' , component: DirectMessagingComponent },
+    { path: 'chat' , component: DirectMessagingComponent, canActivate: [ChatGuard]},
     { path: '**',redirectTo:'/homepage'}
 ];

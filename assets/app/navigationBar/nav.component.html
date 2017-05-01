@@ -33,6 +33,9 @@
 					<li *ngIf="loggedin && isAdmin">
 						<a href="/admin">Admin Panel</a>
 					</li>
+					<li *ngIf="loggedin">
+						<a routerLink="/chat">Messages</a>
+					</li>
 					<li>
 						<a routerLink="/contactSupport">Support</a>
 					</li>

@@ -175,9 +175,6 @@ module.exports.findExistingThread = function (req, res) {
     } else {
         userID = req.body.userID;
     }
-    console.log(userID);
-    console.log(businessID);
-    console.log("1");
     if (!businessID) {
         businessID = req.user._id;
     } else {
@@ -203,7 +200,7 @@ module.exports.findExistingThread = function (req, res) {
                     data: thread
                 });
             } else
-                return res.status(404).json({
+                return res.status(200).json({
                     error: null,
                     msg: "No existing thread",
                     data: null
@@ -486,7 +483,12 @@ module.exports.getThreads = function (req, res) {
             "user": req.params.userId
         }).populate({
             path: 'business',
-            select: 'name'
+            select: 'name logo'
+        }).populate({
+          path: 'user',
+          select: 'firstName lastName profilePicture'
+        }).populate({
+          path: 'messages'
         }).exec(function (err, threads) {
             //If an error occurred, return an error
             if (err) {
@@ -508,8 +510,13 @@ module.exports.getThreads = function (req, res) {
         Thread.find({
             "business": req.params.userId
         }).populate({
-            path: 'user',
-            select: 'firstName lastName'
+            path: 'business',
+            select: 'name logo'
+        }).populate({
+          path: 'user',
+          select: 'firstName lastName profilePicture'
+        }).populate({
+          path: 'messages'
         }).exec(function (err, threads) {
             //If an error occurred, return an error
             if (err) {
