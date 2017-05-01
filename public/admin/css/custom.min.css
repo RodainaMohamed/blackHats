@@ -949,7 +949,7 @@ a:visited {
 }
 
 .nav li.current-page {
-    background: rgba(255, 255, 255, .05)
+    background: rgba(255, 255, 255, .08)
 }
 
 .nav li li li.current-page {

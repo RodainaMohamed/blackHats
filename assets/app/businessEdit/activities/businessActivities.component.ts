@@ -97,13 +97,13 @@ export class BusinessActivitiesComponent implements OnInit {
     }
 
     onAddSubmit() {
-        if (!this.addName || this.addName.length == 0) {
+        if (!this.addName || this.addName.trim().length == 0) {
             this.addNameWarning = true;
         }
         else {
             this.addNameWarning = false;
         }
-        if (!this.addDescription || this.addDescription.length == 0) {
+        if (!this.addDescription || this.addDescription.trim().length == 0) {
             this.addDescriptionWarning = true;
         }
         else {

@@ -64,7 +64,6 @@ export class ReviewComponent implements OnInit {
   }
 
   viewBusiness(businessId: string) {
-    this.router.navigate(['/business', businessId]);
-    location.reload();
+    window.location.href = "/business/" + businessId;
   }
 };

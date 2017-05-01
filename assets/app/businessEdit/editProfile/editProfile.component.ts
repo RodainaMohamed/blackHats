@@ -120,14 +120,14 @@ export class EditProfileComponent implements OnInit {
     }
 
     updateProfile() {
-        if (!this.name || this.name.length == 0) {
+        if (!this.name || this.name.trim().length == 0) {
             this.nameRequired = true;
         }
         else {
             this.nameRequired = false;
         }
 
-        if (!this.description || this.description.length == 0) {
+        if (!this.description || this.description.trim().length == 0) {
             this.descriptionRequired = true;
         }
         else {
@@ -152,10 +152,7 @@ export class EditProfileComponent implements OnInit {
             }
             this.editProfileService.editBusinessProfile(this.name, workingHours, this.workingDays, this.category, location, this.description, this.phoneNumbers, this.tags, this.paymentRequired, this.deposit).subscribe(
                 (data) => {
-                    bootbox.alert({
-                        message: "Profile updated!",
-                        size: 'small'
-                    });
+                    bootbox.alert("Profile updated.");
                 },
                 (err) => {
                     switch (err.status) {

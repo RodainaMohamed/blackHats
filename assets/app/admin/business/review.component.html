@@ -39,12 +39,10 @@
                                             <td>
                                                 <p>{{business.email}}</p>
                                             </td>
-                                            <td *ngIf="business.location.city">
+                                            <td>
                                                 {{business.location.city}}
                                             </td>
-                                            <td *ngIf="!business.location.city">
-                                                None
-                                            </td>
+                                        
                                             <td>
                                                 {{business.averageRating}}
                                             </td>

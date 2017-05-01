@@ -65,7 +65,6 @@ export class ReviewComponent implements OnInit {
   }
 
   viewUser(userId: string) {
-    this.router.navigate(['/user', userId]);
-    location.reload();
+    window.location.href = "/user/" + userId;
   }
 };

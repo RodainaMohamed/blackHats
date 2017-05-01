@@ -140,7 +140,7 @@ export class BusinessPageComponent implements OnInit {
                     }
                     this.paymentRequired = info.data.paymentRequired;
                     if (info.data.deposit != null) {
-                        this.deposit = info.data.deposit * 100;
+                        this.deposit = info.data.deposit;
                         this.depositAvailable = true;
                     }
                     switch (this.paymentRequired) {
