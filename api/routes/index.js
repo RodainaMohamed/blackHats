@@ -32,7 +32,7 @@ module.exports = function(passportConfig) {
     });
 
     //For testing
-    router.route('/charge').post(paymentCtrl.charge);
+    router.route('/charge').post(passportConfig.isLoggedIn, paymentCtrl.charge);
 
     //Not logged in only routes
     router.route('/user/login').post(passportConfig.isNotLoggedIn, authenticateUser);

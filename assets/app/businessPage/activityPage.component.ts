@@ -16,7 +16,7 @@ export class ActivityPageComponent implements OnInit {
     activity: Activity;
     slots: Slot[];
     gotActivity = false;
-    path: String = "http://localhost:8080/api/";
+    path: String = "http://54.213.175.206:8080/api/";
     chosenDate: Date;
     dateChosen: Boolean = false;
     loggedIn = true;
@@ -130,6 +130,22 @@ export class ActivityPageComponent implements OnInit {
     }
 
     bookSlot(index) {
+        switch (this.activity.business.paymentRequired) {
+            case 1:
+                this.createHandler(100, index);
+                break;
+            case 2:
+                this.createHandler(this.activity.business.deposit, index);
+                break;
+            default:
+                this.bookActivity(index);
+                break;
+        }
+        console.log(this.activity.business);
+
+    }
+
+    createHandler(deposit: Number, index: Number) {
         var handler = (<any>window).StripeCheckout.configure({
             key: 'pk_test_vtTq04LX7KiFSy5Eev4qPRDL',
             locale: 'auto',
@@ -140,35 +156,39 @@ export class ActivityPageComponent implements OnInit {
         handler.open({
             name: 'Book Activity',
             description: this.activity.name,
-            amount: this.activity.price * 100
+            amount: this.activity.price * deposit
         });
+    }
+
+    bookActivity(index: Number) {
+        this.businessPageService.bookActivity(this.slots[index], this.activity.id, this.chosenDate).subscribe(
+            (data) => {
+                bootbox.alert(data.msg);
+            },
+            (err) => {
+                switch (err.status) {
+                    case 404:
+                        this.router.navigateByUrl('/404-error');
+                        break;
+                    case 401:
+                        this.router.navigateByUrl('/notAuthorized-error');
+                        break;
+                    default:
+                        this.router.navigateByUrl('/500-error');
+                        break;
+                }
+            }
+        );
     }
 
     gotToken(token, index) {
 
         this.appService.charge(token).subscribe(res => {
-            this.businessPageService.bookActivity(this.slots[index], this.activity.id, this.chosenDate).subscribe(
-                (data) => {
-                    bootbox.alert(data.msg);
-                },
-                (err) => {
-                    switch (err.status) {
-                        case 404:
-                            this.router.navigateByUrl('/404-error');
-                            break;
-                        case 401:
-                            this.router.navigateByUrl('/notAuthorized-error');
-                            break;
-                        default:
-                            this.router.navigateByUrl('/500-error');
-                            break;
-                    }
-                }
-            );
+            this.bookActivity(index);
         });
     }
 
     onBack() {
-        this.router.navigate(["/business/" + this.activity.business]);
+        this.router.navigate(["/business/" + this.activity.business._id]);
     }
 }
