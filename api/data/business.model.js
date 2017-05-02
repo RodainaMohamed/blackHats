@@ -94,7 +94,8 @@ const businessSchema = new mongoose.Schema({
         default: 3
     },
     deposit: {
-        type: Number
+        type: Number,
+        default: 100
     },
     logo: {
         type: String
