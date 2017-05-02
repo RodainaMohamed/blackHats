@@ -18,7 +18,7 @@ export class UserFavoritesComponent implements OnInit {
     favorites: [String];
     businesses: [Object];
     userId: String = "";
-    logoPath: String = "http://localhost:8080/api/image/businessLogos/";
+    logoPath: String = "http://54.213.175.206:8080/api/image/businessLogos/";
     loggedIn: Boolean;
 
     constructor(

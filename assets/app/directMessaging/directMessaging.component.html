@@ -35,10 +35,10 @@
                                         <li class="left clearfix" *ngFor="let thread of threads; let i = index" (click)="onClick(i)">
                                             <div *ngIf="isUser">
                                                 <span *ngIf="thread.business.logo" class="chat-img pull-left">
-                                              <img src="http://localhost:8080/api/image/businessLogos/{{thread.business.logo}}" alt="User Avatar" class="img-circle">
+                                              <img src="http://54.213.175.206:8080/api/image/businessLogos/{{thread.business.logo}}" alt="User Avatar" class="img-circle">
                                             </span>
                                                 <span *ngIf="!thread.business.logo" class="chat-img pull-left">
-                                              <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
+                                              <img src="http://54.213.175.206:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
                                             </span>
                                                 <div class="chat-body clearfix">
                                                     <div class="header_sec">
@@ -49,8 +49,8 @@
 
                                             <div *ngIf="!isUser">
                                                 <span class="chat-img pull-left">
-                                              <img *ngIf="thread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{thread.user.profilePicture}}" alt="User Avatar" class="img-circle">
-                                              <img *ngIf="!thread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
+                                              <img *ngIf="thread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/{{thread.user.profilePicture}}" alt="User Avatar" class="img-circle">
+                                              <img *ngIf="!thread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
                                             </span>
                                                 <div class="chat-body clearfix">
                                                     <div class="header_sec">
@@ -72,8 +72,8 @@
                                     <div *ngIf="isUser">
                                         <li *ngIf="message.byUser" class="left clearfix">
                                             <span class="chat-img1 pull-left">
-                                          <img *ngIf="currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
-                                          <img *ngIf="!currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
+                                          <img *ngIf="currentThread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
+                                          <img *ngIf="!currentThread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
                                         </span>
                                             <div class="chat-body1 clearfix">
                                                 <p>{{message.content}}</p>
@@ -82,10 +82,10 @@
                                         </li>
                                         <li *ngIf="!message.byUser" class="left clearfix admin_chat">
                                             <span *ngIf="currentThread.business.logo" class="chat-img pull-right">
-                                        <img src="http://localhost:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
+                                        <img src="http://54.213.175.206:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
                                       </span>
                                             <span *ngIf="!currentThread.business.logo" class="chat-img pull-right">
-                                        <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
+                                        <img src="http://54.213.175.206:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
                                       </span>
                                             <div class="chat-body1 clearfix">
                                                 <p>{{message.content}}</p>
@@ -96,8 +96,8 @@
                                     <div *ngIf="!isUser">
                                         <li *ngIf="message.byUser" class="left clearfix admin_chat">
                                             <span class="chat-img1 pull-right">
-                                          <img *ngIf="currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
-                                          <img *ngIf="!currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
+                                          <img *ngIf="currentThread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
+                                          <img *ngIf="!currentThread.user.profilePicture" src="http://54.213.175.206:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
                                         </span>
                                             <div class="chat-body1 clearfix">
                                                 <p>{{message.content}}</p>
@@ -106,10 +106,10 @@
                                         </li>
                                         <li *ngIf="!message.byUser" class="left clearfix">
                                             <span *ngIf="currentThread.business.logo" class="chat-img pull-left">
-                                        <img src="http://localhost:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
+                                        <img src="http://54.213.175.206:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
                                       </span>
                                             <span *ngIf="!currentThread.business.logo" class="chat-img pull-right">
-                                        <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
+                                        <img src="http://54.213.175.206:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
                                       </span>
                                             <div class="chat-body1 clearfix">
                                                 <p>{{message.content}}</p>

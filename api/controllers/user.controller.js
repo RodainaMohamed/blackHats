@@ -161,7 +161,7 @@ module.exports.registerUser = function (req, res) {
                                 });
                                 else {
                                     if (user) {
-                                        var html = "<p>Hello " + newUser.firstName + ", <br><br>Welcome to Black Hats, Please verify your account by clicking this <a href=\"http://localhost:8080/verify/" + token + "\">Link</a>.<br><br>If you are unable to do so, copy and paste the following link into your browser:<br><br>http://localhost:8080/verify/" + token + "</p>";
+                                        var html = "<p>Hello " + newUser.firstName + ", <br><br>Welcome to Black Hats, Please verify your account by clicking this <a href=\"http://54.213.175.206:8080/verify/" + token + "\">Link</a>.<br><br>If you are unable to do so, copy and paste the following link into your browser:<br><br>http://54.213.175.206:8080/verify/" + token + "</p>";
                                         var subject = 'Account Verification';
                                         emailSender.sendEmail(subject, req.body.email, "", html, function (err, info) {
                                             if (err)
@@ -873,7 +873,7 @@ module.exports.resendVerification = function (req, res) {
                             });
                         } else {
                             //TO-DO replace the link with the angular route not server route.
-                            var html = "<p>Hello " + tempUser.firstName + ", <br><br>Welcome to Black Hats, Please verify your account by clicking this <a href=\"http://localhost:8080/verify/" + token + "\">Link</a>.<br><br>If you are unable to do so, copy and paste the following link into your browser:<br><br>http://localhost:8080/verify/" + token + "</p>";
+                            var html = "<p>Hello " + tempUser.firstName + ", <br><br>Welcome to Black Hats, Please verify your account by clicking this <a href=\"http://54.213.175.206:8080/verify/" + token + "\">Link</a>.<br><br>If you are unable to do so, copy and paste the following link into your browser:<br><br>http://54.213.175.206:8080/verify/" + token + "</p>";
                             var subject = 'Account Verification';
                             emailSender.sendEmail(subject, email, "", html, function (err, info) {
                                 if (err) res.status(500).json({
