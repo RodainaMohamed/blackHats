@@ -22,7 +22,7 @@ export class DirectMessagingComponent implements OnInit {
     private srcID: string;
 
 
-    private currentThread: = {
+    private currentThread: any = {
       messages: []
     };
     private newMessage: String;
@@ -135,11 +135,11 @@ export class DirectMessagingComponent implements OnInit {
             (threads) => {
                 this.threads = threads.data;
                 if(this.threads.length != 0){
-                  this.nothreads = false
+                  this.noThreads = false
                   this.currentThread = this.threads[0];
                 }
                 else{
-                  this.nothreads = true
+                  this.noThreads = true
                 }
             },
             (err) => {

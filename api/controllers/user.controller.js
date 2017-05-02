@@ -457,13 +457,13 @@ module.exports.searchByLocationAndCategory = function (req, res) {
     //Check for query string Ex: "/api/search?location=Cairo&category=Escape"
 
     if (req.query && req.query.category) {
-        category = req.query.category;
+        category = req.query.category.replace(" ", "\\s");
     }
 
     if (req.query && req.query.location) {
-        location = req.query.location;
+        location = req.query.location.replace(" ", "\\s");
     }
-
+    
     var findQuery;
 
     //if location by geocordinates should be used

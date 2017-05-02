@@ -157,7 +157,7 @@ export class EditUserProfileComponent implements OnInit {
                 if (result) {
                     _this.editProfileService.deleteAccount().subscribe(
                         (data) => {
-                            _this.router.navigateByUrl('/homepage');
+    window.location.href = "/homepage";
                         },
                         (err) => {
                             switch (err.status) {

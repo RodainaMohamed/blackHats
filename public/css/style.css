@@ -668,7 +668,7 @@ ul.footer-menu li+li {
 }
 
 .bottom-footer {
-    background: #212124;
+    background: rgba(0, 0, 0, 0.9);
     color: rgba(255, 255, 255, 0.7);
     line-height: 22px;
     font-size: 13px;
