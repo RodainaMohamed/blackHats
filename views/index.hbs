@@ -2,28 +2,42 @@
 <html>
 
 <head>
-    <base href="/">
     <title>Black Hats</title>
-
+    <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="keywords" content="Activities, Adventure, Entertainment, Egypt, Escape, Breakout" />
     <meta name="author" content="Black Hats">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-
-<body>
-    
-    <my-app></my-app>
-    <!-- this is how our angular app gets served -->
-    <script src="/js/app/bundle.js"></script>
-
-      <!-- Core JS -->
+    <link href="/css/introLoader.css" rel="stylesheet">
+    <!-- Core JS -->
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/core-plugins.js"></script>
     <script type="text/javascript" src="/js/customs.js"></script>
+    <div id="introLoader" class="introLoading"></div>
+</head>
+
+<body>
+
+    <my-app>
+        <script>
+            $("#introLoader").introLoader({
+                animation: {
+                    name: 'cssLoader',
+                    options: {
+                        ease: "easeInOutCirc",
+                        style: 'dark bubble',
+                        delayBefore: 1000,
+                        exitTime: 500
+                    }
+                }
+            });
+        </script>
+    </my-app>
+
+    <!-- this is how our angular app gets served -->
+    <script src="/js/app/bundle.js"></script>
 
     <!-- Detail Page JS -->
     <script type="text/javascript" src="/js/jquery.stickit.js"></script>
@@ -41,8 +55,6 @@
     <script type="text/javascript" src="/js/fileinput.min.js"></script>
     <script type="text/javascript" src="/js/dropzone.min.js"></script>
     <script src="https://checkout.stripe.com/checkout.js"></script>
-    <!-- FastClick -->
-    <script src="/admin/js/fastclick.js"></script>
     <!-- Datatables -->
     <script src="/admin/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -57,7 +69,6 @@
     <script src="/admin/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="/admin/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
     <script src="/admin/jszip/dist/jszip.min.js"></script>
-    <script src="/admin/pdfmake/build/pdfmake.min.js"></script>
 </body>
 
 </html>
