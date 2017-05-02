@@ -11,8 +11,8 @@ import 'rxjs/add/operator/map';
 
 export class VerifyComponent implements OnInit {
 
-    private token: String;
-    private userId: String;
+     token: String;
+     userId: String;
 
     constructor(
         private verifyService: VerifyService,

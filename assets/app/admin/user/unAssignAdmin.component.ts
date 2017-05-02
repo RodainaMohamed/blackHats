@@ -11,8 +11,8 @@ import { User } from './user.model';
 
 
 export class UnAssignAdminComponent implements OnInit {
-    private users: User[] = [];
-    private loading: boolean = false;
+     users: User[] = [];
+     loading: boolean = false;
     constructor(private userService: UserService) { }
     ngOnInit() {
         this.userService.getAdmins().subscribe(users => {

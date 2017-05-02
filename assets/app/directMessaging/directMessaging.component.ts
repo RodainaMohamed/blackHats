@@ -11,23 +11,23 @@ import { AppService } from '../app.service';
 })
 
 export class DirectMessagingComponent implements OnInit {
-    private user: String;
-    private business: String;
-    private thread: Object;
-    private destID: String;
+     user: String;
+     business: String;
+     thread: any;
+     destID: String;
     message: String;
-    private threads: [Object];
-    private messages: [Object];
-    private isUser: boolean = true;
-    private srcID: string;
+     threads: any;
+     messages: [Object];
+     isUser: boolean = true;
+     srcID: string;
 
 
-    private currentThread: any = {
+     currentThread: any = {
       messages: []
     };
-    private newMessage: String;
-    private index = 0;
-    private noThreads = true;
+     newMessage: String;
+     index = 0;
+     noThreads = true;
 
 
     constructor(

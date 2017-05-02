@@ -17,10 +17,10 @@ import 'rxjs/add/operator/map';
 
 export class EditUserProfileComponent implements OnInit {
     public uploader: FileUploader = new FileUploader({ url: 'http://localhost:8080/api/user/profile/uploadProfilePicture', itemAlias: "myfile" });
-    private profilePicture: String;
-    private loggedin: Boolean;
-    private isUser: Boolean;
-    private user: Object;
+     profilePicture: String;
+     loggedin: Boolean;
+     isUser: Boolean;
+     user: Object;
     firstName: String;
     lastName: String;
     birthDate: Date;

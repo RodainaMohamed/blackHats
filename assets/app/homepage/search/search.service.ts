@@ -7,8 +7,8 @@ import { Business } from '../business.model';
 
 @Injectable()
 export class SearchService {
-    private path: string = "http://localhost:8080/api/";
-    private businesses: Business[] = [];
+     path: string = "http://localhost:8080/api/";
+     businesses: Business[] = [];
 
     constructor(private http: Http) { }
 

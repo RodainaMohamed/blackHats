@@ -12,8 +12,8 @@ import { User } from './user.model';
 
 
 export class ReviewComponent implements OnInit {
-  private users: User[] = [];
-  private loading: boolean = false;
+   users: User[] = [];
+   loading: boolean = false;
   constructor(private userService: UserService, private router: Router) { }
   ngOnInit() {
     this.userService.getUsers().subscribe(users => {

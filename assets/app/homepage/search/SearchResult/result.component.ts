@@ -12,16 +12,16 @@ import { Business } from '../../business.model';
     templateUrl: './result.component.html'
 })
 export class SearchResultComponent implements OnInit, AfterViewChecked {
-    private businesses: Business[] = [];
-    private temp: Observable<Business[]>;
-    private sliced: Business[] = [];
-    private pagingIndex: number[] = [];
-    private pageNumber: number = 1;
-    private searchQuery: string;
-    private sort: string;
-    private result: string;
-    private location: string;
-    private category: string;
+     businesses: Business[] = [];
+     temp: Observable<Business[]>;
+     sliced: Business[] = [];
+     pagingIndex: number[] = [];
+     pageNumber: number = 1;
+     searchQuery: string;
+     sort: string;
+     result: string;
+     location: string;
+     category: string;
 
     constructor(private searchService: SearchService, private route: ActivatedRoute, private router: Router) { }
 

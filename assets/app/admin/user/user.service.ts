@@ -8,8 +8,8 @@ import { User } from './user.model';
 
 @Injectable()
 export class UserService {
-    private alertMsg: string;
-    private apiPath: string = "http://localhost:8080/api/";
+     alertMsg: string;
+     apiPath: string = "http://localhost:8080/api/";
     constructor(private http: Http) { }
 
     getUsers() {

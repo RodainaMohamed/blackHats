@@ -16,10 +16,10 @@ export class UserComponent implements OnInit {
     public showBookings = false;
     public editProfile = false;
 
-    private profilePicture: String;
+     profilePicture: String;
     public loggedin: Boolean;
-    private isUser: Boolean;
-    private user: Object;
+     isUser: Boolean;
+     user: Object;
 
     userId: String = "";
     favorites: Object[];

@@ -11,19 +11,19 @@ import 'rxjs/add/operator/map';
 
 export class ResetPasswordComponent implements OnInit {
 
-    private token: String;
-    private id: String;
-    private password: String;
-    private confirmPassword: String;
+     token: String;
+     id: String;
+     password: String;
+     confirmPassword: String;
 
-    private resetFailure: String;
+     resetFailure: String;
 
 
     //warning Flags
 
-    private passwordWarning: boolean = false;
-    private confirmPasswordWarning: boolean = false;
-    private resetFailureWarning: boolean = false;
+     passwordWarning: boolean = false;
+     confirmPasswordWarning: boolean = false;
+     resetFailureWarning: boolean = false;
 
     constructor(
         private resetPasswordService: ResetPasswordService,

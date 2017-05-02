@@ -11,12 +11,12 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
 
   //to check for this part later
-  private loggedin: Boolean;
-  private isUser: Boolean;
-  private isAdmin: boolean;
-  private user: Object;
-  private business: Object;
-  private path: String = "http://localhost:8080/";
+   loggedin: Boolean;
+   isUser: Boolean;
+   isAdmin: boolean;
+   user: Object;
+   business: Object;
+   path: String = "http://localhost:8080/";
 
   constructor(
     private appService: AppService,
