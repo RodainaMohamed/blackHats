@@ -131,7 +131,7 @@ export class ActivityPageComponent implements OnInit {
 
     bookSlot(index) {
         var handler = (<any>window).StripeCheckout.configure({
-            key: 'pk_test_9AEHvD0gXViwtKYQDpQcLXlY',
+            key: 'pk_test_vtTq04LX7KiFSy5Eev4qPRDL',
             locale: 'auto',
             currency: 'egp',
             token: token => this.gotToken(token, index)
