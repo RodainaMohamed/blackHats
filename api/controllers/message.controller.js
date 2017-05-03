@@ -180,8 +180,6 @@ module.exports.findExistingThread = function (req, res) {
     } else {
         userID = req.user._id;
     }
-    console.log(userID);
-    console.log(businessID);
 
     Thread.findOne({
         "user": userID,
