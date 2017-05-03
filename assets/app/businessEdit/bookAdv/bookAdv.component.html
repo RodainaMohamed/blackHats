@@ -12,6 +12,11 @@
             <a class="close" (click)="hideNoOfDaysWarning()" aria-label="close">&times;</a> You must specify the number of
             days to book an advertisement
         </div>
+
+        <div *ngIf="negDaysWarning" class="alert alert-danger alert-dismissable">
+            <a class="close" (click)="hideNegDaysWarning()" aria-label="close">&times;</a> Number of days can not be negative!
+        </div>
+
         <div class="row gap-20">
 
             <div class="col-sm-6 col-md-4">

@@ -313,7 +313,7 @@ module.exports.uploadAdv = function (req, res) {
     uploadAdPhoto(req, res, function (err) {
         //if an error occurred, return the error
         if (err) {
-            return res.status(500).json({
+            return res.status(300).json({
                 error: err,
                 msg: "Error Uploading Photo",
                 data: null
@@ -336,7 +336,7 @@ module.exports.uploadAdv = function (req, res) {
                 fs.unlink(req.file.path);
 
                 //return the error message to frontend
-                return res.status(500).json({
+                return res.status(300).json({
                     error: err,
                     msg: "File Format Not Supported",
                     data: null
@@ -352,7 +352,7 @@ module.exports.uploadAdv = function (req, res) {
             });
 
             //return the file path to the frontend to show the image
-            res.status(200).json({
+            res.status(201).json({
                 error: null,
                 msg: 'Advertisement photo uploaded successfully',
                 data: req.file.filename + '.' + string
@@ -360,7 +360,7 @@ module.exports.uploadAdv = function (req, res) {
         }
         //multer did not find a file selected to upload
         else {
-            res.status(500).json({
+            res.status(300).json({
                 error: null,
                 msg: 'Please choose a valid file.',
                 data: null

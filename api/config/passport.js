@@ -11,7 +11,7 @@ var configurePassport = function (passport) {
         usernameField: 'username',
         passwordField: 'password'
     }, function (username, password, done) { // Finding the user by his username
-        User.getUserByUsername(username.trim(), function (err, user) {
+        User.getUserByUsername(username.toLowerCase().trim(), function (err, user) {
             if (err) return done(err);
             if (!user) {
                 return done(null, false, {
@@ -37,7 +37,7 @@ var configurePassport = function (passport) {
         passwordField: 'password',
     }, function (email, password, done) {
         // Finding the business by his email
-        Business.getBusinessByEmail(email.trim(), function (err, business) {
+        Business.getBusinessByEmail(email.toLowerCase().trim(), function (err, business) {
             if (err) return done(err);
             if (!business) return done(null, false, {
                 msg: 'Invalid email.'

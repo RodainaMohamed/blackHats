@@ -44,9 +44,9 @@ module.exports.registerUser = function (req, res) {
         for (i = 1; i < errors.length; i++) {
             errors[0].msg += "\n" + errors[i].msg;
         }
-        res.status(500).json({
-            error: errors[0],
-            msg: null,
+        res.status(300).json({
+            error: errors,
+            msg: errors[0].msg,
             data: null
         });
     } else {
@@ -88,7 +88,7 @@ module.exports.registerUser = function (req, res) {
                 var newError = {
                     "msg": msg
                 };
-                res.status(500).json({
+                res.status(300).json({
                     error: newError,
                     msg: msg,
                     data: null
@@ -130,7 +130,7 @@ module.exports.registerUser = function (req, res) {
                             var newError = {
                                 "msg": msg
                             };
-                            res.status(500).json({
+                            res.status(300).json({
                                 error: newError,
                                 msg: msg,
                                 data: null
@@ -169,18 +169,19 @@ module.exports.registerUser = function (req, res) {
                                                     var newError = {
                                                         "msg": 'Email address is not valid, registration failed.'
                                                     };
-                                                    res.status(500).json({
+                                                    res.status(300).json({
                                                         error: null,
                                                         msg: 'Email address is not valid, registration failed.',
                                                         data: null
                                                     });
                                                 });
-                                            else
+                                            else{
                                                 res.status(200).json({
                                                     error: null,
                                                     msg: "An Email was sent successfully to " + req.body.email + ", check your inbox.",
                                                     data: null
                                                 });
+                                              }
                                         });
                                     } else
                                         res.status(500).json({
@@ -463,7 +464,7 @@ module.exports.searchByLocationAndCategory = function (req, res) {
     if (req.query && req.query.location) {
         location = req.query.location.replace(" ", "\\s");
     }
-    
+
     var findQuery;
 
     //if location by geocordinates should be used

@@ -17,7 +17,7 @@ const uploadProfilePic = multer({
     Get function that gets all info of a user
     it gets User info from the User model with _id
     equal to the params.userID and return it
-    Takes: 
+    Takes:
         params{
             userId
         }
@@ -153,7 +153,7 @@ module.exports.updateOneUser = function (req, res) {
 };
 
 
-/*  
+/*
     Post function that sets the profile picture of the user.
     Takes:
         body: {
@@ -168,7 +168,7 @@ module.exports.uploadProfilePicture = function (req, res) {
     uploadProfilePic(req, res, function (err) {
         //if an error occurred, return the error
         if (err) {
-            return res.status(500).json({
+            return res.status(300).json({
                 error: err,
                 msg: "Error uploading photo.",
                 data: null
@@ -192,7 +192,7 @@ module.exports.uploadProfilePicture = function (req, res) {
                 fs.unlink(req.file.path);
 
                 //return the error message to frontend
-                return res.status(500).json({
+                return res.status(300).json({
                     error: null,
                     msg: "File format is not supported.",
                     data: null
@@ -212,7 +212,7 @@ module.exports.uploadProfilePicture = function (req, res) {
             //save the image file path to the User model
             User.findById(req.user._id, function (err, user) {
                 if (err)
-                    res.status(500).json({
+                    res.status(300).json({
                         error: err,
                         msg: "Error retrieving user from database.",
                         data: null
@@ -226,7 +226,7 @@ module.exports.uploadProfilePicture = function (req, res) {
                         user.save(function (err) {
                             //couldn't save, return the error
                             if (err) {
-                                res.status(500).json({
+                                res.status(300).json({
                                     error: err,
                                     msg: "Updating your profile picture failed.",
                                     data: null
@@ -259,7 +259,7 @@ module.exports.uploadProfilePicture = function (req, res) {
         }
         //multer did not find a file selected to upload
         else {
-            res.status(500).json({
+            res.status(300).json({
                 error: null,
                 msg: "Please choose a valid file.",
                 data: null

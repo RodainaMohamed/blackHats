@@ -320,6 +320,7 @@ export class EditActivityComponent implements OnInit {
 
 
     onUploadError(args: any) {
+      
     }
 
     onUploadSuccess(event) {

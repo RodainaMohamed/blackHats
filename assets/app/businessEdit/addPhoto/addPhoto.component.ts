@@ -39,21 +39,17 @@ export class AddPhotoComponent implements OnInit {
                             this.photos = data.data.photos;
                             this.uploader = new FileUploader({ url: 'http://54.213.175.206:8080/api/business/addPhoto', itemAlias: "myfile" });
                             this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-                                switch (status) {
-                                    case 404:
-                                        this.router.navigateByUrl('/404-error');
-                                        break;
-                                    case 401:
-                                        this.router.navigateByUrl('/notAuthorized-error');
-                                        break;
-                                    case 201:
-                                        break;
-                                    case 200: break;
-                                    default:
-                                        this.router.navigateByUrl('/500-error');
-                                        break;
-                                }
+
+                              var res = JSON.parse(response);
+                              var msg = res.msg;
+
+                              if(!(status == 201)) {
+                                bootbox.alert(msg);
+                              }
+                              else{
                                 this.showPhotos();
+                              }
+
                             };
                         }, (err) => {
                             switch (err.status) {

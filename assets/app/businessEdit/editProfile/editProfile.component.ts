@@ -117,8 +117,19 @@ export class EditProfileComponent implements OnInit {
                                 this.logo = "http://54.213.175.206:8080/api/image/businessLogos/defaultBLogo.jpg";
                             }
                             this.uploader = new FileUploader({ url: 'http://54.213.175.206:8080/api/business/addLogo', itemAlias: "myfile" });
-                            this.uploader.onCompleteItem = (item: any, response: any, headers: any) => {
-                                this.initialise();
+                            this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+
+                              var res = JSON.parse(response);
+                              var msg = res.msg;
+
+                              if(!(status == 201)) {
+                                bootbox.alert(msg);
+                              }
+                              else{
+                                let res = JSON.parse(response);
+                                this.path = "http://54.213.175.206:8080/api/image/businessLogos/";
+                                this.logo = res.data;
+                              }
                             };
                         }, (err) => {
                             switch (err.status) {

@@ -30,6 +30,7 @@ export class EditUserProfileComponent implements OnInit {
 
     path: String = "";
     userId: String = "";
+    ageWarning = false;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -77,32 +78,24 @@ export class EditUserProfileComponent implements OnInit {
                 }
                 this.uploader = new FileUploader({ url: 'http://54.213.175.206:8080/api/user/profile/uploadProfilePicture', itemAlias: "myfile" });
                 this.uploader.onCompleteItem = (item: any, response, status: any, headers: any) => {
-                    switch (status) {
-                        case 404:
-                            this.router.navigateByUrl('/404-error');
-                            break;
-                        case 401:
-                            this.router.navigateByUrl('/notAuthorized-error');
-                            break;
-                        case 200:
-                            break;
-                        case 201:
-                            break;
-                        default:
-                            this.router.navigateByUrl('/500-error');
-                            break;
-                    }
-                    this.initialise();
-                    let res = JSON.parse(response);
-                    this.profilePicture = res.data.imagePath;
-                    let user = {
-                        firstName: this.firstName,
-                        lastName: this.lastName,
-                        birthDate: this.birthDate,
-                        profilePicture: this.profilePicture
-                    }
-                    this.profileChanged.emit(user);
 
+                    var resp = JSON.parse(response);
+                    var msg = resp.msg;
+
+                    if (!(status == 201)) {
+                        bootbox.alert(msg);
+                    }
+                    else {
+                        let res = JSON.parse(response);
+                        this.profilePicture = res.data.imagePath;
+                        let user = {
+                            firstName: this.firstName,
+                            lastName: this.lastName,
+                            birthDate: this.birthDate,
+                            profilePicture: this.profilePicture
+                        }
+                        this.profileChanged.emit(user);
+                    }
 
                 };
             }, (err) => {
@@ -122,30 +115,38 @@ export class EditUserProfileComponent implements OnInit {
 
     updateProfile() {
 
-        this.editProfileService.editUserProfile(this.firstName, this.lastName, this.birthDate).subscribe(
-            (data) => {
-                let user = {
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    birthDate: this.birthDate,
-                    profilePicture: this.profilePicture
+        let now = new Date();
+
+        if (now < this.birthDate) {
+            this.ageWarning = true;
+        }
+        else {
+            this.editProfileService.editUserProfile(this.firstName, this.lastName, this.birthDate).subscribe(
+                (data) => {
+                    let user = {
+                        firstName: this.firstName,
+                        lastName: this.lastName,
+                        birthDate: this.birthDate,
+                        profilePicture: this.profilePicture
+                    }
+                    this.profileChanged.emit(user);
+                    bootbox.alert("Profile Updated.");
+                }, (err) => {
+                    switch (err.status) {
+                        case 404:
+                            this.router.navigateByUrl('/404-error');
+                            break;
+                        case 401:
+                            this.router.navigateByUrl('/notAuthorized-error');
+                            break;
+                        default:
+                            this.router.navigateByUrl('/500-error');
+                            break;
+                    }
                 }
-                this.profileChanged.emit(user);
-                bootbox.alert("Profile Updated.");
-            }, (err) => {
-                switch (err.status) {
-                    case 404:
-                        this.router.navigateByUrl('/404-error');
-                        break;
-                    case 401:
-                        this.router.navigateByUrl('/notAuthorized-error');
-                        break;
-                    default:
-                        this.router.navigateByUrl('/500-error');
-                        break;
-                }
-            }
-        );
+            );
+
+        }
     }
 
 
@@ -171,7 +172,7 @@ export class EditUserProfileComponent implements OnInit {
                 if (result) {
                     _this.editProfileService.deleteAccount().subscribe(
                         (data) => {
-    window.location.href = "/homepage";
+                            window.location.href = "/homepage";
                         },
                         (err) => {
                             switch (err.status) {
@@ -195,5 +196,8 @@ export class EditUserProfileComponent implements OnInit {
 
     cancel() {
         this.initialise();
+    }
+    hideAgeWarning() {
+        this.ageWarning = false;
     }
 }
