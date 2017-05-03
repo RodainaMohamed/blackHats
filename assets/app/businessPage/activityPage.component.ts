@@ -141,8 +141,6 @@ export class ActivityPageComponent implements OnInit {
                 this.bookActivity(index);
                 break;
         }
-        console.log(this.activity.business);
-
     }
 
     createHandler(deposit: Number, index: Number) {
