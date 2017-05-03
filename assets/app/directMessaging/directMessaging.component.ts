@@ -13,17 +13,17 @@ import { AppService } from '../app.service';
 export class DirectMessagingComponent implements OnInit {
     private user: String;
     private business: String;
-    private thread: Object;
+    private thread: any;
     private destID: String;
     message: String;
-    private threads: [Object];
-    private messages: [Object];
+    private threads: [any];
+    private messages: [any];
     private isUser: boolean = true;
     private srcID: string;
 
 
     private currentThread: any = {
-      messages: []
+        messages: []
     };
     private newMessage: String;
     private index = 0;
@@ -50,19 +50,6 @@ export class DirectMessagingComponent implements OnInit {
                     this.isUser = false;
                 }
                 this.getThreads();
-            });
-    }
-
-    sendMessage() {
-
-        this.appService.getCurrentUser().subscribe(
-            (user) => {
-                if (this.user.constructor.name === "User") {
-                    this.user = user.data._id;
-                }
-                else {
-                    this.business = user.data._id;
-                }
             },
             (err) => {
                 switch (err.status) {
@@ -77,69 +64,18 @@ export class DirectMessagingComponent implements OnInit {
                         break;
                 }
             });
-
-        this.route.params.subscribe(
-            (params) => {
-                if (!this.user) {
-                    this.user = params['userId'];
-                    this.destID = params['userId'];
-                }
-                if (!this.business) {
-                    this.business = params['businessId'];
-                    this.destID = params['businessId'];
-                }
-                this.directMessagingService.existingThread(this.user, this.business).subscribe(
-                    (thread) => {
-                        this.thread = thread.data;
-                        this.directMessagingService.addMessage(this.thread._id, this.message).subscribe(
-                            (data) => { },
-                            (err) => {
-                                switch (err.status) {
-                                    case 404:
-                                        this.router.navigateByUrl('/404-error');
-                                        break;
-                                    case 401:
-                                        this.router.navigateByUrl('/notAuthorized-error');
-                                        break;
-                                    default:
-                                        this.router.navigateByUrl('/500-error');
-                                        break;
-                                }
-                            }
-                        )
-                    },
-                    (err) => {
-                        this.directMessagingService.newThread(this.destID, this.message).subscribe(
-                            (thread) => {
-                                this.thread = thread.data;
-                            },
-                            (err) => {
-                                switch (err.status) {
-                                    case 404:
-                                        this.router.navigateByUrl('/404-error');
-                                        break;
-                                    case 401:
-                                        this.router.navigateByUrl('/notAuthorized-error');
-                                        break;
-                                    default:
-                                        this.router.navigateByUrl('/500-error');
-                                        break;
-                                }
-                            });
-                    });
-            });
     }
 
     getThreads() {
         this.directMessagingService.getThreads(this.srcID).subscribe(
             (threads) => {
                 this.threads = threads.data;
-                if(this.threads.length != 0){
-                  this.noThreads = false
-                  this.currentThread = this.threads[0];
+                if (this.threads.length != 0) {
+                    this.noThreads = false
+                    this.currentThread = this.threads[0];
                 }
-                else{
-                  this.noThreads = true
+                else {
+                    this.noThreads = true
                 }
             },
             (err) => {
@@ -179,7 +115,9 @@ export class DirectMessagingComponent implements OnInit {
 
     deleteThread(threadID) {
         this.directMessagingService.deleteThread(threadID).subscribe(
-            (data) => { },
+            (data) => {
+                bootbox.alert(data.msg);
+            },
             (err) => {
                 switch (err.status) {
                     case 404:
@@ -215,39 +153,40 @@ export class DirectMessagingComponent implements OnInit {
         )
     }
 
-    onClick(i){
-      this.currentThread = this.threads[i];
-      this.index = i;
+    onClick(i) {
+        this.currentThread = this.threads[i];
+        this.index = i;
     }
 
-    onSend(){
-      if(this.newMessage && this.newMessage.length != 0){
-        this.directMessagingService.addMessage(this.currentThread._id, this.newMessage).subscribe(
-          (data) => {
-            let now = new Date();
-            let message = {
-              content: this.newMessage,
-              byUser: this.isUser,
-              dateCreated: now
-            };
-            this.threads[this.index].messages.push(message);
-            //this.currentThread.messages.push(this.newMessage);
-            this.newMessage = null;
-          },
-          (err) => {
-            switch (err.status) {
-                case 404:
-                    this.router.navigateByUrl('/404-error');
-                    break;
-                case 401:
-                    this.router.navigateByUrl('/notAuthorized-error');
-                    break;
-                default:
-                    this.router.navigateByUrl('/500-error');
-                    break;
-            }
-          }
-        )
-      }
+    onSend() {
+        if (this.newMessage && this.newMessage.length != 0) {
+            this.directMessagingService.addMessage(this.currentThread._id, this.newMessage).subscribe(
+                (data) => {
+                    let now = new Date();
+                    let message = {
+                        content: this.newMessage,
+                        byUser: this.isUser,
+                        dateCreated: now
+                    };
+                    this.threads[this.index].messages.push(message);
+                    //this.currentThread.messages.push(this.newMessage);
+                    this.newMessage = null;
+                },
+                (err) => {
+                    switch (err.status) {
+                        case 404:
+                            this.router.navigateByUrl('/404-error');
+                            break;
+                        case 401:
+                            this.router.navigateByUrl('/notAuthorized-error');
+                            break;
+                        default:
+                            this.router.navigateByUrl('/500-error');
+                            break;
+                    }
+                }
+            )
+        }
     }
+
 }

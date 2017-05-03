@@ -26,10 +26,10 @@ export class SearchResultComponent implements OnInit, AfterViewChecked {
     constructor(private searchService: SearchService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
+        $(".selectpicker").selectpicker();
         this.getQueryParams();
         this.search();
         $("#back-to-top").click();
-
     }
 
 

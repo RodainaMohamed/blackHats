@@ -1,5 +1,5 @@
 <div class="container-wrapper">
-    <div class="main-wrapper scrollspy-container"  style="min-height: 500px;">
+    <div class="main-wrapper scrollspy-container" style="background-color: white">
         <!-- start Breadcrumb -->
 
         <div class="breadcrumb-wrapper">
@@ -12,11 +12,10 @@
         </div>
 
         <!-- end Breadcrumb -->
-        <!--<div class="main_section">-->
-        <div class="pt-50">
-            <div class="container" style="padding-top: 50px; padding-bottom: 73px;">
+        <div class="main_section">
+            <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
                 <div *ngIf="noThreads">
-                    <div class="section-title">
+                    <div class="section-title" style="padding-top: 80px;">
 
                         <h2>Inbox</h2>
                         <p>You have no open conversations, start some with the businesses you want to know more about.</p>
@@ -28,50 +27,45 @@
                         <div class="row">
                             <div class="member_list">
                                 <ul class="list-unstyled">
-                                    <div *ngIf="noThreads">
-                                        <h1> No Threads </h1>
-                                    </div>
-                                    <div *ngIf="!noThreads">
-                                        <li class="left clearfix" *ngFor="let thread of threads; let i = index" (click)="onClick(i)">
-                                            <div *ngIf="isUser">
-                                                <span *ngIf="thread.business.logo" class="chat-img pull-left">
+                                    <li class="left clearfix" *ngFor="let thread of threads; let i = index" (click)="onClick(i)">
+                                        <div *ngIf="isUser">
+                                            <span *ngIf="thread.business.logo" class="chat-img pull-left">
                                               <img src="http://localhost:8080/api/image/businessLogos/{{thread.business.logo}}" alt="User Avatar" class="img-circle">
                                             </span>
-                                                <span *ngIf="!thread.business.logo" class="chat-img pull-left">
+                                            <span *ngIf="!thread.business.logo" class="chat-img pull-left">
                                               <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
                                             </span>
-                                                <div class="chat-body clearfix">
-                                                    <div class="header_sec">
-                                                        <strong class="primary-font">{{thread.business.name}}</strong>
-                                                    </div>
+                                            <div class="chat-body clearfix">
+                                                <div class="header_sec">
+                                                    <strong class="primary-font">{{thread.business.name}}</strong>
                                                 </div>
                                             </div>
+                                        </div>
 
-                                            <div *ngIf="!isUser">
-                                                <span class="chat-img pull-left">
+                                        <div *ngIf="!isUser">
+                                            <span class="chat-img pull-left">
                                               <img *ngIf="thread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{thread.user.profilePicture}}" alt="User Avatar" class="img-circle">
                                               <img *ngIf="!thread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
                                             </span>
-                                                <div class="chat-body clearfix">
-                                                    <div class="header_sec">
-                                                        <strong class="primary-font">{{thread.user.firstName}} {{thread.user.lastName}}</strong>
-                                                    </div>
+                                            <div class="chat-body clearfix">
+                                                <div class="header_sec">
+                                                    <strong class="primary-font">{{thread.user.firstName}} {{thread.user.lastName}}</strong>
                                                 </div>
                                             </div>
-                                        </li>
-                                    </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <!--chat_sidebar-->
                     <div class="col-sm-9 message_section">
-                        <div class="chat_area">
+                        <div id="#chatBox" class="chat_area">
                             <ul class="list-unstyled">
                                 <div *ngFor="let message of currentThread.messages; let j = index">
                                     <div *ngIf="isUser">
-                                        <li *ngIf="message.byUser" class="left clearfix">
-                                            <span class="chat-img1 pull-left">
+                                        <li *ngIf="message.byUser" class="right clearfix">
+                                            <span class="chat-img1 pull-right">
                                           <img *ngIf="currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
                                           <img *ngIf="!currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
                                         </span>
@@ -81,10 +75,10 @@
                                             </div>
                                         </li>
                                         <li *ngIf="!message.byUser" class="left clearfix admin_chat">
-                                            <span *ngIf="currentThread.business.logo" class="chat-img pull-right">
+                                            <span *ngIf="currentThread.business.logo" class="chat-img pull-left">
                                         <img src="http://localhost:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
                                       </span>
-                                            <span *ngIf="!currentThread.business.logo" class="chat-img pull-right">
+                                            <span *ngIf="!currentThread.business.logo" class="chat-img pull-left">
                                         <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
                                       </span>
                                             <div class="chat-body1 clearfix">

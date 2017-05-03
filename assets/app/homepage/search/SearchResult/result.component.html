@@ -72,7 +72,7 @@
                                                         <div class="input-group input-group-addon-icon no-border no-br-xs">
                                                             <span class="input-group-addon input-group-addon-icon bg-white">
 																<label class="block-xs"><i class="fa fa-sort-amount-asc"></i> Sort by:</label></span>
-                                                            <select class="selectpicker form-control block-xs" #sort (change)="updateSortQuery(sort.value)" style="min-width: 120px;">
+                                                            <select class="selectpicker show-tick form-control block-xs" #sort (change)="updateSortQuery(sort.value)">
 																	<option value="interactivity"> Popularity</option>
 																	<option value="averageRating"> Ratings</option>
 
@@ -103,7 +103,7 @@
 
 
 
-        <div class="pt-30 pb-50" style="min-height: 460px">
+        <div class="pt-30 pb-50" style="min-height:180px;">
 
             <div class="container">
 
@@ -125,7 +125,7 @@
                                     <div class="content">
 
                                         <h4>{{business.name}}</h4>
-                                        <div *ngIf="business.location">
+                                        <div *ngIf="business.location && business.location.city">
                                             <span class="labeling"><i class="fa fa-map-marker"></i> {{business.location.city}}</span>
                                         </div>
 

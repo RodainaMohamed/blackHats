@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import {BusinessService} from './business.service';
+import { Component, OnInit } from '@angular/core';
+import { BusinessService } from './business.service';
 
 @Component({
   selector: 'app-business',
   templateUrl: './businessEdit.component.html'
 })
-export class BusinessEditComponent {
+export class BusinessEditComponent implements OnInit {
 
   public showActivities = true;
   public showPhotos = false;
@@ -17,7 +17,7 @@ export class BusinessEditComponent {
   constructor(private businessService: BusinessService) { }
 
 
-  onActivitiesClick(){
+  onActivitiesClick() {
     this.showActivities = true;
     this.showPhotos = false;
     this.showReviews = false;
@@ -26,7 +26,7 @@ export class BusinessEditComponent {
     this.showAds = false;
   }
 
-  onPhotosClick(){
+  onPhotosClick() {
     this.showActivities = false;
     this.showPhotos = true;
     this.showReviews = false;
@@ -35,7 +35,7 @@ export class BusinessEditComponent {
     this.showAds = false;
   }
 
-  onReviewsClick(){
+  onReviewsClick() {
     this.showActivities = false;
     this.showPhotos = false;
     this.showReviews = true;
@@ -44,7 +44,7 @@ export class BusinessEditComponent {
     this.showAds = false;
   }
 
-  onBookingsClick(){
+  onBookingsClick() {
     this.showActivities = false;
     this.showPhotos = false;
     this.showReviews = false;
@@ -53,7 +53,7 @@ export class BusinessEditComponent {
     this.showAds = false;
   }
 
-  onEditClick(){
+  onEditClick() {
     this.showActivities = false;
     this.showPhotos = false;
     this.showReviews = false;
@@ -62,7 +62,7 @@ export class BusinessEditComponent {
     this.showAds = false;
   }
 
-  onAdsClick(){
+  onAdsClick() {
     this.showActivities = false;
     this.showPhotos = false;
     this.showReviews = false;
@@ -71,5 +71,7 @@ export class BusinessEditComponent {
     this.showAds = true;
   }
 
-
+  ngOnInit() {
+    $('#back-to-top').click();
+  }
 }
