@@ -128,7 +128,7 @@ export class EditProfileComponent implements OnInit {
                               else{
                                 let res = JSON.parse(response);
                                 this.path = "http://54.213.175.206:8080/api/image/businessLogos/";
-                                this.logo = res.data.imagePath;
+                                this.logo = res.data;
                               }
                             };
                         }, (err) => {

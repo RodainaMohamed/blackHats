@@ -50,7 +50,7 @@ export class BookAdvComponent implements OnInit {
           }
           else{
             this.path = "http://54.213.175.206:8080/api/image/businessAds/";
-            this.advPicture = res.data.imagePath;
+            this.advPicture = res.data;
           }
 
 
