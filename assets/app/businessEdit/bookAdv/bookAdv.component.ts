@@ -40,6 +40,21 @@ export class BookAdvComponent implements OnInit {
     ngOnInit() {
         this.advPicture = "http://localhost:8080/api/image/businessAds/defaultAPic.jpg";
         this.showAdvSlots();
+        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+
+          var res = JSON.parse(response);
+          var msg = res.msg;
+
+          if(!(status == 201)) {
+            bootbox.alert(msg);
+          }
+          else{
+            this.path = "http://localhost:8080/api/image/businessAds/";
+            this.advPicture = res.data.imagePath;
+          }
+
+
+        }
     }
 
     showAdvSlots() {
@@ -88,18 +103,7 @@ export class BookAdvComponent implements OnInit {
 
     uploadAdvPicture() {
         this.uploader.uploadAll();
-        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
 
-          var res = JSON.parse(response);
-          var msg = res.msg;
-
-          if(!(status == 201)) {
-            bootbox.alert(msg);
-          }
-          
-            this.advPicture = JSON.parse(response).data;
-            this.path = "http://localhost:8080/api/image/businessAds/";
-        }
     }
 
 

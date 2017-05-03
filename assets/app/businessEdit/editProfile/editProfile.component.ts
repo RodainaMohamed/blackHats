@@ -106,8 +106,11 @@ export class EditProfileComponent implements OnInit {
                               if(!(status == 201)) {
                                 bootbox.alert(msg);
                               }
-
-                                this.initialise();
+                              else{
+                                let res = JSON.parse(response);
+                                this.path = "http://localhost:8080/api/image/businessLogos/";
+                                this.logo = res.data.imagePath;
+                              }
                             };
                         }, (err) => {
                             switch (err.status) {

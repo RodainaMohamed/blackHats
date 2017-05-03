@@ -460,7 +460,7 @@ module.exports.uploadLogo = function (req, res) {
                                     });
                                 }
                                 //return the file path to the frontend to show the image
-                                res.status(200).json({
+                                res.status(201).json({
                                     error: null,
                                     msg: 'Logo was updated successfully.',
                                     data: business.logo

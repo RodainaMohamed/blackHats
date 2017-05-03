@@ -46,7 +46,10 @@ export class AddPhotoComponent implements OnInit {
                               if(!(status == 201)) {
                                 bootbox.alert(msg);
                               }
+                              else{
                                 this.showPhotos();
+                              }
+
                             };
                         }, (err) => {
                             switch (err.status) {

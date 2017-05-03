@@ -352,7 +352,7 @@ module.exports.uploadAdv = function (req, res) {
             });
 
             //return the file path to the frontend to show the image
-            res.status(200).json({
+            res.status(201).json({
                 error: null,
                 msg: 'Advertisement photo uploaded successfully',
                 data: req.file.filename + '.' + string

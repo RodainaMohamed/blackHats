@@ -85,11 +85,19 @@ export class EditUserProfileComponent implements OnInit {
                   if(!(status == 201)) {
                     bootbox.alert(msg);
                   }
-
-                    this.initialise();
+                  else{
                     let res = JSON.parse(response);
-                    this.pictureChanged.emit(res.data.imagePath);
                     this.profilePicture = res.data.imagePath;
+                    let user = {
+                        firstName: this.firstName,
+                        lastName: this.lastName,
+                        birthDate: this.birthDate,
+                        profilePicture: this.profilePicture
+                    }
+                    this.pictureChanged.emit(user);
+                  }
+
+
 
                 };
             }, (err) => {
