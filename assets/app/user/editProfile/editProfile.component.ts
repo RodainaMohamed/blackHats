@@ -24,7 +24,7 @@ export class EditUserProfileComponent implements OnInit {
     firstName: String;
     lastName: String;
     birthDate: Date;
-    @Output() pictureChanged = new EventEmitter<string>();
+    @Output() profileChanged = new EventEmitter<any>();
 
 
 
@@ -94,8 +94,15 @@ export class EditUserProfileComponent implements OnInit {
                     }
                     this.initialise();
                     let res = JSON.parse(response);
-                    this.pictureChanged.emit(res.data.imagePath);
                     this.profilePicture = res.data.imagePath;
+                    let user = {
+                        firstName: this.firstName,
+                        lastName: this.lastName,
+                        birthDate: this.birthDate,
+                        profilePicture: this.profilePicture
+                    }
+                    this.profileChanged.emit(user);
+
 
                 };
             }, (err) => {
@@ -117,6 +124,13 @@ export class EditUserProfileComponent implements OnInit {
 
         this.editProfileService.editUserProfile(this.firstName, this.lastName, this.birthDate).subscribe(
             (data) => {
+                let user = {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    birthDate: this.birthDate,
+                    profilePicture: this.profilePicture
+                }
+                this.profileChanged.emit(user);
                 bootbox.alert("Profile Updated.");
             }, (err) => {
                 switch (err.status) {
@@ -153,7 +167,7 @@ export class EditUserProfileComponent implements OnInit {
                     label: '<i class="fa fa-check"></i> Confirm'
                 }
             },
-            callback: function (result) {
+            callback: function(result) {
                 if (result) {
                     _this.editProfileService.deleteAccount().subscribe(
                         (data) => {

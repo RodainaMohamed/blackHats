@@ -400,4 +400,13 @@ export class BusinessPageComponent implements OnInit {
     onMessageCancel(){
       this.message = null;
     }
+
+    trimDays(days){
+      let string = "";
+      days.forEach((item, i) => {
+        string = string + item + " | ";
+      });
+      string = string.slice(0, -3);
+      return string;
+    }
 }
