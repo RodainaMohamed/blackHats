@@ -205,9 +205,9 @@ module.exports.addBusiness = function (req, res) {
         for (i = 1; i < errors.length; i++) {
             errors[0].msg += "\n" + errors[i].msg;
         }
-        res.status(500).json({
-            error: errors[0],
-            msg: "Problem with submitted fields.",
+        res.status(300).json({
+            error: errors,
+            msg: errors[0].msg,
             data: null
         });
     } else {
@@ -232,7 +232,7 @@ module.exports.addBusiness = function (req, res) {
                     "msg": msg
                 };
 
-                res.status(500).json({
+                res.status(300).json({
                     error: newError,
                     msg: msg,
                     data: null

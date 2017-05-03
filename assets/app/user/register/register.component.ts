@@ -19,6 +19,7 @@ export class RegisterComponent {
     success: boolean = false;
     failure: boolean = false;
     message: string;
+    successMessage: string = "";
 
     //warnings
     firstNameRequired = false;
@@ -129,18 +130,18 @@ export class RegisterComponent {
             this.registerService.signUp(user)
                 .subscribe(
                 (data) => {
-                    this.success = true;
-                    // $("#userRegisterModal").scrollTop(0);
-                    setTimeout(() => {
-                        this.success = false;
-                        $("#userRegisterClose").click();
-                    }, 5000);
-
+                  this.successMessage = data.msg;
+                  this.success = true;
+                  // $("#userRegisterModal").scrollTop(0);
+                  setTimeout(() => {
+                      this.success = false;
+                      $("#userRegisterClose").click();
+                  }, 5000);
                 },
                 (error) => {
                     this.success = false;
                     this.failure = true;
-                    this.message = error.error.msg;
+                    this.message = error.msg;
                     setTimeout(() => {
                       this.failure = false;
                     }, 10000);

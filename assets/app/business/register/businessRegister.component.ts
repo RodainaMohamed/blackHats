@@ -118,7 +118,7 @@ export class BusinessRegisterComponent {
                 (error) => {
                     this.success = false;
                     this.failure = true;
-                    this.message = error.error.msg;
+                    this.message = error.msg;
                     setTimeout(() => {
                       this.failure = false;
                     }, 10000);
