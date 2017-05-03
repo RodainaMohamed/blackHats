@@ -126,14 +126,44 @@
 	<div class="form-horizontal">
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label">Working Days</label>
-			<div class="col-xs-5 col-sm-5">
+			<div class="col-md-7 col-sm-7">
+			<div class="checkbox-block">
+				<input id="sat" name="saturday" [(ngModel)]="saturday" type="checkbox" class="checkbox"/>
+				<label class="" for="sat">Saturday</label>
+			</div>
+			<div class="checkbox-block">
+				<input id="sun" name="sunday" [(ngModel)]="sunday" type="checkbox" class="checkbox"/>
+				<label class="" for="sun">Sunday</label>
+			</div>
+			<div class="checkbox-block">
+				<input id="mon" name="monday" [(ngModel)]="monday" type="checkbox" class="checkbox"/>
+				<label class="" for="mon">Monday</label>
+			</div>
+			<div class="checkbox-block">
+				<input id="tues" name="tuesday" [(ngModel)]="tuesday" type="checkbox" class="checkbox"/>
+				<label class="" for="tues">Tuesday</label>
+			</div>
+			<div class="checkbox-block">
+				<input id="wed" name="wednesday" [(ngModel)]="wednesday" type="checkbox" class="checkbox"/>
+				<label class="" for="wed">Wednesday</label>
+			</div>
+			<div class="checkbox-block">
+				<input id="thursday" name="thursday" [(ngModel)]="thursday" type="checkbox" class="checkbox"/>
+				<label class="" for="thursday">Thursday</label>
+			</div>
+			<div class="checkbox-block">
+				<input id="friday" name="friday" [(ngModel)]="friday" type="checkbox" class="checkbox"/>
+				<label class="" for="friday">Friday</label>
+			</div>
+		</div>
+			<!-- <div class="col-xs-5 col-sm-5">
 				<tr *ngFor="let workingDay of workingDays; let i=index">
 					<div class="form-horizontal">
 						<div class="form-group">
-							<div class="col-sm-5 col-md-5">
+							<div class="col-sm-7 col-md-7">
 								<input type="text" class="form-control" value={{workingDay}} readonly>
 							</div>
-							<div class="col-xs-5 col-sm-5">
+							<div class="col-sm-3 col-md-3">
 								<a class="btn btn-primary btn-border" (click)="removeWorkingDay(i)"><i class="glyphicon glyphicon-minus"></i></a>
 							</div>
 						</div>
@@ -141,15 +171,15 @@
 				</tr>
 				<div class="form-horizontal">
 					<div class="form-group">
-						<div class="col-sm-5 col-md-5">
+						<div class="col-sm-7 col-md-7">
 							<input type="text" class="form-control" [(ngModel)]="extraDay" name="extraDay">
 						</div>
-						<div class="col-xs-5 col-sm-5">
+						<div class="col-sm-3 col-md-3">
 							<a class="btn btn-primary" (click)="addWorkingDay()"><i class="glyphicon glyphicon-plus"></i></a>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
@@ -164,10 +194,10 @@
 					<tr *ngFor="let phoneNumber of phoneNumbers; let k=index">
 						<div class="form-horizontal">
 							<div class="form-group">
-								<div class="col-sm-5 col-md-5">
-									<input type="text" class="form-control" value={{phoneNumber}} readonly>
+								<div class="col-sm-7 col-md-7">
+									<input type="tel" class="form-control" value={{phoneNumber}} readonly>
 								</div>
-								<div class="col-xs-5 col-sm-5">
+								<div class="col-sm-3 col-md-3">
 									<a class="btn btn-primary btn-border" (click)="removePhoneNumber(k)"><i class="glyphicon glyphicon-minus"></i></a>
 								</div>
 							</div>
@@ -175,10 +205,10 @@
 					</tr>
 					<div class="form-horizontal">
 						<div class="form-group">
-							<div class="col-sm-5 col-md-5">
-								<input type="text" class="form-control" [(ngModel)]="extraNumber" name="extraNumber">
+							<div class="col-sm-7 col-md-7">
+								<input type="number" min="0" class="form-control" [(ngModel)]="extraNumber" name="extraNumber">
 							</div>
-							<div class="col-xs-5 col-sm-5">
+							<div class="col-sm-3 col-md-3">
 								<a class="btn btn-primary" (click)="addPhoneNumber()"><i class="glyphicon glyphicon-plus"></i></a>
 							</div>
 						</div>
@@ -197,10 +227,10 @@
 							<tr *ngFor="let tag of tags; let j=index">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<div class="col-sm-5 col-md-5">
+										<div class="col-sm-7 col-md-7">
 											<input type="text" class="form-control" value={{tag}} readonly>
 										</div>
-										<div class="col-xs-5 col-sm-5">
+										<div class="col-sm-3 col-md-3">
 											<a class="btn btn-primary btn-border" (click)="removeTag(j)"><i class="glyphicon glyphicon-minus"></i></a>
 										</div>
 									</div>
@@ -208,10 +238,10 @@
 							</tr>
 							<div class="form-horizontal">
 								<div class="form-group">
-									<div class="col-sm-5 col-md-5">
+									<div class="col-sm-7 col-md-7">
 										<input type="text" class="form-control" [(ngModel)]="extraTag" name="extraTag">
 									</div>
-									<div class="col-xs-5 col-sm-5">
+									<div class="col-sm-3 col-md-3">
 										<a class="btn btn-primary" (click)="addTag()"><i class="glyphicon glyphicon-plus"></i></a>
 									</div>
 								</div>
