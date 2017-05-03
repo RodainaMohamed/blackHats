@@ -1,4 +1,5 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Component, ElementRef, NgModule, OnInit, ViewChild } from '@angular/core';
 import { DirectMessagingService } from './directMessaging.service';
 import { Http, Headers } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,7 +11,9 @@ import { AppService } from '../app.service';
     styleUrls: ['./directMessaging.component.css']
 })
 
-export class DirectMessagingComponent implements OnInit {
+export class DirectMessagingComponent implements OnInit, AfterViewChecked {
+    @ViewChild('chatBox') private myScrollContainer: ElementRef;
+
     private user: String;
     private business: String;
     private thread: any;
@@ -28,7 +31,6 @@ export class DirectMessagingComponent implements OnInit {
     private newMessage: String;
     private index = 0;
     private noThreads = true;
-
 
     constructor(
         private appService: AppService,
@@ -64,6 +66,16 @@ export class DirectMessagingComponent implements OnInit {
                         break;
                 }
             });
+    }
+
+    ngAfterViewChecked() {
+        this.scrollToBottom();
+    }
+
+    scrollToBottom() {
+        try {
+            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        } catch (err) { }
     }
 
     getThreads() {
@@ -156,6 +168,12 @@ export class DirectMessagingComponent implements OnInit {
     onClick(i) {
         this.currentThread = this.threads[i];
         this.index = i;
+    }
+
+    isThreadActive(id) {
+        return {
+            active: this.index == id
+        }
     }
 
     onSend() {
