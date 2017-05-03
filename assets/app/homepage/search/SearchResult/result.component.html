@@ -116,9 +116,9 @@
 
                                 <div class="user-item-02" style="background-color:white">
 
-                                    <div class="image" style="min-height: 86px;">
-                                        <img style="height: 86px;" *ngIf="!business.logo" src="http://54.213.175.206:8080/api/image/businessLogos/x" alt="Images" />
-                                        <img style="height: 86px;" name="businessLogo" *ngIf="business.logo" src="http://54.213.175.206:8080/api/image/businessLogos/{{business.logo}}"
+                                    <div class="image">
+                                        <img style="height: 86px; width:100%; margin: auto;" *ngIf="!business.logo" src="http://54.213.175.206:8080/api/image/businessLogos/x" alt="Images" />
+                                        <img style="height: 86px; width: 100%; margin: auto;" name="businessLogo" *ngIf="business.logo" src="http://54.213.175.206:8080/api/image/businessLogos/{{business.logo}}"
                                             alt="Images" />
                                     </div>
 
