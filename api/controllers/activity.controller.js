@@ -624,7 +624,7 @@ module.exports.addPhoto = function(req, res) {
             uploadPhotos(req, res, function(err) {
                 //if an error occurred, return the error
                 if (err) {
-                    return res.status(500).json({
+                    return res.status(300).json({
                         error: err,
                         msg: null,
                         data: null
@@ -647,7 +647,7 @@ module.exports.addPhoto = function(req, res) {
                         fs.unlink(req.file.path);
 
                         //return the error message to frontend
-                        return res.status(500).json({
+                        return res.status(300).json({
                             error: err,
                             msg: "File Format is Not Supported",
                             data: null
@@ -673,7 +673,7 @@ module.exports.addPhoto = function(req, res) {
                         function(err, result) {
                             //couldn't add to array, return the error
                             if (err) {
-                                return res.status(500).json({
+                                return res.status(300).json({
                                     error: err,
                                     msg: null,
                                     data: null
@@ -698,7 +698,7 @@ module.exports.addPhoto = function(req, res) {
                 }
                 //multer did not find a file selected to upload
                 else {
-                    return res.status(500).json({
+                    return res.status(300).json({
                         error: null,
                         msg: "Choose a Valid File",
                         data: null

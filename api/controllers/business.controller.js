@@ -35,7 +35,7 @@ module.exports.addPhoto = function (req, res) {
     uploadPhotos(req, res, function (err) {
         //if an error occurred, return the error
         if (err) {
-            return res.status(500).json({
+            return res.status(300).json({
                 error: err,
                 msg: "Error uploading photo.",
                 data: null
@@ -59,7 +59,7 @@ module.exports.addPhoto = function (req, res) {
                 fs.unlink(req.file.path);
 
                 //return the error message to frontend
-                return res.status(500).json({
+                return res.status(300).json({
                     error: null,
                     msg: "File format is not supported.",
                     data: null
@@ -84,7 +84,7 @@ module.exports.addPhoto = function (req, res) {
                 function (err, business) {
                     //couldn't add to array, return the error
                     if (err) {
-                        res.status(500).json({
+                        res.status(300).json({
                             error: err,
                             msg: "Error retrieving business from database",
                             data: null
@@ -111,7 +111,7 @@ module.exports.addPhoto = function (req, res) {
         }
         //multer did not find a file selected to upload
         else {
-            res.status(500).json({
+            res.status(300).json({
                 error: null,
                 msg: "Please choose a valid file.",
                 data: null
@@ -410,7 +410,7 @@ module.exports.uploadLogo = function (req, res) {
                 fs.unlink(req.file.path);
 
                 //return the error message to frontend
-                return res.status(500).json({
+                return res.status(300).json({
                     error: null,
                     msg: 'File format is not supported.',
                     data: null
@@ -430,7 +430,7 @@ module.exports.uploadLogo = function (req, res) {
             Business.findById(req.user._id, function (err, business) {
                 //if an error occurred, return the error
                 if (err)
-                    res.status(500).json({
+                    res.status(300).json({
                         error: err,
                         msg: null,
                         data: null
@@ -446,7 +446,7 @@ module.exports.uploadLogo = function (req, res) {
                         business.save(function (err) {
                             //couldn't save, return the error
                             if (err) {
-                                res.status(500).json({
+                                res.status(300).json({
                                     error: err,
                                     msg: null,
                                     data: null
@@ -478,7 +478,7 @@ module.exports.uploadLogo = function (req, res) {
         }
         //multer did not find a file selected to upload
         else {
-            res.status(500).json({
+            res.status(300).json({
                 error: null,
                 msg: 'Please choose a valid file.',
                 data: null
