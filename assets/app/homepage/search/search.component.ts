@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent {
+export class SearchComponent implements AfterViewInit {
 
   constructor(private router: Router) { }
 
@@ -19,8 +19,7 @@ export class SearchComponent {
     this.router.navigate(['search'], { queryParams: { location: location, category: category } });
   }
 
-  // ngAfterContentInit() {
-  //   $.noConflict();
-  //   $.getScript('/js/bootstrap-select.js');
-  // }
+  ngAfterViewInit() {
+    $(".selectpicker").selectpicker();
+  }
 }

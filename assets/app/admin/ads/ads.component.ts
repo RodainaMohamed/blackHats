@@ -22,6 +22,7 @@ export class AdsComponent implements OnInit {
   ngOnInit() {
     this.adsService.getSlots().subscribe(slots => {
       this.slots = slots;
+      setTimeout(this.onLast, 0);
     },
       err => {
         bootbox.alert(err.msg, () => {
@@ -33,6 +34,10 @@ export class AdsComponent implements OnInit {
 
   isLoading() {
     return this.loading;
+  }
+
+  onLast() {
+    $('#datatable').dataTable();
   }
 
   deleteSlot(slotId: string) {

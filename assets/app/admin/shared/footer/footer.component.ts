@@ -1,4 +1,4 @@
-import { AfterContentInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-admin-footer',
@@ -6,9 +6,8 @@ import { AfterContentInit, Component } from '@angular/core';
 })
 
 
-export class FooterComponent implements AfterContentInit {
-  ngAfterContentInit() {
-    $.noConflict();
+export class FooterComponent implements OnInit {
+  ngOnInit() {
     $.getScript('/admin/js/custom.min.js');
   }
 };

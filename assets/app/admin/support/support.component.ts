@@ -18,6 +18,7 @@ export class SupportComponent implements OnInit {
   ngOnInit() {
     this.supportService.getRequests().subscribe(requests => {
       this.requests = requests;
+      setTimeout(this.onLast, 0);
     },
       err => {
         bootbox.alert(err.msg);
@@ -27,6 +28,10 @@ export class SupportComponent implements OnInit {
 
   isLoading() {
     return this.loading;
+  }
+
+  onLast() {
+    $('#datatable').dataTable();
   }
 
   recoverAccount(requestId: string, accountFlag: string) {

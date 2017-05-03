@@ -23,8 +23,23 @@ $lines-to-show: 3;
   text-overflow: ellipsis;
 }
 
-body{
-  min-height: 500px;
-  padding-top: 3px;
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 100px;
+  padding-top: 2px;
 }
 
+.bottom-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+  padding-top: 25px;
+}
