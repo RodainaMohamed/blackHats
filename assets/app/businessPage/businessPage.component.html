@@ -86,9 +86,9 @@
                                                     <a *ngIf="userLoggedIn" routerLink="/business/{{businessId}}/reviews" class="btn btn-primary btn-xs btn-border">Rate and Review</a>
                                                 </li>
 
-                                                <!--<li>
+                                                <li>
                                                     <a *ngIf="userLoggedIn" data-toggle="modal" href="#userMessageModal" class="btn btn-primary btn-xs btn-border">Message</a>
-                                                </li>-->
+                                                </li>
 
                                             </ul>
                                         </div>
@@ -187,7 +187,7 @@
                                     <h5><i class="ti-calendar text-primary mr-5"></i> Working days</h5>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-6 mt-sm">
-                                    <span class="pl-sm">{{workingDays}}</span>
+                                    <span class="pl-sm">{{trimDays(workingDays)}}</span>
                                 </div>
                             </div>
                         </li>
@@ -378,7 +378,7 @@
                             maxlength="100" rows="4"></textarea>
                     </div>
                     <div *ngIf="messageDone">
-                      <label>Your Message has been successfully sent!</label>
+                        <label>Your Message has been successfully sent!</label>
                     </div>
                 </div>
 

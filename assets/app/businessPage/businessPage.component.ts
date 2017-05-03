@@ -51,7 +51,7 @@ export class BusinessPageComponent implements OnInit {
     test = 3;
     private user: String;
     private business: String;
-    private thread: Object;
+    private thread: any;
     private destID: String;
     message: String;
     messageDone: Boolean = false;
@@ -334,7 +334,6 @@ export class BusinessPageComponent implements OnInit {
                           this.thread = thread.data;
                           this.directMessagingService.addMessage(this.thread._id, this.message).subscribe(
                               (data) => {
-                                console.log("done");
                                 this.messageDone = true;
                               },
                               (err) => {
@@ -355,7 +354,6 @@ export class BusinessPageComponent implements OnInit {
                         else{
                           this.directMessagingService.newThread(this.destID, this.message).subscribe(
                               (thread) => {
-                                  console.log("done");
                                   this.thread = thread.data;
                                   this.messageDone = true;
                               },
@@ -399,5 +397,14 @@ export class BusinessPageComponent implements OnInit {
     }
     onMessageCancel(){
       this.message = null;
+    }
+
+    trimDays(days){
+      let string = "";
+      days.forEach((item, i) => {
+        string = string + item + " | ";
+      });
+      string = string.slice(0, -3);
+      return string;
     }
 }

@@ -46,6 +46,16 @@ export class EditProfileComponent implements OnInit {
     nameRequired = false;
     depositRequired = false;
 
+    //days
+
+    saturday: Boolean = false;
+    sunday: Boolean = false;
+    monday: Boolean = false;
+    tuesday: Boolean = false;
+    wednesday: Boolean = false;
+    thursday: Boolean = false;
+    friday: Boolean = false;
+
 
     constructor(
         private editProfileService: EditProfileService,
@@ -55,6 +65,14 @@ export class EditProfileComponent implements OnInit {
 
     ngOnInit() {
         this.initialise();
+        $('form').on('focus', 'input[type=number]', function(e) {
+            $(this).on('mousewheel.disableScroll', function(e) {
+                e.preventDefault()
+            })
+        })
+        $('form').on('blur', 'input[type=number]', function(e) {
+            $(this).off('mousewheel.disableScroll')
+        })
     }
 
     initialise() {
@@ -82,7 +100,8 @@ export class EditProfileComponent implements OnInit {
                             this.deposit = data.data.deposit;
                             this.phoneNumbers = data.data.phoneNumbers;
                             this.tags = data.data.tags;
-                            this.workingDays = data.data.workingDays;
+                            this.fillDays(data.data.workingDays);
+                            // this.workingDays = data.data.workingDays;
                             if (data.data.location != null) {
                                 this.lng = data.data.location.coordinates[0];
                                 this.lat = data.data.location.coordinates[1];
@@ -144,11 +163,11 @@ export class EditProfileComponent implements OnInit {
         else {
             this.descriptionRequired = false;
         }
-        if(this.depositFlag && (!this.deposit || this.deposit == 0)) {
-          this.depositRequired = true;
+        if (this.depositFlag && (!this.deposit || this.deposit == 0)) {
+            this.depositRequired = true;
         }
         else {
-          this.depositRequired = false;
+            this.depositRequired = false;
         }
 
         if (!this.descriptionRequired && !this.nameRequired && !this.depositRequired) {
@@ -161,7 +180,8 @@ export class EditProfileComponent implements OnInit {
                 city: this.city,
                 coordinates: [this.lng, this.lat]
             }
-            this.editProfileService.editBusinessProfile(this.name, workingHours, this.workingDays, this.category, location, this.description, this.phoneNumbers, this.tags, this.paymentRequired, this.deposit).subscribe(
+            let days = this.getDays();
+            this.editProfileService.editBusinessProfile(this.name, workingHours, days, this.category, location, this.description, this.phoneNumbers, this.tags, this.paymentRequired, this.deposit).subscribe(
                 (data) => {
                     bootbox.alert("Profile updated.");
                 },
@@ -180,7 +200,7 @@ export class EditProfileComponent implements OnInit {
                 });
         }
         else {
-           $("#back-to-top").click();
+            $("#back-to-top").click();
         }
     }
 
@@ -253,7 +273,56 @@ export class EditProfileComponent implements OnInit {
     }
 
     hideDepositWarning() {
-      this.depositRequired = false;
+        this.depositRequired = false;
+    }
+
+    fillDays(days: string[]){
+      days.forEach((item, index) => {
+        switch(item){
+          case "Saturday":
+            this.saturday = true;
+            break;
+          case "Sunday":
+            this.sunday = true;
+            break;
+          case "Monday":
+            this.monday = true;
+            break;
+          case "Tuesday":
+            this.tuesday = true;
+            break;
+          case "Wednesday":
+            this.wednesday = true;
+            break;
+          case "Thursday":
+            this.thursday = true;
+            break;
+          case "Friday":
+            this.friday = true;
+            break;
+          default:
+            break;
+        }
+      });
+    }
+
+    getDays(){
+      let days = [];
+      if(this.saturday)
+        days.push("Saturday");
+      if(this.sunday)
+        days.push("Sunday");
+      if(this.monday)
+        days.push("Monday");
+      if(this.tuesday)
+        days.push("Tuesday");
+      if(this.wednesday)
+        days.push("Wednesday");
+      if(this.thursday)
+        days.push("Thursday");
+      if(this.friday)
+        days.push("Friday");
+      return days;
     }
 
 }

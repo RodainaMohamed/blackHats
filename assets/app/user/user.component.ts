@@ -152,8 +152,11 @@ export class UserComponent implements OnInit {
         return this.loggedin;
     }
 
-    pictureChanged(path: string) {
+    profileChanged(user: any) {
         this.path = "http://54.213.175.206:8080/api/image/profilePictures/";
-        this.profilePicture = path;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.birthDate = user.birthDate;
+        this.profilePicture = user.profilePicture;
     }
 }

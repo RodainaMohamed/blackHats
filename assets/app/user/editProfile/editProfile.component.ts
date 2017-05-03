@@ -24,7 +24,7 @@ export class EditUserProfileComponent implements OnInit {
     firstName: String;
     lastName: String;
     birthDate: Date;
-    @Output() pictureChanged = new EventEmitter<string>();
+    @Output() profileChanged = new EventEmitter<any>();
 
 
 
@@ -79,25 +79,23 @@ export class EditUserProfileComponent implements OnInit {
                 this.uploader = new FileUploader({ url: 'http://54.213.175.206:8080/api/user/profile/uploadProfilePicture', itemAlias: "myfile" });
                 this.uploader.onCompleteItem = (item: any, response, status: any, headers: any) => {
 
-                  var resp = JSON.parse(response);
-                  var msg = resp.msg;
+                    var resp = JSON.parse(response);
+                    var msg = resp.msg;
 
-                  if(!(status == 201)) {
-                    bootbox.alert(msg);
-                  }
-                  else{
-                    let res = JSON.parse(response);
-                    this.profilePicture = res.data.imagePath;
-                    let user = {
-                        firstName: this.firstName,
-                        lastName: this.lastName,
-                        birthDate: this.birthDate,
-                        profilePicture: this.profilePicture
+                    if (!(status == 201)) {
+                        bootbox.alert(msg);
                     }
-                    this.pictureChanged.emit(user);
-                  }
-
-
+                    else {
+                        let res = JSON.parse(response);
+                        this.profilePicture = res.data.imagePath;
+                        let user = {
+                            firstName: this.firstName,
+                            lastName: this.lastName,
+                            birthDate: this.birthDate,
+                            profilePicture: this.profilePicture
+                        }
+                        this.profileChanged.emit(user);
+                    }
 
                 };
             }, (err) => {
@@ -125,8 +123,14 @@ export class EditUserProfileComponent implements OnInit {
         else {
             this.editProfileService.editUserProfile(this.firstName, this.lastName, this.birthDate).subscribe(
                 (data) => {
+                    let user = {
+                        firstName: this.firstName,
+                        lastName: this.lastName,
+                        birthDate: this.birthDate,
+                        profilePicture: this.profilePicture
+                    }
+                    this.profileChanged.emit(user);
                     bootbox.alert("Profile Updated.");
-                    this.initialise();
                 }, (err) => {
                     switch (err.status) {
                         case 404:
@@ -144,6 +148,7 @@ export class EditUserProfileComponent implements OnInit {
 
         }
     }
+
 
     onUpload() {
         this.uploader.uploadAll();
