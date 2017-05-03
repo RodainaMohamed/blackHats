@@ -8,7 +8,7 @@ import { AfterContentInit, Component } from '@angular/core';
 
 export class FooterComponent implements AfterContentInit {
   ngAfterContentInit() {
-    $.noConflict();
-    $.getScript('/admin/js/custom.min.js');
+    // $.noConflict();
+    // $.getScript('/admin/js/custom.min.js');
   }
 };
