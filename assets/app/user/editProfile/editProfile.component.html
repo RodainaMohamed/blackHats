@@ -51,6 +51,9 @@
 
 
                 <div class="form-group">
+                  <div *ngIf="ageWarning" class="alert alert-danger alert-dismissable">
+            				<a class="close" (click)="hideAgeWarning()" aria-label="close">&times;</a> Invalid birth date
+            			</div>
                     <label>Birth Date: </label>
                     <input name="birthDate" [ngModel]="birthDate | date: 'shortDate' " [(dateTimePicker)]="birthDate" [pickerType]=" 'date' "
                         [mode]=" 'dropdown' " [theme]=" 'gray' " [hourTime]=" '12' " class="form-control " />

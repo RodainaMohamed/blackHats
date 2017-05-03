@@ -17,7 +17,7 @@ export class BookAdvComponent implements OnInit {
     availableSlots: Date[] = [];
     date: Date;
     noOfDays: number[] = [];
-    public uploader: FileUploader = new FileUploader({ url: 'http://54.213.175.206:8080/api/advertisement/addAdvPhoto', itemAlias: "myfile" });;
+    public uploader: FileUploader = new FileUploader({ url: 'http://localhost:8080/api/advertisement/addAdvPhoto', itemAlias: "myfile" });;
     startTime: Date = new Date();
     endTime: Date = new Date();
     startTimeValue: Date = new Date();
@@ -28,6 +28,7 @@ export class BookAdvComponent implements OnInit {
     private advNoOfDaysWarning: boolean = false;
     private advImgWarning: boolean = false;
     private successfulBooking: boolean = false;
+    private negDaysWarning: boolean = false;
 
     constructor(
         private bookAdvService: BookAdvService,
@@ -37,7 +38,7 @@ export class BookAdvComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.advPicture = "http://54.213.175.206:8080/api/image/businessAds/defaultAPic.jpg";
+        this.advPicture = "http://localhost:8080/api/image/businessAds/defaultAPic.jpg";
         this.showAdvSlots();
     }
 
@@ -88,21 +89,16 @@ export class BookAdvComponent implements OnInit {
     uploadAdvPicture() {
         this.uploader.uploadAll();
         this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-            switch (status) {
-                case 404:
-                    this.router.navigateByUrl('/404-error');
-                    break;
-                case 401:
-                    this.router.navigateByUrl('/notAuthorized-error');
-                    break;
-                case 200:
-                    break;
-                default:
-                    this.router.navigateByUrl('/500-error');
-                    break;
-            }
+
+          var res = JSON.parse(response);
+          var msg = res.msg;
+
+          if(!(status == 201)) {
+            bootbox.alert(msg);
+          }
+          
             this.advPicture = JSON.parse(response).data;
-            this.path = "http://54.213.175.206:8080/api/image/businessAds/";
+            this.path = "http://localhost:8080/api/image/businessAds/";
         }
     }
 
@@ -110,19 +106,22 @@ export class BookAdvComponent implements OnInit {
 
 
     bookAdv(advId, index) {
+        if(this.noOfDays[index] < 0 ) {
+            this.negDaysWarning = true;
+        }
         if (!this.noOfDays || this.noOfDays.length == 0) {
             this.advNoOfDaysWarning = true;
         }
         else {
             this.advNoOfDaysWarning = false;
         }
-        if (!this.advPicture || this.advPicture.length == 0 || this.advPicture === "http://54.213.175.206:8080/api/image/businessAds/defaultAPic.jpg") {
+        if (!this.advPicture || this.advPicture.length == 0 || this.advPicture === "http://localhost:8080/api/image/businessAds/defaultAPic.jpg") {
             this.advImgWarning = true;
         }
         else {
             this.advImgWarning = false;
         }
-        if (!this.advImgWarning && !this.advNoOfDaysWarning) {
+        if (!this.advImgWarning && !this.advNoOfDaysWarning && !this.negDaysWarning) {
             this.startTimeValue = new Date(this.availableSlots[index]);
             this.endTimeValue = new Date();
             let end = moment(this.startTimeValue);
@@ -180,5 +179,8 @@ export class BookAdvComponent implements OnInit {
 
     hideNoOfDaysWarning() {
         this.advNoOfDaysWarning = false;
+    }
+    hideNegDaysWarning() {
+        this.negDaysWarning = false;
     }
 }
