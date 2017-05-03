@@ -69,6 +69,7 @@ export class DirectMessagingComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
+        this.getThreads();
         this.scrollToBottom();
     }
 

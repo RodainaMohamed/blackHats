@@ -12,8 +12,7 @@ export class NavbarComponent {
   constructor(private adminService: AdminService, private router: Router) { }
   logout() {
     this.adminService.logout().subscribe(response => {
-      this.router.navigateByUrl('/');
-      location.reload();
+      window.location.href = "/homepage";
     });
   }
 };
