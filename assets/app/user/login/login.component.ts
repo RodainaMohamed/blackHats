@@ -176,10 +176,12 @@ export class LoginComponent {
             this.loginService.forgetPassword(this.userEmail).subscribe(data => {
                 this.resetFailureWarning = false;
                 this.resetSuccessWarning = true;
+                this.successReset = data.msg;
                 setTimeout(() => {
                     this.resetSuccessWarning = false;
+                    // $("#userForgetClose").click();
                 }, 5000);
-                this.successReset = data.msg;
+
             }, err => {
                 this.resetSuccessWarning = false;
                 this.resetFailureWarning = true;
@@ -212,9 +214,11 @@ export class LoginComponent {
         if (!this.resetBusinessEmailWarning) {
             this.loginService.forgetPassword(this.businessEmail).subscribe(data => {
                 this.resetFailureWarning = false;
+                this.successReset = data.msg;
                 this.resetSuccessWarning = true;
                 setTimeout(() => {
                     this.resetSuccessWarning = false;
+                    // $("#businessForgetClose").click();
                 }, 5000);
                 this.successReset = data.msg;
             }, err => {

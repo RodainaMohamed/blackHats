@@ -148,7 +148,7 @@
 
     <div class="modal-footer text-center">
         <button type="button" class="btn btn-primary" (click)="onUserForgetPass()">Restore</button>
-        <button type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="onUserForgetPassCancel()">Close</button>
+        <button id="userForgetClose" type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="onUserForgetPassCancel()">Close</button>
     </div>
 
 </div>
@@ -276,7 +276,7 @@
                 <form (keydown)="keyDownForgetBusiness($event)">
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input class="form-control" placeholder="Enter your email address" type="email" required>
+                        <input class="form-control" placeholder="Enter your email address" type="email" [(ngModel)]="businessEmail" name="businessEmail" required>
                     </div>
                 </form>
 
@@ -294,7 +294,7 @@
 
     <div class="modal-footer text-center">
         <button type="button" class="btn btn-primary" (click)="onBusinessForgetPass()">Restore</button>
-        <button type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="onBusinessForgetPassCancel()">Close</button>
+        <button id="businessForgetClose" type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="onBusinessForgetPassCancel()">Close</button>
     </div>
 
 </div>
