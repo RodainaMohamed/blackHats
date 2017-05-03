@@ -14,11 +14,15 @@ import { User } from './user.model';
 export class ReviewComponent implements OnInit {
   private users: User[] = [];
   private loading: boolean = false;
+
+
   constructor(private userService: UserService, private router: Router) { }
+
   ngOnInit() {
     this.userService.getUsers().subscribe(users => {
       this.userService.getUnverifiedUsers().subscribe(tempUsers => {
         this.users = users.concat(tempUsers);
+        setTimeout(this.onLast, 0);
       },
         err => {
           bootbox.alert(err.msg);
@@ -29,6 +33,10 @@ export class ReviewComponent implements OnInit {
 
   isLoading() {
     return this.loading;
+  }
+
+  onLast() {
+    $('#datatable').dataTable();
   }
 
   deleteUser(userId: string, verified: boolean) {

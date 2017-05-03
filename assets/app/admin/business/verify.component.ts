@@ -18,6 +18,7 @@ export class VerifyComponent implements OnInit {
   ngOnInit() {
     this.businessService.getUnverifiedBusinesses().subscribe(businesses => {
       this.businesses = businesses
+      setTimeout(this.onLast, 0);
     },
       err => {
         bootbox.alert(err.msg);
@@ -27,6 +28,10 @@ export class VerifyComponent implements OnInit {
 
   isLoading() {
     return this.loading;
+  }
+
+  onLast() {
+    $('#datatable').dataTable();
   }
 
   verifyBusiness(businessId: string) {

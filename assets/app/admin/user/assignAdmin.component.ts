@@ -16,6 +16,7 @@ export class AssignAdminComponent implements OnInit {
     ngOnInit() {
         this.userService.getNonAdmins().subscribe(users => {
             this.users = users;
+            setTimeout(this.onLast, 0);
         },
             err => {
                 bootbox.alert(err.msg);
@@ -25,6 +26,10 @@ export class AssignAdminComponent implements OnInit {
 
     isLoading() {
         return this.loading;
+    }
+
+    onLast() {
+        $('#datatable').dataTable();
     }
 
     assignAdmin(userId: string) {

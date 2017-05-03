@@ -19,6 +19,7 @@ export class ReviewComponent implements OnInit {
   ngOnInit() {
     this.businessService.getBusinesses().subscribe(businesses => {
       this.businesses = businesses
+      setTimeout(this.onLast, 0);
     },
       err => {
         bootbox.alert(err.msg);
@@ -66,4 +67,9 @@ export class ReviewComponent implements OnInit {
   viewBusiness(businessId: string) {
     window.location.href = "/business/" + businessId;
   }
+
+  onLast() {
+    $('#datatable').dataTable();
+  }
+
 };

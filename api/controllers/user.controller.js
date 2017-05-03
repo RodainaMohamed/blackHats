@@ -472,6 +472,7 @@ module.exports.searchByLocationAndCategory = function (req, res) {
         var lng = 0;
 
         publicIp.v4().then(ip => {
+            console.log(ip);
             //look up ip address location
             var geo = geoip.lookup(ip);
             //check if the ip provided valid and has a location
