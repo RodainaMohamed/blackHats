@@ -10,6 +10,7 @@ const AdvSlot = mongoose.model('AdvSlot');
 const Review = mongoose.model('Review');
 const Thread = mongoose.model('Thread');
 const Activity = mongoose.model('Activity');
+const Booking = mongoose.model('Booking');
 
 
 /*
@@ -103,89 +104,91 @@ module.exports.deleteBusiness = function (req, res) {
             });
         } else {
             if (business) {
-                Review.find({business: business._id}, function(err, reviews){
-                  if(err){
-                    res.status(500).json({
-                        error: err,
-                        msg: null,
-                        data: null
-                    });
-                  }
-                  else{
-                    for(var i = 0; i < reviews.length; i++){
-                      reviews[i].remove();
-                    }
-                    Thread.find({business: business._id}, function(err, threads){
-                      if(err){
+                Review.find({
+                    business: business._id
+                }, function (err, reviews) {
+                    if (err) {
                         res.status(500).json({
                             error: err,
                             msg: null,
                             data: null
                         });
-                      }
-                      else{
-                        for(var i = 0; i < threads.length; i++){
-                          threads[i].remove();
+                    } else {
+                        for (var i = 0; i < reviews.length; i++) {
+                            reviews[i].remove();
                         }
-                        Activity.find({business: business._id}, function(err, activities){
-                          if(err){
-                            res.status(500).json({
-                                error: err,
-                                msg: null,
-                                data: null
-                            });
-                          }
-                          else{
-                            for(var i = 0; i < activities.length; i++){
-                              activities[i].remove();
-                            }
-                            User.update(
-                              {favorites: business._id},
-                              {
-                                $pull: {
-                                    "favorites": business._id
-                                }
-                            }, function(err, result){
-                              if(err){
+                        Thread.find({
+                            business: business._id
+                        }, function (err, threads) {
+                            if (err) {
                                 res.status(500).json({
                                     error: err,
                                     msg: null,
                                     data: null
                                 });
-                              }
-                              else{
-                                if (business.verified) {
-                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
-                                    var subject = 'Account Suspended';
-                                } else {
-                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was rejected.\n\nThank you for considering Black Hats.';
-                                    var subject = 'Account Rejected';
+                            } else {
+                                for (var i = 0; i < threads.length; i++) {
+                                    threads[i].remove();
                                 }
-                                emailSender.sendEmail(subject, business.email, text, null, function (err, info) {
+                                Activity.find({
+                                    business: business._id
+                                }, function (err, activities) {
                                     if (err) {
                                         res.status(500).json({
-                                            error: null,
-                                            msg: 'Business was deleted, however the business was not notified.',
+                                            error: err,
+                                            msg: null,
                                             data: null
                                         });
                                     } else {
-                                        res.status(200).json({
-                                            error: null,
-                                            msg: 'Business was deleted and notified.',
-                                            data: null
+                                        for (var i = 0; i < activities.length; i++) {
+                                            activities[i].remove();
+                                        }
+                                        User.update({
+                                            favorites: business._id
+                                        }, {
+                                            $pull: {
+                                                "favorites": business._id
+                                            }
+                                        }, function (err, result) {
+                                            if (err) {
+                                                res.status(500).json({
+                                                    error: err,
+                                                    msg: null,
+                                                    data: null
+                                                });
+                                            } else {
+                                                if (business.verified) {
+                                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
+                                                    var subject = 'Account Suspended';
+                                                } else {
+                                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was rejected.\n\nThank you for considering Black Hats.';
+                                                    var subject = 'Account Rejected';
+                                                }
+                                                emailSender.sendEmail(subject, business.email, text, null, function (err, info) {
+                                                    if (err) {
+                                                        res.status(500).json({
+                                                            error: null,
+                                                            msg: 'Business was deleted, however the business was not notified.',
+                                                            data: null
+                                                        });
+                                                    } else {
+                                                        res.status(200).json({
+                                                            error: null,
+                                                            msg: 'Business was deleted and notified.',
+                                                            data: null
+                                                        });
+                                                    }
+                                                });
+                                            }
                                         });
+
+
                                     }
-                                });
-                              }
-                            });
+                                })
 
-
-                          }
-                        })
-
-                      }
-                    });
-                  }
+                            }
+                        });
+                    }
 
                 });
             } else
@@ -335,87 +338,90 @@ module.exports.removeAdmin = function (req, res) {
     Calling Route: '/api/admin/user/delete/:userId'
 */
 module.exports.deleteUser = function (req, res) {
-  User.findByIdAndRemove(req.params.userId, function (err, user) {
-      if (err) {
-          res.status(500).json({
-              error: err,
-              msg: null,
-              data: null
-          });
-      } else {
-          if (user) {
-              Review.find({user: user._id}, function(err, reviews){
-                if(err){
-                  res.status(500).json({
-                      error: err,
-                      msg: null,
-                      data: null
-                  });
-                }
-                else{
-                  for(var i = 0; i < reviews.length; i++){
-                    reviews[i].remove();
-                  }
-                  Thread.find({user: user._id}, function(err, threads){
-                    if(err){
-                      res.status(500).json({
-                          error: err,
-                          msg: null,
-                          data: null
-                      });
-                    }
-                    else{
-                      for(var i = 0; i < threads.length; i++){
-                        threads[i].remove();
-                      }
-                      Booking.find({user: user._id}, function(err, bookings){
-                        if(err){
-                          res.status(500).json({
-                              error: err,
-                              msg: null,
-                              data: null
-                          });
+    User.findByIdAndRemove(req.params.userId, function (err, user) {
+        if (err) {
+            res.status(500).json({
+                error: err,
+                msg: null,
+                data: null
+            });
+        } else {
+            if (user) {
+                Review.find({
+                    user: user._id
+                }, function (err, reviews) {
+                    if (err) {
+                        res.status(500).json({
+                            error: err,
+                            msg: null,
+                            data: null
+                        });
+                    } else {
+                        for (var i = 0; i < reviews.length; i++) {
+                            reviews[i].remove();
                         }
-                        else{
-                          for(var i = 0; i < bookings.length; i++){
-                            bookings[i].remove();
-                          }
-                          var email = user.email;
-                          var username = user.firstName;
-                          var text = 'Hello ' + username + ',\n\nUnfortunately, your account was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
-                          var subject = 'Account Suspended';
+                        Thread.find({
+                            user: user._id
+                        }, function (err, threads) {
+                            if (err) {
+                                res.status(500).json({
+                                    error: err,
+                                    msg: null,
+                                    data: null
+                                });
+                            } else {
+                                for (var i = 0; i < threads.length; i++) {
+                                    threads[i].remove();
+                                }
+                                Booking.find({
+                                    user: user._id
+                                }, function (err, bookings) {
+                                    if (err) {
+                                        res.status(500).json({
+                                            error: err,
+                                            msg: null,
+                                            data: null
+                                        });
+                                    } else {
+                                        for (var i = 0; i < bookings.length; i++) {
+                                            bookings[i].remove();
+                                        }
+                                        var email = user.email;
+                                        var username = user.firstName;
+                                        var text = 'Hello ' + username + ',\n\nUnfortunately, your account was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
+                                        var subject = 'Account Suspended';
 
-                          emailSender.sendEmail(subject, email, text, null, function (err, info) {
-                              if (err) {
-                                  res.status(500).json({
-                                      error: null,
-                                      msg: 'User was deleted, however the user was not notified.',
-                                      data: null
-                                  });
-                              } else {
-                                  res.status(200).json({
-                                      error: null,
-                                      msg: 'User was deleted and notified.',
-                                      data: null
-                                  });
-                              }
-                          });
-                        }
-                      })
+                                        emailSender.sendEmail(subject, email, text, null, function (err, info) {
+                                            if (err) {
+                                                res.status(500).json({
+                                                    error: null,
+                                                    msg: 'User was deleted, however the user was not notified.',
+                                                    data: null
+                                                });
+                                            } else {
+                                                res.status(200).json({
+                                                    error: null,
+                                                    msg: 'User was deleted and notified.',
+                                                    data: null
+                                                });
+                                            }
+                                        });
+                                    }
+                                })
 
+                            }
+                        });
                     }
-                  });
-                }
 
-              });
-          } else
-              res.status(404).json({
-                  error: null,
-                  msg: 'User not found.',
-                  data: null
-              });
-      }
-  });
+                });
+            } else
+                res.status(404).json({
+                    error: null,
+                    msg: 'User not found.',
+                    data: null
+                });
+        }
+    });
 };
 
 
