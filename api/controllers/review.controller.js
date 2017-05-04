@@ -353,14 +353,6 @@ module.exports.editReview = function (req, res) {
     }
 };
 
-module.exports.delete = function (req, res){
-  Review.findOne({_id: "590a6e0ac8e800ae6f2477c1"}, function(err, review){
-    console.log(err);
-    console.log(review);
-    review.remove();
-    res.json({hi:"hi"});
-  })
-}
 /*
     Delete function that finds and deletes a specific review
     Takes:

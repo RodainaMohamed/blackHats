@@ -139,7 +139,47 @@ module.exports.deleteBusiness = function (req, res) {
                             for(var i = 0; i < activities.length; i++){
                               activities[i].remove();
                             }
-                            res.json({msg: "done"});
+                            User.update(
+                              {favorites: business._id},
+                              {
+                                $pull: {
+                                    "favorites": business._id
+                                }
+                            }, function(err, result){
+                              if(err){
+                                res.status(500).json({
+                                    error: err,
+                                    msg: null,
+                                    data: null
+                                });
+                              }
+                              else{
+                                if (business.verified) {
+                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
+                                    var subject = 'Account Suspended';
+                                } else {
+                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was rejected.\n\nThank you for considering Black Hats.';
+                                    var subject = 'Account Rejected';
+                                }
+                                emailSender.sendEmail(subject, business.email, text, null, function (err, info) {
+                                    if (err) {
+                                        res.status(500).json({
+                                            error: null,
+                                            msg: 'Business was deleted, however the business was not notified.',
+                                            data: null
+                                        });
+                                    } else {
+                                        res.status(200).json({
+                                            error: null,
+                                            msg: 'Business was deleted and notified.',
+                                            data: null
+                                        });
+                                    }
+                                });
+                              }
+                            });
+
+
                           }
                         })
 
@@ -170,28 +210,7 @@ var loopHelper = function (array, callback) {
     });
 };
 
-// if (business.verified) {
-//     var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
-//     var subject = 'Account Suspended';
-// } else {
-//     var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was rejected.\n\nThank you for considering Black Hats.';
-//     var subject = 'Account Rejected';
-// }
-// emailSender.sendEmail(subject, business.email, text, null, function (err, info) {
-//     if (err) {
-//         res.status(500).json({
-//             error: null,
-//             msg: 'Business was deleted, however the business was not notified.',
-//             data: null
-//         });
-//     } else {
-//         res.status(200).json({
-//             error: null,
-//             msg: 'Business was deleted and notified.',
-//             data: null
-//         });
-//     }
-// });
+
 
 /*
     Put function that makes a user an admin.

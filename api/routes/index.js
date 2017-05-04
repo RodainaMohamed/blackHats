@@ -92,8 +92,7 @@ module.exports = function(passportConfig) {
     //Admin routes
     //TO-DO: add login check after testing
     router.route('/admin/business/verify/:businessId').put(passportConfig.isAdminLoggedIn, adminCtrl.verifyBusiness);
-    router.route('/admin/business/delete/:businessId').delete(adminCtrl.deleteBusiness);
-    // router.route('/admin/business/delete/:businessId').delete(passportConfig.isAdminLoggedIn, adminCtrl.deleteBusiness);
+    router.route('/admin/business/delete/:businessId').delete(passportConfig.isAdminLoggedIn, adminCtrl.deleteBusiness);
     router.route('/admin/business/recoverAccount/:businessId').put(passportConfig.isAdminLoggedIn, adminCtrl.recoverBusiness);
     router.route('/admin/business/getAll').get(passportConfig.isAdminLoggedIn, adminCtrl.getBusinesses);
     router.route('/admin/business/unVerifiedBusinesses').get(passportConfig.isAdminLoggedIn, adminCtrl.unVerifiedBusinesses);
@@ -123,11 +122,9 @@ module.exports = function(passportConfig) {
     router.route('/activity/book').post(passportConfig.isUserLoggedIn, bookingCtrl.bookActivity);
     router.route('/activity/deleteBooking/:bookingId').delete(passportConfig.isUserLoggedIn, bookingCtrl.deleteBooking);
     //User review routes
-    router.route('/review/:businessId/add').post(reviewCtrl.addReview);
-    // router.route('/review/:businessId/add').post(passportConfig.isUserLoggedIn, reviewCtrl.addReview);
+    router.route('/review/:businessId/add').post(passportConfig.isUserLoggedIn, reviewCtrl.addReview);
     router.route('/review/:reviewId/edit').put(passportConfig.isUserLoggedIn, reviewCtrl.editReview);
     router.route('/review/:reviewId/delete').delete(passportConfig.isUserLoggedIn, reviewCtrl.deleteReview);
-    router.route('/review/test').delete(reviewCtrl.delete);
 
     //Advertisement routes
     router.route('/advertisement/bookAdvSlot/:advSlotId').post(passportConfig.isBusinessLoggedIn, advCtrl.bookAdvSlot);
