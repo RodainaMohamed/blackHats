@@ -335,7 +335,7 @@ module.exports.removeAdmin = function (req, res) {
     Calling Route: '/api/admin/user/delete/:userId'
 */
 module.exports.deleteUser = function (req, res) {
-  User.findByIdAndRemove(req.user._id, function (err, user) {
+  User.findByIdAndRemove(req.params.userId, function (err, user) {
       if (err) {
           res.status(500).json({
               error: err,
