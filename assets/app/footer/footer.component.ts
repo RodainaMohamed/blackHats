@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewChecked } from '@angular/core';
 import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html'
 })
-export class FooterComponent{
-  
+export class FooterComponent implements AfterViewChecked {
+  ngAfterViewChecked() {
+    $(".selectpicker").selectpicker();
+  }
 }
