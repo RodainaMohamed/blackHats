@@ -108,6 +108,15 @@ export class SearchResultComponent implements OnInit, AfterViewChecked {
         this.search();
     }
 
+    getInteractivity(interactivity) {
+        if (interactivity < 50)
+            return "Low";
+        else if (interactivity < 100)
+            return "Average";
+        else
+            return "High";
+    }
+
     ngAfterViewChecked() {
         $("#page" + this.pageNumber).addClass("active");
         $('input.rating').rating();

@@ -128,7 +128,7 @@
                                         <h4>{{business.name}}</h4>
                                         <div class="rating-wrapper">
                                             <div class="rating-item">
-                                                <input id="rating" type="hidden" class="rating" data-filled="fa fa-star rating-rated" data-empty="fa fa-star-o" data-fractions="2" data-readonly
+                                                <input type="hidden" class="rating" data-filled="fa fa-star rating-rated" data-empty="fa fa-star-o" data-fractions="2" data-readonly
                                                     value="{{business.averageRating}}" />
                                             </div>
                                         </div>
@@ -148,12 +148,12 @@
                                         <ul class="clearfix">
                                             <li>
                                                 <div class="meta">
-                                                    <span class="number">{{business.interactivity}}</span> Popularity
+                                                    <span class="number">{{getInteractivity(business.interactivity)}}</span> Popularity
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="meta">
-                                                    <span class="number">{{business.averageRating}}/5</span> Rating
+                                                    <span class="number">{{business.activities.length}}</span> Activities
                                                 </div>
                                             </li>
                                         </ul>
