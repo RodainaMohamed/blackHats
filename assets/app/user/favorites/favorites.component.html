@@ -1,9 +1,9 @@
-<div class="dashboard-wrapper" style="min-height: 300px;">
+<div  class="dashboard-wrapper" style="min-height: 300px;">
 
     <h4 class="section-title">Favorites</h4>
-    <p *ngIf="businesses && businesses.length == 0" style="padding-left: 5px;">No Favorites</p>
+    <p *ngIf="noFavorites && loadDone" style="padding-left: 5px;">No Favorites</p>
 
-    <div class="folloer-wrapper user-long-sm-wrapper">
+    <div *ngIf="loadDone" class="folloer-wrapper user-long-sm-wrapper">
 
         <div class="GridLex-gap-10">
 
