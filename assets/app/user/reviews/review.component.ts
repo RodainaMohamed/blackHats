@@ -26,6 +26,7 @@ export class ReviewComponent implements OnInit {
     editRating: Number;
     isUser = false;
     editCommentWarning = false;
+    loadDone = false;
 
 
     constructor(
@@ -64,6 +65,7 @@ export class ReviewComponent implements OnInit {
                             (data) => {
                                 this.reviews = data.data;
                                 this.count = this.reviews.length;
+                                this.loadDone = true;
                             }, (err) => {
                                 switch (err.status) {
                                     case 404:

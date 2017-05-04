@@ -3,13 +3,13 @@
     <div class="review-header">
     <h4 class="section-title">Reviews</h4>
 
-        <div class="GridLex-gap-30">
+        <div *ngIf="loadDone" class="GridLex-gap-30">
 
             <div class="GridLex-grid-noGutter-equalHeight GridLex-grid-middle">
 
                 <div class="GridLex-col-9_sm-8_xs-12_xss-12">
 
-                    <div class="review-rating">
+                    <div  class="review-rating">
                         <div class="number">{{averageString}}</div>
                         <div class="rating-wrapper">
                             {{count}} Reviews

@@ -25,15 +25,15 @@
                                     <div class="GridLex-col-7_sm-12_xs-12_xss-12">
 
                                         <div class="GridLex-inner">
-                                            <div class="heading clearfix">
+                                            <div *ngIf="loadDone" class="heading clearfix">
 
                                                 <h3>{{firstName +" " + lastName}}</h3>
 
                                             </div>
                                             <ul class="user-meta">
-                                                <li> Email: {{email}}<span class="mh-5 text-muted"></span></li>
-                                                <li *ngIf="birthDate"> Born: {{birthDate | date:'shortDate' }}<span class="mh-5 text-muted"></span></li>
-                                                <li> Joined: {{createdAt | date:'shortDate' }}<span class="mh-5 text-muted"></span></li>
+                                                <li *ngIf="loadDone"> Email: {{email}}<span class="mh-5 text-muted"></span></li>
+                                                <li *ngIf="birthDate && loadDone"> Born: {{birthDate | date:'shortDate' }}<span class="mh-5 text-muted"></span></li>
+                                                <li *ngIf="loadDone"> Joined: {{createdAt | date:'shortDate' }}<span class="mh-5 text-muted"></span></li>
 
 
                                             </ul>

@@ -20,6 +20,8 @@ export class UserFavoritesComponent implements OnInit {
     userId: String = "";
     logoPath: String = "http://54.213.175.206:8080/api/image/businessLogos/";
     loggedIn: Boolean;
+    loadDone = false;
+    noFavorites = true;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -58,10 +60,18 @@ export class UserFavoritesComponent implements OnInit {
                                 this.user = data.data;
                                 this.favorites = data.data.favorites;
                                 var businesses = [];
+                                if(this.favorites.length == 0){
+                                  this.noFavorites = true;
+                                }
+                                else{
+                                  this.noFavorites = false;
+                                }
+                                this.loadDone = true;
                                 for (var i = 0; i < this.favorites.length; i++) {
                                     this.userService.getCurrentInfo(this.favorites[i]).subscribe(
                                         (data) => {
                                             businesses.push(data.data);
+
                                         }, (err) => {
                                             switch (err.status) {
                                                 case 404:

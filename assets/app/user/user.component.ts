@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
     public loggedin: Boolean;
     private isUser: Boolean;
     private user: Object;
+    private loadDone = false;
 
     userId: String = "";
     favorites: Object[];
@@ -64,6 +65,7 @@ export class UserComponent implements OnInit {
                                 this.path = "";
                                 this.profilePicture = "http://54.213.175.206:8080/api/image/profilePictures/defaultpp.jpg";
                             }
+                            this.loadDone = true;
                         }
 
                         //if no one is logged in or logged in user not the one in the route:
@@ -86,6 +88,7 @@ export class UserComponent implements OnInit {
                                         this.path = "";
                                         this.profilePicture = "http://54.213.175.206:8080/api/image/profilePictures/defaultpp.jpg";
                                     }
+                                    this.loadDone = true;
 
                                 }, (err) => {
                                     switch (err.status) {
