@@ -1,127 +1,111 @@
 <div class="container-wrapper">
-    <div class="main-wrapper scrollspy-container" style="background-color: white">
-        <!-- start Breadcrumb -->
+    <div #chatBox class="container-fluid">
+        <div *ngIf="noThreads">
+            <div class="section-title" style="padding-top: 80px;">
 
-        <div class="breadcrumb-wrapper">
-            <div class="container">
-                <ol class="breadcrumb">
-                    <li><a routerLink="/homepage">Home</a></li>
-                    <li class="active">Inbox</li>
-                </ol>
+                <h2>Inbox</h2>
+                <p>You have no open conversations, start some with the businesses you want to know more about.</p>
+
             </div>
         </div>
-
-        <!-- end Breadcrumb -->
-        <div class="main_section">
-            <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-                <div *ngIf="noThreads">
-                    <div class="section-title" style="padding-top: 80px;">
-
-                        <h2>Inbox</h2>
-                        <p>You have no open conversations, start some with the businesses you want to know more about.</p>
-
-                    </div>
-                </div>
-                <div *ngIf="!noThreads" class="chat_container">
-                    <div class="col-sm-3 chat_sidebar">
-                        <div class="row">
-                            <div class="member_list">
-                                <ul class="list-unstyled">
-                                    <li [ngClass]="isThreadActive(i)" class="left clearfix" *ngFor="let thread of threads; let i = index" (click)="onClick(i)">
-                                        <div *ngIf="isUser">
-                                            <span *ngIf="thread.business.logo" class="chat-img pull-left">
+        <div *ngIf="!noThreads">
+            <!--<div class="row">-->
+            <div class="col-sm-3">
+                <div class="member_list">
+                    <ul>
+                        <li [ngClass]="isThreadActive(i)" class="left clearfix" *ngFor="let thread of threads; let i = index" (click)="onClick(i)">
+                            <div *ngIf="isUser">
+                                <span *ngIf="thread.business.logo" class="chat-img pull-left">
                                               <img src="http://localhost:8080/api/image/businessLogos/{{thread.business.logo}}" alt="User Avatar" class="img-circle">
                                             </span>
-                                            <span *ngIf="!thread.business.logo" class="chat-img pull-left">
+                                <span *ngIf="!thread.business.logo" class="chat-img pull-left">
                                               <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
                                             </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header_sec">
-                                                    <strong class="primary-font">{{thread.business.name}}</strong>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="chat-body clearfix">
+                                    <div class="header_sec">
+                                        <strong class="primary-font">{{thread.business.name}}</strong>
+                                    </div>
+                                </div>
+                            </div>
 
-                                        <div *ngIf="!isUser">
-                                            <span class="chat-img pull-left">
+                            <div *ngIf="!isUser">
+                                <span class="chat-img pull-left">
                                               <img *ngIf="thread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{thread.user.profilePicture}}" alt="User Avatar" class="img-circle">
                                               <img *ngIf="!thread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
                                             </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header_sec">
-                                                    <strong class="primary-font">{{thread.user.firstName}} {{thread.user.lastName}}</strong>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!--chat_sidebar-->
-                    <div class="col-sm-9 message_section">
-                        <div #chatBox class="chat_area">
-                            <ul class="list-unstyled">
-                                <div *ngFor="let message of currentThread.messages; let j = index">
-                                    <div *ngIf="isUser">
-                                        <li *ngIf="message.byUser" class="right clearfix">
-                                            <span class="chat-img1 pull-right">
-                                          <img *ngIf="currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
-                                          <img *ngIf="!currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
-                                        </span>
-                                            <div class="chat-body1 clearfix">
-                                                <p>{{message.content}}</p>
-                                                <div class="chat_time pull-right">{{message.dateCreated | date: 'shortTime'}}</div>
-                                            </div>
-                                        </li>
-                                        <li *ngIf="!message.byUser" class="left clearfix admin_chat">
-                                            <span *ngIf="currentThread.business.logo" class="chat-img pull-left">
-                                        <img src="http://localhost:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
-                                      </span>
-                                            <span *ngIf="!currentThread.business.logo" class="chat-img pull-left">
-                                        <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
-                                      </span>
-                                            <div class="chat-body2 clearfix">
-                                                <p>{{message.content}}</p>
-                                                <div class="chat_time pull-left">{{message.dateCreated | date: 'shortTime'}}</div>
-                                            </div>
-                                        </li>
-                                    </div>
-                                    <div *ngIf="!isUser">
-                                        <li *ngIf="message.byUser" class="left clearfix admin_chat">
-                                            <span class="chat-img1 pull-left">
-                                          <img *ngIf="currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
-                                          <img *ngIf="!currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
-                                        </span>
-                                            <div class="chat-body2 clearfix">
-                                                <p>{{message.content}}</p>
-                                                <div class="chat_time pull-left">{{message.dateCreated | date: 'shortTime'}}</div>
-                                            </div>
-                                        </li>
-                                        <li *ngIf="!message.byUser" class="right clearfix">
-                                            <span *ngIf="currentThread.business.logo" class="chat-img pull-right">
-                                        <img src="http://localhost:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
-                                      </span>
-                                            <span *ngIf="!currentThread.business.logo" class="chat-img pull-right">
-                                        <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
-                                      </span>
-                                            <div class="chat-body1 clearfix">
-                                                <p>{{message.content}}</p>
-                                                <div class="chat_time pull-right">{{message.dateCreated | date: 'shortTime'}}</div>
-                                            </div>
-                                        </li>
+                                <div class="chat-body clearfix">
+                                    <div class="header_sec">
+                                        <strong class="primary-font">{{thread.user.firstName}} {{thread.user.lastName}}</strong>
                                     </div>
                                 </div>
-                            </ul>
-                        </div>
-                        <!--chat_area-->
-                        <div class="message_write">
-                            <textarea (keyup.enter)="onSend()" style="resize: none;" [(ngModel)]="newMessage" name="newMessage" class="form-control" placeholder="Type a message"></textarea>
-                            <div class="clearfix"></div>
-                            <div class="chat_bottom">
-                                <a (click)="onSend()" class="pull-right btn btn-success">Send</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--chat_sidebar-->
+            <div class="col-sm-9">
+                <div class="chat_area">
+                    <ul class="list-unstyled">
+                        <div *ngFor="let message of currentThread.messages; let j = index">
+                            <div *ngIf="isUser">
+                                <li *ngIf="message.byUser" class="right clearfix">
+                                    <span class="chat-img1 pull-right">
+                                          <img *ngIf="currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
+                                          <img *ngIf="!currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
+                                        </span>
+                                    <div class="chat-body1 clearfix">
+                                        <p>{{message.content}}</p>
+                                        <div class="chat_time pull-right">{{message.dateCreated | date: 'shortTime'}}</div>
+                                    </div>
+                                </li>
+                                <li *ngIf="!message.byUser" class="left clearfix admin_chat">
+                                    <span *ngIf="currentThread.business.logo" class="chat-img pull-left">
+                                        <img src="http://localhost:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
+                                      </span>
+                                    <span *ngIf="!currentThread.business.logo" class="chat-img pull-left">
+                                        <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
+                                      </span>
+                                    <div class="chat-body2 clearfix">
+                                        <p>{{message.content}}</p>
+                                        <div class="chat_time pull-left">{{message.dateCreated | date: 'shortTime'}}</div>
+                                    </div>
+                                </li>
+                            </div>
+                            <div *ngIf="!isUser">
+                                <li *ngIf="message.byUser" class="left clearfix admin_chat">
+                                    <span class="chat-img1 pull-left">
+                                          <img *ngIf="currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/{{currentThread.user.profilePicture}}" alt="User Avatar" class="img-circle">
+                                          <img *ngIf="!currentThread.user.profilePicture" src="http://localhost:8080/api/image/profilePictures/default" alt="User Avatar" class="img-circle">
+                                        </span>
+                                    <div class="chat-body2 clearfix">
+                                        <p>{{message.content}}</p>
+                                        <div class="chat_time pull-left">{{message.dateCreated | date: 'shortTime'}}</div>
+                                    </div>
+                                </li>
+                                <li *ngIf="!message.byUser" class="right clearfix">
+                                    <span *ngIf="currentThread.business.logo" class="chat-img pull-right">
+                                        <img src="http://localhost:8080/api/image/businessLogos/{{currentThread.business.logo}}" alt="User Avatar" class="img-circle">
+                                      </span>
+                                    <span *ngIf="!currentThread.business.logo" class="chat-img pull-right">
+                                        <img src="http://localhost:8080/api/image/businessLogos/default" alt="User Avatar" class="img-circle">
+                                      </span>
+                                    <div class="chat-body1 clearfix">
+                                        <p>{{message.content}}</p>
+                                        <div class="chat_time pull-right">{{message.dateCreated | date: 'shortTime'}}</div>
+                                    </div>
+                                </li>
                             </div>
                         </div>
+                    </ul>
+                </div>
+                <!--chat_area-->
+                <div class="message_write">
+                    <textarea (keyup.enter)="onSend()" style="resize: none;" [(ngModel)]="newMessage" name="newMessage" class="form-control"
+                        placeholder="Type a message"></textarea>
+                    <div class="clearfix"></div>
+                    <div class="chat_bottom">
+                        <button type="button" [disabled]="isMessageInvalid()" (click)="onSend()" class="pull-right btn btn-success">Send</button>
                     </div>
                 </div>
                 <!--message_section-->

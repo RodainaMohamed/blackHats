@@ -388,7 +388,7 @@
 
         <div class="modal-footer text-center">
             <button type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="goToMessages()">Your Messages</button>
-            <button *ngIf="!messageDone" type="button" class="btn btn-primary" (click)="sendMessage()">Send</button>
+            <button *ngIf="!messageDone" type="button" class="btn btn-primary" [disabled]="isMessageInvalid()" (click)="sendMessage()">Send</button>
             <button *ngIf="!messageDone" type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="onMessageCancel()">Cancel</button>
             <button *ngIf="messageDone" type="button" data-dismiss="modal" class="btn btn-primary btn-border" (click)="onMessageDone()">Done</button>
         </div>

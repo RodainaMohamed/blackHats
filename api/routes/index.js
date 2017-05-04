@@ -17,7 +17,7 @@ const paymentCtrl = require("../controllers/payment.controller");
 const messageCtrl = require("../controllers/message.controller");
 
 
-module.exports = function(passportConfig) {
+module.exports = function (passportConfig) {
     var authenticateUser = passportConfig.passport.authenticate('local-user', {
         successRedirect: '/api/successLogin',
         failureRedirect: '/api/failedLogin',
@@ -30,9 +30,6 @@ module.exports = function(passportConfig) {
         failureRedirect: '/api/failedLogin',
         failureFlash: false
     });
-
-    //For testing
-    router.route('/charge').post(passportConfig.isLoggedIn, paymentCtrl.charge);
 
     //Not logged in only routes
     router.route('/user/login').post(passportConfig.isNotLoggedIn, authenticateUser);
@@ -71,6 +68,7 @@ module.exports = function(passportConfig) {
 
     //Available to logged in only routes
     router.route('/logout').get(passportConfig.isLoggedIn, passportConfig.logout);
+    router.route('/charge').post(passportConfig.isLoggedIn, paymentCtrl.charge);
 
     //Business routes
     router.route('/business/editInfo').put(passportConfig.isBusinessLoggedIn, businessCtrl.saveNewInfo);

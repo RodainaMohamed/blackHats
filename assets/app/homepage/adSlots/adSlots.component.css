@@ -1,4 +1,7 @@
 img {
     min-height: 350px;
-    border-radius: 2%;
+}
+
+.top-destination-item {
+    border-radius: 25px;
 }
