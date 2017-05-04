@@ -21,7 +21,7 @@ export class TopBusinessesService {
                 const businesses = response.json().data;
                 let transformedBusiness: Business[] = [];
                 for (let business of businesses) {
-                    transformedBusiness.push(new Business(business._id,business.name,business.logo, []));
+                    transformedBusiness.push(new Business(business._id,business.name,business.logo, [], [], {"address": "", "city": "", "coordinates": []}));
                 }
                 this.businesses = transformedBusiness;
                 return transformedBusiness;

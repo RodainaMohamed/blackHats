@@ -143,7 +143,7 @@ export class ActivityPageComponent implements OnInit {
         }
     }
 
-    createHandler(deposit: Number, index: Number) {
+    createHandler(deposit: number, index: Number) {
         var handler = (<any>window).StripeCheckout.configure({
             key: 'pk_test_vtTq04LX7KiFSy5Eev4qPRDL',
             locale: 'auto',
@@ -158,7 +158,7 @@ export class ActivityPageComponent implements OnInit {
         });
     }
 
-    bookActivity(index: Number) {
+    bookActivity(index: number) {
         this.businessPageService.bookActivity(this.slots[index], this.activity.id, this.chosenDate).subscribe(
             (data) => {
                 bootbox.alert(data.msg);

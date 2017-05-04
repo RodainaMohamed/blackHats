@@ -8,7 +8,7 @@ export class Activity {
   photos: [String];
   bookingsPerSlot: number;
   slots: Slot[];
-  business: String;
+  business: any;
   bookings: [String];
 
     constructor(
