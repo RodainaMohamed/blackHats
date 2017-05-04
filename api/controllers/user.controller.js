@@ -175,13 +175,13 @@ module.exports.registerUser = function (req, res) {
                                                         data: null
                                                     });
                                                 });
-                                            else{
+                                            else {
                                                 res.status(200).json({
                                                     error: null,
                                                     msg: "An Email was sent successfully to " + req.body.email + ", check your inbox.",
                                                     data: null
                                                 });
-                                              }
+                                            }
                                         });
                                     } else
                                         res.status(500).json({
@@ -474,6 +474,11 @@ module.exports.searchByLocationAndCategory = function (req, res) {
 
         publicIp.v4().then(ip => {
             console.log(ip);
+            if (ip === "54.213.175.206") {
+                ip = req.ip;
+                ip = ip.split(',')[0];
+                ip = ip.split(':').slice(-1)[0];
+            }
             //look up ip address location
             var geo = geoip.lookup(ip);
             //check if the ip provided valid and has a location
