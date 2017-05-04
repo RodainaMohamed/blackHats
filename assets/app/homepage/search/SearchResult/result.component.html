@@ -126,6 +126,12 @@
                                     <div class="content">
 
                                         <h4>{{business.name}}</h4>
+                                        <div class="rating-wrapper">
+                                            <div class="rating-item">
+                                                <input id="rating" type="hidden" class="rating" data-filled="fa fa-star rating-rated" data-empty="fa fa-star-o" data-fractions="2" data-readonly
+                                                    value="{{business.averageRating}}" />
+                                            </div>
+                                        </div>
                                         <div *ngIf="business.location && business.location.city">
                                             <span class="labeling"><i class="fa fa-map-marker"></i> {{business.location.city}}</span>
                                         </div>
