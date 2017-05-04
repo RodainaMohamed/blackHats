@@ -30,13 +30,13 @@
 					<li *ngIf="loggedin && !isUser">
 						<a routerLink="/business/{{business._id}}">My Page</a>
 					</li>
+					<li *ngIf="loggedin">
+						<a routerLink="/chat">Inbox</a>
+					</li>
 					<li *ngIf="loggedin && isAdmin">
 						<a href="/admin">Admin Panel</a>
 					</li>
-					<li *ngIf="loggedin">
-						<a routerLink="/chat">Messages</a>
-					</li>
-					<li>
+					<li *ngIf="!isAdmin">
 						<a routerLink="/contactSupport">Support</a>
 					</li>
 				</ul>
