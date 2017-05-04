@@ -15,8 +15,8 @@ export class AdsComponent implements OnInit {
   price: number;
   length: number;
   width: number;
-  private slots: AdSlot[] = [];
-  private loading: boolean = false;
+   slots: AdSlot[] = [];
+   loading: boolean = false;
 
   constructor(private adsService: AdsService) { }
   ngOnInit() {

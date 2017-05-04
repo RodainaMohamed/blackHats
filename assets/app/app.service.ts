@@ -3,7 +3,7 @@ import { Http, Headers, Response} from '@angular/http';
 
 @Injectable()
 export class AppService {
-  private isLoggedin = false;
+   isLoggedin = false;
   apiPath: String = "http://54.213.175.206:8080/api/";
   
   constructor(private http: Http) { }

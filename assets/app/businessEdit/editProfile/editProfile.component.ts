@@ -19,7 +19,7 @@ import { EventEmitter } from "@angular/common/src/facade/async";
 
 export class EditProfileComponent implements OnInit {
     public uploader: FileUploader = new FileUploader({ url: 'http://54.213.175.206:8080/api/business/addLogo', itemAlias: "myfile" });
-    private logo: String;
+     logo: String;
     name: String;
     workingFrom: Date;
     workingTo: Date;

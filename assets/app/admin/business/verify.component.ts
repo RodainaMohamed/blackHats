@@ -11,8 +11,8 @@ import { BusinessService } from './business.service';
 
 
 export class VerifyComponent implements OnInit {
-  private businesses: Business[] = [];
-  private loading: boolean = false;
+   businesses: Business[] = [];
+   loading: boolean = false;
 
   constructor(private businessService: BusinessService) { }
   ngOnInit() {

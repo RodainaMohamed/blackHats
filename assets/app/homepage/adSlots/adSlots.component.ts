@@ -11,9 +11,9 @@ import { BookingSlot } from "../bookingSlot.model";
     styleUrls: ['adSlots.component.css']
 })
 export class AdSlotsComponent implements OnInit {
-    private adSlots: AdSlot[] = [];;
-    private bookingSlots: BookingSlot[] = [];
-    private exists = false;
+     adSlots: AdSlot[] = [];;
+     bookingSlots: BookingSlot[] = [];
+     exists = false;
 
 
     constructor(

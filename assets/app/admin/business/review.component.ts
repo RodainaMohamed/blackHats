@@ -12,8 +12,8 @@ import { BusinessService } from './business.service';
 
 
 export class ReviewComponent implements OnInit {
-  private businesses: Business[] = [];
-  private loading: boolean = false;
+   businesses: Business[] = [];
+   loading: boolean = false;
 
   constructor(private businessService: BusinessService, private router: Router) { }
   ngOnInit() {

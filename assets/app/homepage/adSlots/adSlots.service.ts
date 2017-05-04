@@ -8,8 +8,8 @@ import { BookingSlot } from "../bookingSlot.model";
 
 @Injectable()
 export class AdSlotsService {
-    private adSlots: AdSlot[] = [];
-    private bookingSlots: BookingSlot[] = [];
+     adSlots: AdSlot[] = [];
+     bookingSlots: BookingSlot[] = [];
 
     constructor(private http: Http) { }
 

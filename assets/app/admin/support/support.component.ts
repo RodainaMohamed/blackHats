@@ -11,8 +11,8 @@ import { SupportService } from './support.service';
 
 
 export class SupportComponent implements OnInit {
-  private requests: SupportRequest[] = [];
-  private loading: boolean = false;
+   requests: SupportRequest[] = [];
+   loading: boolean = false;
 
   constructor(private supportService: SupportService) { }
   ngOnInit() {

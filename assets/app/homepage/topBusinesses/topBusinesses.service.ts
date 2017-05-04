@@ -7,7 +7,7 @@ import { Business } from '../business.model';
 
 @Injectable()
 export class TopBusinessesService {
-    private businesses: Business[] = [];
+     businesses: Business[] = [];
 
     constructor(private http: Http) { }
 

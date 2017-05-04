@@ -12,25 +12,25 @@ import { AppService } from '../app.service';
 })
 
 export class DirectMessagingComponent implements OnInit, AfterViewChecked {
-    @ViewChild('chatBox') private myScrollContainer: ElementRef;
+    @ViewChild('chatBox')  myScrollContainer: ElementRef;
 
-    private user: String;
-    private business: String;
-    private thread: any;
-    private destID: String;
+     user: String;
+     business: String;
+     thread: any;
+     destID: String;
     message: String;
-    private threads: [any];
-    private messages: [any];
-    private isUser: boolean = true;
-    private srcID: string;
+     threads: [any];
+     messages: [any];
+     isUser: boolean = true;
+     srcID: string;
 
 
-    private currentThread: any = {
+     currentThread: any = {
         messages: []
     };
-    private newMessage: String;
-    private index = 0;
-    private noThreads = true;
+     newMessage: String;
+     index = 0;
+     noThreads = true;
 
     constructor(
         private appService: AppService,

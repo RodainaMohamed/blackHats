@@ -5,10 +5,10 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class UserService {
-  private reviews: Object[] = [];
-  private user: Object;
-  private business: Object;
-  private loggedin = true;
+   reviews: Object[] = [];
+   user: Object;
+   business: Object;
+   loggedin = true;
 
   constructor(private http: Http) { }
 

@@ -25,7 +25,7 @@ module.exports = webpackMerge(commonConfig, {
                     loader: 'angular2-template-loader'
                 },
                 {
-                    loader: 'angular2-router-loader'
+                    loader: 'angular-router-loader'
                 }
             ]
         }]

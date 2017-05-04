@@ -12,9 +12,9 @@ import 'rxjs/add/operator/map';
     templateUrl: './favorites.component.html'
 })
 export class UserFavoritesComponent implements OnInit {
-    private loggedin: Boolean;
-    private isUser: Boolean;
-    private user: Object;
+     loggedin: Boolean;
+     isUser: Boolean;
+     user: Object;
     favorites: [String];
     businesses: [Object];
     userId: String = "";

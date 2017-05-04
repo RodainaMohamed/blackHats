@@ -15,43 +15,43 @@ export class LoginComponent {
 
     @Output() loginClicked = new EventEmitter<boolean>();
 
-    private username: String;
-    private userPassword: String;
-    private userEmail: String;
+     username: String;
+     userPassword: String;
+     userEmail: String;
 
-    private businessEmail: String;
-    private businessPassword: String;
+     businessEmail: String;
+     businessPassword: String;
 
-    private successReset: String;
-    private failedReset: String;
-    private successBusinessReset: String;
-    private failedBusinessReset: String;
+     successReset: String;
+     failedReset: String;
+     successBusinessReset: String;
+     failedBusinessReset: String;
 
-    private successResend: String;
-    private failedResend: String;
+     successResend: String;
+     failedResend: String;
 
 
 
 
     //warning Flags
 
-    private userUsernameWarning: boolean = false;
-    private userPasswordWarning: boolean = false;
-    private businessEmailWarning: boolean = false;
-    private businessPasswordWarning: boolean = false;
-    private incorrectUserWarning: boolean = false;
-    private incorrectBusinessWarning: boolean = false;
-    private resetUserEmailWarning: boolean = false;
-    private resetBusinessEmailWarning: boolean = false;
-    private resetSuccessWarning: boolean = false;
-    private resetFailureWarning: boolean = false;
-    private resetBusinessSuccessWarning: boolean = false;
-    private resetBusinessFailureWarning: boolean = false;
-    private loggedin: boolean = false;
+     userUsernameWarning: boolean = false;
+     userPasswordWarning: boolean = false;
+     businessEmailWarning: boolean = false;
+     businessPasswordWarning: boolean = false;
+     incorrectUserWarning: boolean = false;
+     incorrectBusinessWarning: boolean = false;
+     resetUserEmailWarning: boolean = false;
+     resetBusinessEmailWarning: boolean = false;
+     resetSuccessWarning: boolean = false;
+     resetFailureWarning: boolean = false;
+     resetBusinessSuccessWarning: boolean = false;
+     resetBusinessFailureWarning: boolean = false;
+     loggedin: boolean = false;
 
-    private resendEmailWarning: boolean = false;
-    private resendSuccessWarning: boolean = false;
-    private resendFailureWarning: boolean = false;
+     resendEmailWarning: boolean = false;
+     resendSuccessWarning: boolean = false;
+     resendFailureWarning: boolean = false;
 
     constructor(
         private loginService: LoginService,

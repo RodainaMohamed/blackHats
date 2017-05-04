@@ -15,9 +15,6 @@ export class UserBookingsComponent implements OnInit {
     bookings: [Object];
     userId: String;
     logoPath: String = "http://54.213.175.206:8080/api/image/businessLogos/";
-    //private user: Object;
-    //private loggedin: Boolean;
-    //private isUser: Boolean;
     businesses: [Object];
     loaded = false;
 

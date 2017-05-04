@@ -49,10 +49,10 @@ export class BusinessPageComponent implements OnInit {
     activitiesAvailable = false;
     reviewsAvailable = false;
     test = 3;
-    private user: String;
-    private business: String;
-    private thread: any;
-    private destID: String;
+     user: String;
+     business: String;
+     thread: any;
+     destID: String;
     message: String ="";
     messageDone: Boolean = false;
 

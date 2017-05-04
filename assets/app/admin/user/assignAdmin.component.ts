@@ -10,8 +10,8 @@ import { User } from './user.model';
 
 
 export class AssignAdminComponent implements OnInit {
-    private users: User[] = [];
-    private loading: boolean = false;
+     users: User[] = [];
+     loading: boolean = false;
     constructor(private userService: UserService) { }
     ngOnInit() {
         this.userService.getNonAdmins().subscribe(users => {

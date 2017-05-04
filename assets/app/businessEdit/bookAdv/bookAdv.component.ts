@@ -25,10 +25,10 @@ export class BookAdvComponent implements OnInit {
     path: String;
     advPicture: String;
 
-    private advNoOfDaysWarning: boolean = false;
-    private advImgWarning: boolean = false;
-    private successfulBooking: boolean = false;
-    private negDaysWarning: boolean = false;
+     advNoOfDaysWarning: boolean = false;
+     advImgWarning: boolean = false;
+     successfulBooking: boolean = false;
+     negDaysWarning: boolean = false;
 
     constructor(
         private bookAdvService: BookAdvService,

@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class BusinessService {
-    private alertMsg: string;
-    private apiPath: string = "http://54.213.175.206:8080/api/";
+     alertMsg: string;
+     apiPath: string = "http://54.213.175.206:8080/api/";
     constructor(private http: Http) { }
 
     getBusinesses() {

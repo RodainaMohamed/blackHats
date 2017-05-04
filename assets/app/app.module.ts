@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routing } from "./app.routing";
 import { MomentModule } from 'angular2-moment';
-import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { DateTimePickerModule } from 'ng2-date-time-picker';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
@@ -97,7 +97,6 @@ const DROPZONE_CONFIG: DropzoneConfigInterface = {
     UserFavoritesComponent,
     UserBookingsComponent,
     EditUserProfileComponent,
-    FileSelectDirective,
     NotAuthorizedErrorComponent,
     SomethingWrongComponent,
     BusinessPageComponent,
@@ -123,7 +122,6 @@ const DROPZONE_CONFIG: DropzoneConfigInterface = {
     EditActivityComponent,
     EditProfileComponent,
     ActivityPageComponent,
-    FileSelectDirective,
     FocusDirective,
     ContactSupportComponent,
     LoaderComponent,
@@ -144,7 +142,8 @@ const DROPZONE_CONFIG: DropzoneConfigInterface = {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAhPwdEndt1K4nL2Q3wjR1P7LITWK794iI'
     }),
-    AdminModule
+    AdminModule,
+    FileUploadModule
   ],
   providers: [
     AppService,

@@ -10,7 +10,7 @@ import { Business } from '../business.model';
     styleUrls: ['topBusinesses.component.css']
 })
 export class TopBusinessesComponent implements OnInit {
-    private businesses: Business[] = [];
+     businesses: Business[] = [];
 
     constructor(
         private topBusinessesService: TopBusinessesService,

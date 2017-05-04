@@ -17,16 +17,14 @@ module.exports = webpackMerge.smart(commonConfig, {
     },
 
     module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                use: [
-                    'awesome-typescript-loader',
-                    'angular2-template-loader',
-                    'angular2-router-loader?aot=true'
-                ]
-            }
-        ]
+        rules: [{
+            test: /\.ts$/,
+            use: [
+                'awesome-typescript-loader',
+                'angular2-template-loader',
+                'angular-router-loader?aot=true'
+            ]
+        }]
     },
 
     plugins: [
