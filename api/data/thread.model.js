@@ -25,4 +25,24 @@ const threadSchema = new mongoose.Schema({
     }
 });
 
+threadSchema.pre('remove', function(next){
+	var thread = this;
+	thread.model('Business').update(
+        { _id: thread.business},
+        { $pull: { threads: thread._id } },
+        { multi: true },
+        next
+     );
+});
+
+threadSchema.pre('remove', function(next){
+	var thread = this;
+	thread.model('User').update(
+        { _id: thread.user},
+        { $pull: { threads: thread._id } },
+        { multi: true },
+        next
+     );
+});
+
 mongoose.model('Thread', threadSchema);

@@ -26,4 +26,24 @@ const reviewSchema = new mongoose.Schema( {
 	}
 });
 
+reviewSchema.pre('remove', function(next){
+	var review = this;
+	review.model('Business').update(
+        { _id: review.business},
+        { $pull: { reviews: review._id } },
+        { multi: true },
+        next
+     );
+});
+
+reviewSchema.pre('remove', function(next){
+	var review = this;
+	review.model('User').update(
+        { _id: review.user},
+        { $pull: { reviews: review._id } },
+        { multi: true },
+        next
+     );
+});
+
 mongoose.model('Review', reviewSchema);

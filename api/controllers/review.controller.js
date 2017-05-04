@@ -353,7 +353,6 @@ module.exports.editReview = function (req, res) {
     }
 };
 
-
 /*
     Delete function that finds and deletes a specific review
     Takes:

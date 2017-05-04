@@ -126,7 +126,6 @@ module.exports = function(passportConfig) {
     router.route('/review/:reviewId/edit').put(passportConfig.isUserLoggedIn, reviewCtrl.editReview);
     router.route('/review/:reviewId/delete').delete(passportConfig.isUserLoggedIn, reviewCtrl.deleteReview);
 
-
     //Advertisement routes
     router.route('/advertisement/bookAdvSlot/:advSlotId').post(passportConfig.isBusinessLoggedIn, advCtrl.bookAdvSlot);
     router.route('/advertisement/addAdvPhoto').post(passportConfig.isBusinessLoggedIn, advCtrl.uploadAdv);
