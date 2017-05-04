@@ -214,73 +214,76 @@ module.exports.registerUser = function (req, res) {
 */
 module.exports.deleteAccount = function (req, res) {
 
-  User.findByIdAndRemove(req.user._id, function (err, user) {
-      if (err) {
-          res.status(500).json({
-              error: err,
-              msg: null,
-              data: null
-          });
-      } else {
-          if (user) {
-              Review.find({user: user._id}, function(err, reviews){
-                if(err){
-                  res.status(500).json({
-                      error: err,
-                      msg: null,
-                      data: null
-                  });
-                }
-                else{
-                  for(var i = 0; i < reviews.length; i++){
-                    reviews[i].remove();
-                  }
-                  Thread.find({user: user._id}, function(err, threads){
-                    if(err){
-                      res.status(500).json({
-                          error: err,
-                          msg: null,
-                          data: null
-                      });
-                    }
-                    else{
-                      for(var i = 0; i < threads.length; i++){
-                        threads[i].remove();
-                      }
-                      Booking.find({user: user._id}, function(err, bookings){
-                        if(err){
-                          res.status(500).json({
-                              error: err,
-                              msg: null,
-                              data: null
-                          });
-                        }
-                        else{
-                          for(var i = 0; i < bookings.length; i++){
-                            bookings[i].remove();
-                          }
-                          req.logout();
-                          res.status(200).json({
-                            error: null,
-                            msg: "Account deleted!",
+    User.findByIdAndRemove(req.user._id, function (err, user) {
+        if (err) {
+            res.status(500).json({
+                error: err,
+                msg: null,
+                data: null
+            });
+        } else {
+            if (user) {
+                Review.find({
+                    user: user._id
+                }, function (err, reviews) {
+                    if (err) {
+                        res.status(500).json({
+                            error: err,
+                            msg: null,
                             data: null
-                          });
+                        });
+                    } else {
+                        for (var i = 0; i < reviews.length; i++) {
+                            reviews[i].remove();
                         }
-                      })
+                        Thread.find({
+                            user: user._id
+                        }, function (err, threads) {
+                            if (err) {
+                                res.status(500).json({
+                                    error: err,
+                                    msg: null,
+                                    data: null
+                                });
+                            } else {
+                                for (var i = 0; i < threads.length; i++) {
+                                    threads[i].remove();
+                                }
+                                Booking.find({
+                                    user: user._id
+                                }, function (err, bookings) {
+                                    if (err) {
+                                        res.status(500).json({
+                                            error: err,
+                                            msg: null,
+                                            data: null
+                                        });
+                                    } else {
+                                        for (var i = 0; i < bookings.length; i++) {
+                                            bookings[i].remove();
+                                        }
+                                        req.logout();
+                                        res.status(200).json({
+                                            error: null,
+                                            msg: "Account deleted!",
+                                            data: null
+                                        });
+                                    }
+                                })
 
+                            }
+                        });
                     }
-                  });
-                }
 
-              });
-          } else
-              res.status(404).json({
-                  error: null,
-                  msg: 'User not found.',
-                  data: null
-              });
-      }
-  });
+                });
+            } else
+                res.status(404).json({
+                    error: null,
+                    msg: 'User not found.',
+                    data: null
+                });
+        }
+    });
 };
 
 
