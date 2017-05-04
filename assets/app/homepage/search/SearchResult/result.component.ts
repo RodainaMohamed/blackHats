@@ -1,6 +1,5 @@
-import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Rx';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { SearchService } from '../search.service';
@@ -109,7 +108,17 @@ export class SearchResultComponent implements OnInit, AfterViewChecked {
         this.search();
     }
 
+    getInteractivity(interactivity) {
+        if (interactivity < 50)
+            return "Low";
+        else if (interactivity < 100)
+            return "Average";
+        else
+            return "High";
+    }
+
     ngAfterViewChecked() {
         $("#page" + this.pageNumber).addClass("active");
+        $('input.rating').rating();
     }
 }

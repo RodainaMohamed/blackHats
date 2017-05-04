@@ -52,6 +52,7 @@ export class DirectMessagingComponent implements OnInit, AfterViewChecked {
                     this.isUser = false;
                 }
                 this.getThreads();
+                        this.scrollToBottom();
             },
             (err) => {
                 switch (err.status) {
@@ -69,7 +70,6 @@ export class DirectMessagingComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        this.getThreads();
         this.scrollToBottom();
     }
 
@@ -208,4 +208,10 @@ export class DirectMessagingComponent implements OnInit, AfterViewChecked {
         }
     }
 
+    isMessageInvalid(){
+        if(this.newMessage)
+            return this.newMessage.trim().length == 0; 
+        else
+            return true;
+    }
 }

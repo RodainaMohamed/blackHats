@@ -1,3 +1,7 @@
+.container-fluid {
+  padding: 0px;
+}
+
 .member_list .chat-body {
   margin-left: 47px;
   margin-top: 0;
@@ -34,12 +38,9 @@
 }
 
 .member_list {
-  height: 452px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: whitesmoke;
-  border: 2px solid orange;
-  border-right: none;
 }
 
 .sub_menu_ {
@@ -80,13 +81,9 @@
   width: 100%;
 }
 
-.message_section {
-  border: 2px solid orange;
-}
-
 .chat_area {
   float: left;
-  height: 300px;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
@@ -108,11 +105,18 @@
 .chat-body1 p {
   background: lightgreen none repeat scroll 0 0;
   padding: 10px;
+  border-radius: 25px;
+  word-break: break-all;
+  white-space: normal;
 }
 
 .chat-body2 p {
   background: lightblue none repeat scroll 0 0;
   padding: 10px;
+  padding-left: 45px;
+  border-radius: 25px;
+  word-break: break-all;
+  white-space: normal;
 }
 
 .chat_area .admin_chat .chat-body2 {
@@ -149,13 +153,18 @@
 }
 
 .member_list li:hover {
-  background: #428bca none repeat scroll 0 0;
+  background: #B0B0B0 none repeat scroll 0 0;
   color: #fff;
   cursor: pointer;
 }
 
 .member_list .active {
-  background: #428bca none repeat scroll 0 0;
+  background: #B0B0B0 none repeat scroll 0 0;
   color: #fff;
   cursor: pointer;
+}
+
+.col-sm-3 {
+  height: 100%;
+  min-height: 100%;
 }

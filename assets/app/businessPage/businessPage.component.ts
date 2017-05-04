@@ -53,7 +53,7 @@ export class BusinessPageComponent implements OnInit {
     private business: String;
     private thread: any;
     private destID: String;
-    message: String;
+    message: String ="";
     messageDone: Boolean = false;
 
     constructor(
@@ -406,5 +406,12 @@ export class BusinessPageComponent implements OnInit {
       });
       string = string.slice(0, -3);
       return string;
+    }
+
+    isMessageInvalid(){
+        if(this.message)
+            return this.message.trim().length == 0; 
+        else
+            return true;
     }
 }

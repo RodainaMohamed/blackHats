@@ -19,7 +19,7 @@ export class SearchService {
                 const businesses = response.json().data;
                 let transformedBusiness: Business[] = [];
                 for (let business of businesses) {
-                    transformedBusiness.push(new Business(business._id, business.name, business.logo, business.reviews, business.email, business.phoneNumbers, business.workingDays, business.workingHours, business.location, business.tags, business.category, business.description, business.interactivity,
+                    transformedBusiness.push(new Business(business._id, business.name, business.logo, business.reviews, business.activities, business.location, business.email, business.phoneNumbers, business.workingDays, business.workingHours, business.tags, business.category, business.description, business.interactivity,
                         business.totalRatings, business.photos, business.paymentRequired, business.deposit, business.averageRating.toFixed(1)));
                 }
                 this.businesses = transformedBusiness;

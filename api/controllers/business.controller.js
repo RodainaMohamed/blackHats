@@ -293,7 +293,6 @@ module.exports.addBusiness = function (req, res) {
 module.exports.updateInteractivity = function (req, res) {
     Business.findById(req.params.businessId, function (err, business) {
         if (err) {
-
             res.status(500).json({
                 error: err,
                 msg: "Error retrieving business from database",
@@ -308,7 +307,8 @@ module.exports.updateInteractivity = function (req, res) {
                 });
 
             } else {
-                business.interactivity = business.interactivity + 1;
+                if(business.interactivity < 200)
+                    business.interactivity = business.interactivity + 1;
                 business.save(function (err) {
                     if (err) {
                         res.status(500).json({
