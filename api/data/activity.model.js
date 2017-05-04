@@ -41,4 +41,17 @@ const activitySchema = new mongoose.Schema({
     }]
 });
 
+activitySchema.pre('remove', function(next){
+	var activity = this;
+	activity.model('Booking').find(
+        { _id: {$in: activity.bookings}},
+        function(err, bookings){
+          for(var i = 0; i < bookings.length; i++){
+            bookings[i].remove();
+          }
+          next();
+        }
+     );
+});
+
 mongoose.model('Activity', activitySchema);

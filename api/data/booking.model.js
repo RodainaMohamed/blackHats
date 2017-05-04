@@ -28,4 +28,24 @@ const bookingSchema = new mongoose.Schema({
   	}
 });
 
+bookingSchema.pre('remove', function(next){
+	var booking = this;
+	booking.model('Activity').update(
+        { _id: booking.activity},
+        { $pull: { bookings: booking._id } },
+        { multi: true },
+        next
+     );
+});
+
+bookingSchema.pre('remove', function(next){
+	var booking = this;
+	booking.model('User').update(
+        { _id: booking.user},
+        { $pull: { bookings: booking._id } },
+        { multi: true },
+        next
+     );
+});
+
 mongoose.model('Booking', bookingSchema);
