@@ -214,4 +214,9 @@ export class DirectMessagingComponent implements OnInit, AfterViewChecked {
         else
             return true;
     }
+
+    clickSend(event){
+        event.preventDefault();
+        $('#send').click();
+    }
 }
