@@ -66,6 +66,3 @@ typings/
 
 # Image uploads
 public/uploads/
-
-# Compiled Angular2 Webpack bundle
-public/js/app
