@@ -11,6 +11,7 @@ const Review = mongoose.model('Review');
 const Thread = mongoose.model('Thread');
 const Activity = mongoose.model('Activity');
 const Booking = mongoose.model('Booking');
+const AdvBooking = mongoose.model("AdvBooking");
 
 
 /*
@@ -23,10 +24,10 @@ const Booking = mongoose.model('Booking');
     Redirects to: Nothing.
     Calling Route: '/api/admin/business/verify/:businessId'
 */
-module.exports.verifyBusiness = function (req, res) {
+module.exports.verifyBusiness = function(req, res) {
 
     //Getting the business by its id
-    Business.findById(req.params.businessId, function (err, business) {
+    Business.findById(req.params.businessId, function(err, business) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -46,7 +47,7 @@ module.exports.verifyBusiness = function (req, res) {
                 // else verifying the business
                 business.verified = true;
                 // updating the db
-                business.save(function (err) {
+                business.save(function(err) {
                     if (err)
                         res.status(500).json({
                             error: null,
@@ -56,7 +57,7 @@ module.exports.verifyBusiness = function (req, res) {
                     else {
                         var text = 'Hello ' + business.name + ',\n\nYour account has been verified.\n\nWelcome to Black Hats.';
                         var subject = 'Account Verified';
-                        emailSender.sendEmail(subject, business.email, text, null, function (err, info) {
+                        emailSender.sendEmail(subject, business.email, text, null, function(err, info) {
                             if (err)
                                 res.status(500).json({
                                     error: err,
@@ -93,9 +94,9 @@ module.exports.verifyBusiness = function (req, res) {
     Redirects to: Nothing.
     Calling Route: '/api/admin/business/delete/:businessId'
 */
-module.exports.deleteBusiness = function (req, res) {
+module.exports.deleteBusiness = function(req, res) {
 
-    Business.findByIdAndRemove(req.params.businessId, function (err, business) {
+    Business.findByIdAndRemove(req.params.businessId, function(err, business) {
         if (err) {
             res.status(500).json({
                 error: err,
@@ -106,7 +107,7 @@ module.exports.deleteBusiness = function (req, res) {
             if (business) {
                 Review.find({
                     business: business._id
-                }, function (err, reviews) {
+                }, function(err, reviews) {
                     if (err) {
                         res.status(500).json({
                             error: err,
@@ -119,7 +120,7 @@ module.exports.deleteBusiness = function (req, res) {
                         }
                         Thread.find({
                             business: business._id
-                        }, function (err, threads) {
+                        }, function(err, threads) {
                             if (err) {
                                 res.status(500).json({
                                     error: err,
@@ -132,7 +133,7 @@ module.exports.deleteBusiness = function (req, res) {
                                 }
                                 Activity.find({
                                     business: business._id
-                                }, function (err, activities) {
+                                }, function(err, activities) {
                                     if (err) {
                                         res.status(500).json({
                                             error: err,
@@ -149,7 +150,7 @@ module.exports.deleteBusiness = function (req, res) {
                                             $pull: {
                                                 "favorites": business._id
                                             }
-                                        }, function (err, result) {
+                                        }, function(err, result) {
                                             if (err) {
                                                 res.status(500).json({
                                                     error: err,
@@ -157,28 +158,45 @@ module.exports.deleteBusiness = function (req, res) {
                                                     data: null
                                                 });
                                             } else {
-                                                if (business.verified) {
-                                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
-                                                    var subject = 'Account Suspended';
-                                                } else {
-                                                    var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was rejected.\n\nThank you for considering Black Hats.';
-                                                    var subject = 'Account Rejected';
-                                                }
-                                                emailSender.sendEmail(subject, business.email, text, null, function (err, info) {
+                                                AdvBooking.find({
+                                                    business: business._id
+                                                }, function(err, advs) {
                                                     if (err) {
                                                         res.status(500).json({
-                                                            error: null,
-                                                            msg: 'Business was deleted, however the business was not notified.',
+                                                            error: err,
+                                                            msg: null,
                                                             data: null
                                                         });
                                                     } else {
-                                                        res.status(200).json({
-                                                            error: null,
-                                                            msg: 'Business was deleted and notified.',
-                                                            data: null
+                                                        for (var i = 0; i < advs.length; i++) {
+                                                            advs[i].remove();
+                                                        }
+                                                        if (business.verified) {
+                                                            var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
+                                                            var subject = 'Account Suspended';
+                                                        } else {
+                                                            var text = 'Hello ' + business.name + ',\n\nUnfortunately, your application was rejected.\n\nThank you for considering Black Hats.';
+                                                            var subject = 'Account Rejected';
+                                                        }
+                                                        emailSender.sendEmail(subject, business.email, text, null, function(err, info) {
+                                                            if (err) {
+                                                                res.status(500).json({
+                                                                    error: null,
+                                                                    msg: 'Business was deleted, however the business was not notified.',
+                                                                    data: null
+                                                                });
+                                                            } else {
+                                                                res.status(200).json({
+                                                                    error: null,
+                                                                    msg: 'Business was deleted and notified.',
+                                                                    data: null
+                                                                });
+                                                            }
                                                         });
+
                                                     }
                                                 });
+
                                             }
                                         });
 
@@ -201,9 +219,9 @@ module.exports.deleteBusiness = function (req, res) {
     });
 };
 
-var loopHelper = function (array, callback) {
+var loopHelper = function(array, callback) {
     var length = array.length;
-    array.forEach(function (item, index) {
+    array.forEach(function(item, index) {
         item.user.reviews.pull(array._id);
         item.user.save();
         if (index === length - 1) {
@@ -225,10 +243,10 @@ var loopHelper = function (array, callback) {
     Redirects to: Nothing.
     Calling Route: '/api/admin/makeAdmin/:userId'
 */
-module.exports.makeAdmin = function (req, res) {
+module.exports.makeAdmin = function(req, res) {
     var userId = req.params.userId;
 
-    User.findById(userId, function (err, user) {
+    User.findById(userId, function(err, user) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -245,7 +263,7 @@ module.exports.makeAdmin = function (req, res) {
                     });
                 else {
                     user.admin = true;
-                    user.save(function (err) {
+                    user.save(function(err) {
                         if (err)
                             res.status(500).json({
                                 error: err,
@@ -281,10 +299,10 @@ module.exports.makeAdmin = function (req, res) {
     Redirects to: Nothing.
     Calling Route: '/api/admin/removeAdmin/:userId'
 */
-module.exports.removeAdmin = function (req, res) {
+module.exports.removeAdmin = function(req, res) {
     var userId = req.params.userId;
 
-    User.findById(userId, function (err, user) {
+    User.findById(userId, function(err, user) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -301,7 +319,7 @@ module.exports.removeAdmin = function (req, res) {
                     });
                 else {
                     user.admin = false;
-                    user.save(function (err) {
+                    user.save(function(err) {
                         if (err)
                             res.status(500).json({
                                 error: err,
@@ -337,8 +355,8 @@ module.exports.removeAdmin = function (req, res) {
     Redirects to: Nothing.
     Calling Route: '/api/admin/user/delete/:userId'
 */
-module.exports.deleteUser = function (req, res) {
-    User.findByIdAndRemove(req.params.userId, function (err, user) {
+module.exports.deleteUser = function(req, res) {
+    User.findByIdAndRemove(req.params.userId, function(err, user) {
         if (err) {
             res.status(500).json({
                 error: err,
@@ -349,7 +367,7 @@ module.exports.deleteUser = function (req, res) {
             if (user) {
                 Review.find({
                     user: user._id
-                }, function (err, reviews) {
+                }, function(err, reviews) {
                     if (err) {
                         res.status(500).json({
                             error: err,
@@ -362,7 +380,7 @@ module.exports.deleteUser = function (req, res) {
                         }
                         Thread.find({
                             user: user._id
-                        }, function (err, threads) {
+                        }, function(err, threads) {
                             if (err) {
                                 res.status(500).json({
                                     error: err,
@@ -375,7 +393,7 @@ module.exports.deleteUser = function (req, res) {
                                 }
                                 Booking.find({
                                     user: user._id
-                                }, function (err, bookings) {
+                                }, function(err, bookings) {
                                     if (err) {
                                         res.status(500).json({
                                             error: err,
@@ -391,7 +409,7 @@ module.exports.deleteUser = function (req, res) {
                                         var text = 'Hello ' + username + ',\n\nUnfortunately, your account was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
                                         var subject = 'Account Suspended';
 
-                                        emailSender.sendEmail(subject, email, text, null, function (err, info) {
+                                        emailSender.sendEmail(subject, email, text, null, function(err, info) {
                                             if (err) {
                                                 res.status(500).json({
                                                     error: null,
@@ -426,8 +444,8 @@ module.exports.deleteUser = function (req, res) {
 
 
 
-module.exports.deleteTempUser = function (req, res) {
-    TempUser.findById(req.params.userId, function (err, user) {
+module.exports.deleteTempUser = function(req, res) {
+    TempUser.findById(req.params.userId, function(err, user) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -438,7 +456,7 @@ module.exports.deleteTempUser = function (req, res) {
             if (user) {
                 var email = user.email;
                 var username = user.firstName;
-                user.remove(function (err) {
+                user.remove(function(err) {
                     if (err)
                         res.status(500).json({
                             error: err,
@@ -449,7 +467,7 @@ module.exports.deleteTempUser = function (req, res) {
                         var text = 'Hello ' + username + ',\n\nUnfortunately, your account was suspended for not meeting our terms and conditions.\n\nThank you for considering Black Hats.';
                         var subject = 'Account Suspended';
 
-                        emailSender.sendEmail(subject, email, text, null, function (err, info) {
+                        emailSender.sendEmail(subject, email, text, null, function(err, info) {
                             if (err) {
                                 res.status(500).json({
                                     error: null,
@@ -490,8 +508,8 @@ module.exports.deleteTempUser = function (req, res) {
     Redirects to: Nothing.
     Calling Route: '/api/admin/support/business/recoverAccount/:requestId'
 */
-module.exports.recoverBusiness = function (req, res) {
-    SupportRequest.findById(req.params.requestId, function (err, request) {
+module.exports.recoverBusiness = function(req, res) {
+    SupportRequest.findById(req.params.requestId, function(err, request) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -502,7 +520,7 @@ module.exports.recoverBusiness = function (req, res) {
             if (request) {
                 Business.findOne({
                     email: request.registeredEmail
-                }, function (err, business) {
+                }, function(err, business) {
                     if (err)
                         res.status(500).json({
                             error: err,
@@ -512,10 +530,10 @@ module.exports.recoverBusiness = function (req, res) {
                     else {
                         if (business) {
                             var password = randtoken.generate(8);
-                            bcrypt.genSalt(10, function (err, salt) {
-                                bcrypt.hash(password, salt, function (err, hash) {
+                            bcrypt.genSalt(10, function(err, salt) {
+                                bcrypt.hash(password, salt, function(err, hash) {
                                     business.password = hash;
-                                    business.save(function (err) {
+                                    business.save(function(err) {
                                         if (err)
                                             res.status(500).json({
                                                 error: err,
@@ -525,7 +543,7 @@ module.exports.recoverBusiness = function (req, res) {
                                         else {
                                             var text = 'Hello ' + business.name + ', \n\n The password to your account was reset to a temporary password to give you access to it, Please change the password once you login successfully to your account.\n\nTemporary Password: ' + password + '\n\n If you still have issues, feel free to submit another support request.\n\nRegards,\nBlack Hats Support Team';
                                             var subject = 'Support Request Feedback';
-                                            emailSender.sendEmail(subject, request.contactEmail, text, null, function (err, info) {
+                                            emailSender.sendEmail(subject, request.contactEmail, text, null, function(err, info) {
                                                 if (err)
                                                     res.status(500).json({
                                                         error: err,
@@ -578,8 +596,8 @@ module.exports.recoverBusiness = function (req, res) {
     Redirects to: Nothing.
     Calling Route: '/api/admin/support/user/recoverAccount/:requestId'
 */
-module.exports.recoverUser = function (req, res) {
-    SupportRequest.findById(req.params.requestId, function (err, request) {
+module.exports.recoverUser = function(req, res) {
+    SupportRequest.findById(req.params.requestId, function(err, request) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -590,7 +608,7 @@ module.exports.recoverUser = function (req, res) {
             if (request) {
                 User.findOne({
                     email: request.registeredEmail
-                }, function (err, user) {
+                }, function(err, user) {
                     if (err)
                         res.status(500).json({
                             error: err,
@@ -600,10 +618,10 @@ module.exports.recoverUser = function (req, res) {
                     else {
                         if (user) {
                             var password = randtoken.generate(8);
-                            bcrypt.genSalt(10, function (err, salt) {
-                                bcrypt.hash(password, salt, function (err, hash) {
+                            bcrypt.genSalt(10, function(err, salt) {
+                                bcrypt.hash(password, salt, function(err, hash) {
                                     user.password = hash;
-                                    user.save(function (err) {
+                                    user.save(function(err) {
                                         if (err)
                                             res.status(500).json({
                                                 error: err,
@@ -613,7 +631,7 @@ module.exports.recoverUser = function (req, res) {
                                         else {
                                             var text = 'Hello ' + user.firstName + ', \n\n The password to your account was reset to a temporary password to give you access to it, Please change the password once you login successfully to your account.\n\nTemporary Password: ' + password + '\n\n If you still have issues, feel free to submit another support request.\n\nRegards,\nBlack Hats Support Team';
                                             var subject = 'Support Request Feedback';
-                                            emailSender.sendEmail(subject, request.contactEmail, text, null, function (err, info) {
+                                            emailSender.sendEmail(subject, request.contactEmail, text, null, function(err, info) {
                                                 if (err)
                                                     res.status(500).json({
                                                         error: err,
@@ -663,8 +681,8 @@ module.exports.recoverUser = function (req, res) {
     Redirects to: Nothing.
     Calling Route: '/api/admin/support/deleteRequest/:requestId'
 */
-module.exports.deleteSupportRequest = function (req, res) {
-    SupportRequest.findByIdAndRemove(req.params.requestId, function (err, request) {
+module.exports.deleteSupportRequest = function(req, res) {
+    SupportRequest.findByIdAndRemove(req.params.requestId, function(err, request) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -696,11 +714,11 @@ module.exports.deleteSupportRequest = function (req, res) {
     Redirects to: Nothing.
     Calling Route: '/api/admin/business/unVerifiedBusinesses'
 */
-module.exports.unVerifiedBusinesses = function (req, res) {
+module.exports.unVerifiedBusinesses = function(req, res) {
     const query = Business.find({
         verified: false
     });
-    query.select('-password').exec(function (err, businesses) {
+    query.select('-password').exec(function(err, businesses) {
         if (err) res.status(500).json({
             "error": err,
             "msg": "Can not retrieve unverified businesses.",
@@ -734,7 +752,7 @@ module.exports.unVerifiedBusinesses = function (req, res) {
     Redirects to: Nothing.
     Calling route: '/api/admin/advertisement/addAdvSlots'
 */
-module.exports.addAdvSlots = function (req, res) {
+module.exports.addAdvSlots = function(req, res) {
 
     req.checkBody('name', 'Name is required').notEmpty();
     req.checkBody('price', 'Price is required').notEmpty();
@@ -758,7 +776,7 @@ module.exports.addAdvSlots = function (req, res) {
             width: req.body.width
         });
         //  saves the new advertisement slot in the database
-        newAdvSlot.save(function (err, newSlot) {
+        newAdvSlot.save(function(err, newSlot) {
             //  If there is an error return it in response
             if (err) return res.status(500).json({
                 error: err,
@@ -776,12 +794,12 @@ module.exports.addAdvSlots = function (req, res) {
 }
 
 
-module.exports.getUsers = function (req, res) {
+module.exports.getUsers = function(req, res) {
     User.find({
         _id: {
             $ne: req.user._id
         },
-    }).select('-password').exec(function (err, users) {
+    }).select('-password').exec(function(err, users) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -799,8 +817,8 @@ module.exports.getUsers = function (req, res) {
 };
 
 
-module.exports.getUnverifiedUsers = function (req, res) {
-    TempUser.find({}).select('-password').exec(function (err, tempUsers) {
+module.exports.getUnverifiedUsers = function(req, res) {
+    TempUser.find({}).select('-password').exec(function(err, tempUsers) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -818,10 +836,10 @@ module.exports.getUnverifiedUsers = function (req, res) {
 };
 
 
-module.exports.getNonAdmins = function (req, res) {
+module.exports.getNonAdmins = function(req, res) {
     User.find({
         admin: false
-    }).select('-password').exec(function (err, users) {
+    }).select('-password').exec(function(err, users) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -838,13 +856,13 @@ module.exports.getNonAdmins = function (req, res) {
 };
 
 
-module.exports.getAdmins = function (req, res) {
+module.exports.getAdmins = function(req, res) {
     User.find({
         _id: {
             $ne: req.user._id
         },
         admin: true
-    }).select('-password').exec(function (err, users) {
+    }).select('-password').exec(function(err, users) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -861,10 +879,10 @@ module.exports.getAdmins = function (req, res) {
 };
 
 
-module.exports.getBusinesses = function (req, res) {
+module.exports.getBusinesses = function(req, res) {
     Business.find({
         verified: true
-    }).select('-password').exec(function (err, businesses) {
+    }).select('-password').exec(function(err, businesses) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -881,8 +899,8 @@ module.exports.getBusinesses = function (req, res) {
 };
 
 
-module.exports.getRequests = function (req, res) {
-    SupportRequest.find({}).exec(function (err, requests) {
+module.exports.getRequests = function(req, res) {
+    SupportRequest.find({}).exec(function(err, requests) {
         if (err)
             res.status(500).json({
                 error: err,
@@ -899,8 +917,8 @@ module.exports.getRequests = function (req, res) {
 };
 
 
-module.exports.deleteAdvSlot = function (req, res) {
-    AdvSlot.findByIdAndRemove(req.params.slotId, function (err, slot) {
+module.exports.deleteAdvSlot = function(req, res) {
+    AdvSlot.findByIdAndRemove(req.params.slotId, function(err, slot) {
         if (err)
             res.status(500).json({
                 error: err,

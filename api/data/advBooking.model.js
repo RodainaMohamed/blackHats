@@ -27,4 +27,14 @@ const advBookingSchema = new mongoose.Schema({
     }
 });
 
+advBookingSchema.pre('remove', function(next){
+	var booking = this;
+	booking.model('AdvSlot').update(
+        { _id: booking.advSlot},
+        { $pull: { advSchedule: booking._id } },
+        { multi: true },
+        next
+     );
+});
+
 mongoose.model('AdvBooking', advBookingSchema);

@@ -1,6 +1,6 @@
 <h4 class="section-title">Bookings</h4>
 
-<div class="col-md-12">
+<div *ngIf="loadDone" class="col-md-12">
     <div class="form-group">
         <select select class="selectpicker show-tick form-control" data-live-search="false" #t (change)="getBookings(t.value)">
             <option value="0" selected disabled>Choose an activity</option>

@@ -28,6 +28,7 @@ export class ActivityBookingsComponent implements OnInit {
     activityNames: string[] = [];
     currentBookings: Object[];
     businessId: String;
+    loadDone = false;
 
     constructor(
         private activityBookingsService: ActivityBookingsService,
@@ -45,13 +46,13 @@ export class ActivityBookingsComponent implements OnInit {
             (data) => {
                 if (data.success && data.business) {
                     this.businessId = data.business._id;
-
                     this.activityBookingsService.getBookings(this.businessId).subscribe(
                         (data) => {
                             this.activities = data.data;
                             for (let i = 0; i < data.data.length; i++) {
                                 this.activityNames.push(data.data[i].name);
                             }
+                            this.loadDone = true;
                         }, (err) => {
                             switch (err.status) {
                                 case 404:
